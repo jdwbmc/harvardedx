@@ -1,0 +1,135 @@
+LAURENCE MORONEY: Hi, I'm Laurence Moroney,
+and I lead AI advocacy at Google, working
+on a product called TensorFlow that you'll hear all about in this course.
+But before you get into the nuts and bolts of using machine learning
+and programming with it, I just want to explore what machine learning actually
+is on a fundamental level.
+I personally like to see it as a new paradigm for programming computers,
+where instead of just coding a solution, you can teach
+a computer how to learn a solution.
+This can be incredibly useful, and it can open up new scenarios for you
+to solve problems that can't be solved with programming alone.
+Let's dive in.
+Explicit coding is the bread and butter of software developers
+all over the world.
+You think about the scenario that you're working on
+or the problem that you're trying to solve,
+and you express the solution to that by defining the rules that
+determine the behavior of a program.
+For example, in this bricks game, the ball moves along a path, which can get
+changed when it hits a brick.
+As a programmer, you have to figure out the behavior.
+How does the ball bounce?
+Which brick do I remove?
+What happens when the ball hits a wall?
+Or what happens when the ball misses the bat?
+Everything needs to be figured out in advance.
+It's predetermined by the programmer, and it's then coded and tested.
+The more complex the scenario, the more code you'll have to figure out.
+And with the law of diminishing returns, often you'll
+encounter scenarios that it just isn't feasible to figure out
+all the code for.
+We'll explore one of those in a moment.
+But first, this diagram shows coding scenarios like the one
+we just explored.
+Traditional programming is solving a problem by figuring out and expressing
+roles using a programming language like Java, C++, or Python.
+You then have these act on data, like the location of the ball
+and the bricks in the previous game, and then you get answers from that.
+Is it game over?
+Does the score go up?
+Where should the ball be plotted next?
+It's really powerful, but it can be limited.
+So let's explore one scenario where this doesn't work well at all.
+Consider activity detection.
+Say you want to write an app that uses sensors
+on a phone or a watch or something else to determine a person's activity.
+You could, for example, use the data about their speed
+and write a rule that determines if the speed is below a certain amount,
+then they're probably walking.
+You have data.
+You have a rule.
+And then you can get an answer.
+And then say you extend this to determine if they're
+running by building on that rule.
+If, for example, it's below 4 miles an hour, then they're walking.
+Otherwise, they're running.
+OK, great.
+That still works.
+And then maybe you can extend that even further to see if they're biking.
+If the speed is below 4, they're walking.
+Otherwise, if it's below 12, they're running.
+Otherwise, we can say they're biking.
+But then how would you handle golfing?
+What rule could you write that determines
+that they're actually playing golf?
+Also, by now, you've probably realized that the other rules are also
+a little bit naive.
+You can't just go by speed.
+You might run downhill faster than your bike uphill, for example.
+So let's go back to our diagram.
+Recall that we mentioned that traditional programming is
+when you create rules in a programming language and these rules act on data
+and provide you with answers.
+With activity detection, we had created rules
+to figure out the user's activity, be it walking, biking, or running,
+but then we hit a wall with golfing.
+Not only that, we can also see that our algorithm was that little bit naive.
+Our rules don't really work that well.
+For example, you might run downhill faster than you bike uphill.
+And as a result, your app might fail when written with rules like this.
+Machine learning can help solve this problem.
+And it can be represented with a simple rearrangement of the diagram.
+So instead of you trying to figure out the rules that act on the data
+to give you an answer, what if you go the other way around
+and you provide the answers with the data
+and you have a computer that can figure out the rules that
+will match them together?
+Once it's done this, it can then apply those rules to future data
+in order to figure out the answers about it.
+So in our activity detection scenario, we could gather a lot of data
+from sensors and label them with the activity that the user is following.
+So now, by matching parts of the data with the label that
+describes the activity, the computer might
+be able to figure out the rules for what makes an activity walking or running
+or biking or, yes, even golfing.
+For example, I've highlighted four bits within each of the binary blocks,
+and you might notice that these four bits are
+different between the four activities.
+Now, that could be a signal for which activity is which.
+With machine learning, we have some APIs that
+allow us to write code to potentially identify such distinguishing factors.
+And you'll see that a little later in this course.
+But first, let's consider at a very high level how this works.
+First, the computer will make a guess as to the relationship
+between the data and its labels.
+It does this by randomly initializing a neural network.
+And you'll delve into that a little later.
+But beyond the specifics, it's simply guessing as to the relationship.
+It then measures how good or how bad that guess is.
+The terminology often used here is loss.
+Higher loss is roughly analogous to lower accuracy.
+So then you can measure the results of your guess,
+and you can then use the data from the accuracy measurement
+to figure out your next guess, optimizing
+based on what you already know.
+And if you then repeat the process with the logic being
+that each subsequent guess gets better than the previous one,
+then your model becomes more and more accurate.
+It's learning from experience what the best guess might be.
+So let's return to the diagram describing
+machine learning from a high level.
+I've changed the word "answers" to "labels" here,
+and that's generally used for the term that describes your data.
+But the rest still stands.
+You start with label data and go through the process I previously mentioned.
+And you end up with a set of rules that matches that data to those labels.
+This constructs a model, and from this model, you can then give it new data,
+and it will figure out how closely that data fits the set of labels.
+And it will return you something called a set of inferences,
+and these are the probabilities that the data matches each specific label.
+OK, so now it's your turn.
+In the next section, I'm going to give you a set of numbers.
+And there's a relationship that matches the x to the y, a rule
+that you can figure out.
+Give it a try, and think about how you figured it out.

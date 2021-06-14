@@ -1,0 +1,111 @@
+VIJAY JANAPA REDDI: We're almost at the end of the visual wake word's
+application.
+I'm going to wrap up this video and the series
+by focusing on the metrics that really matter.
+Looking at the end to end pipeline, you've
+come a long way from collecting data to designing
+the model to understanding how to train or cut down the training
+time to now evaluating a model.
+When it comes to evaluation of a model, there are quantitative measures
+and there are qualitative measures.
+Both have pros and cons, and let's try and understand what it really means.
+For quantitative measures, we have things like accuracy.
+How well does a model do in doing its classification?
+There are also other metrics that actually
+matter that are outside of the model, which is, what's
+the overall latency the application?
+What's the amount of energy?
+Does the entire application with the model inside fit in the resource
+constraints?
+Then, of course, there are qualitative aspects
+about how well the overall application does for the end user.
+We touched on these in the context of keyword spotting.
+Here, I'm going to highlight things that are specific to the visual wake words
+model.
+Talking about accuracy, I want to quickly touch on the metrics
+that we have.
+Often, we use Top-1 Accuracy.
+Top-1 Accuracy means that the exact softmax classification
+score that you get has got to have the highest probability so that it matches
+what the original ground truth is.
+In this particular case, it is Firefox.
+So that's great.
+Occasionally, you'll hear about what's called Top-5.
+That simply says that if Firefox shows up
+in anywhere of the top five probabilities,
+then that is also completely acceptable answer.
+It really depends on what you're looking at.
+Often, we use Top-1 as the baseline so keep that in mind.
+Sometimes you hear Top-5, and that's the only reason
+I'm bringing up that notion.
+Now, one of the key things that is important
+is that you got to think about what data you have in order to determine
+whether you are actually going to get good accuracy because if you don't have
+data, you have data that's irrelevant really, then your accuracy
+is going to be bad.
+So no matter what your efficiency is, it does not
+matter because the end user experience is going to be terrible.
+Another thing that you could do is you could obviously
+trade-off accuracy for latency, which we've talked about previously
+when we looked at designing a model.
+For example, I can have a really accurate model that is really slow.
+How will that work?
+So if you look at it purely from an accuracy standpoint,
+it might look like a fantastic choice because it gives you
+the highest accuracy in detecting people or something to that effect.
+But if it takes 10 seconds to be able to make a classification
+and tell you that, yes, there is a person in front of the camera,
+is that any good?
+Will you be able to deploy that on a smart device, for instance?
+No, you won't be.
+So that means your user experience is going to be terrible.
+So that's not really going to work.
+But you might be able to compromise that model quality a little bit
+to get a faster model, which is exactly what mobile nets did.
+That reduced the complexity of the model through depth
+by separable convolutions, which is why we talked about it, in order
+to improve the overall performance of the model,
+and thereby improve the user experience.
+Another thing that we can do, depending on the use cases,
+if you want high quality model, then sometimes you
+might have to offload it to the cloud.
+If you're dealing with applications like medical situations,
+the end user might be willing to tolerate long latency
+as long as the model is accurate.
+So it really depends on the application you're building and deploying.
+So that's the message that I'm trying to get across here.
+Last but not least, fairness--
+diversity in the data is extremely important because if you build a model,
+it's got to work across the diverse situations in which it's
+going to be exercised.
+Specifically, if the particular group that you're looking for
+is actually the majority group of your training data, well,
+then you're naturally going to get good accuracy,
+and everything is going to work fine.
+In other words, if I'm building a visual wake words model that
+recognizes my skin tone, that's great.
+OK, well, I'm in the majority group of that training data
+so the model is going to work well.
+But what happens now if there's a certain skin tone which the network has
+not seen in the training data, someone who's
+got a much lighter color face or someone who's got a much darker skin tone?
+In that case, if there's something very specific about the skin tone,
+for instance, that's getting encoded into the network,
+that's going to prove really problematic because even if the model runs really
+well, the overall user experience is going
+to be bad because it's not generalizing to the characteristics that are needed.
+So the point I'm trying to get across here
+is that we need to think about diverse set of metrics.
+We need to identify the metrics that are important carefully.
+Just the way we identified the requirements for a dataset carefully,
+we need to identify all the right metrics
+and then work through that process.
+Though it is a last step, it actually greatly influences
+how the entire pipeline is kind of engineered.
+And with that said, I hope you learned a couple of new things
+in the TinyML visual wake words application.
+We're going to be moving forward into yet another interesting application
+area where we're going to learn about new fundamentals
+as we go through the same process of dealing with sensors and then
+the network and then how we actually evaluate that particular scenario.
+Stay tuned for that.

@@ -1,0 +1,121 @@
+SUSAN KENNEDY: Hi my name is Susan Kennedy
+and I'll be your guest lecture on responsible AI design.
+I have a PhD in philosophy with a specialization in ethics,
+and my current research focuses on the ethical, social, and political impacts
+of emerging technologies.
+I'm here to talk to you about how you can proactively incorporate ethics
+into your workflow so that you can pursue innovative applications of AI
+in a responsible manner.
+During your introduction to responsible AI,
+you were shown the human-centered design framework.
+Following this framework, we're now going
+to focus on the ethical challenges that arise
+during the first stage of innovation, the design phase.
+The specific questions we'll think about are, what am I building
+and what is the goal?
+Currently, the hype surrounding AI is at an all time high
+as it looks like a promising avenue to tackle
+some of the world's biggest challenges.
+As Nick Bostrom, a philosopher at the University of Oxford, has said,
+machine intelligence is the last invention
+that humanity will ever need to make.
+Without a doubt, the capabilities of AI are promising.
+But with that being said, as a designer, it's important to keep in mind
+the AI is not always the best solution.
+Earlier in this course, Lawrence explained the difference
+between traditional programming and machine
+learning in terms of how they operate.
+To be reminded, with traditional programming,
+we combine data inputs with rules to get answers, whereas with machine learning,
+we combine data with answers so that our model can generate the rules.
+Now we're going to take a closer look at the pros and cons of each
+so that we can make a more informed decision about when
+we should choose a machine learning model as a solution to some problem.
+In some scenarios, traditional programming
+will work just as well if not better than machine learning.
+It's particularly suited to situations in which there
+are lower volumes of data and the rules are relatively simple.
+Some pros of traditional programming is that it's quicker
+to build, easier to explain, easier to debug, easier to maintain,
+and offers more consistent performance.
+Some downsides of traditional programming is that it does not scale,
+it does not adapt or update on its own, and it's not worked well for complex
+tasks that would require a huge amount of rules or rules that domain experts
+cannot specify.
+In contrast, machine learning offers some important benefits
+over traditional programming.
+It can be used to solve complex problems,
+it can scale adapt and update on its own,
+and offer a personalized user experience, and improve over time.
+Some downsides of machine learning models is that they're slower to build,
+as they require the collection of vast amounts of data and time
+to train the model.
+They're harder to interpret and explain, also known as the Black Box Problem,
+and relatedly, they're harder to debug for this reason.
+Now that we've seen some trade offs between traditional programming
+and machine learning, we want to keep this in mind
+when we think about what our goal is.
+The most comprehensive way to think about what our goal is
+to answer these four questions.
+What is the problem?
+Why does it need to be solved?
+How could the problem be solved manually with traditional programming?
+And will AI offer unique value?
+Let's look at what the answers to these questions
+might look like by considering a case study
+you watched a video about earlier, where AI
+was used for the diagnosis of diabetic retinopathy or DR for short.
+The problem is achieving an early diagnosis of DR progression
+from color fundus photographs of the retina.
+The problem needs to be solved because DR is reaching epidemic proportions,
+and early diagnosis would allow for intervention and prevention
+of further DR progression.
+The problem could be solved manually if we collected data
+from retina specialists or trained graders
+and then wrote rules based on the presence of hemorrhages
+and micro aneurysms.
+But will AI offer unique value?
+Seems like the answer is, yes.
+Machine learning can improve predictions about the progression
+of DR for individual patients and identify patterns and images that were
+previously unrecognized by experts.
+When you design your own applications, you
+want to answer these questions to make sure you have a clearly defined goal
+and you choose the right model, either machine
+learning or traditional programming, to pursue this goal.
+A final point worth taking into consideration
+is how you can define your goals for positive social impact.
+This is commonly referred to as AI for social good
+by experts in both industry and academia, who
+recognize the importance of using AI and machine learning to help address
+the world's most pressing challenges.
+For example, AI has been used for image classification
+to spot elephant poachers and for sound detection
+to stop illegal deforestation.
+It's easy to see how these innovations are making the world a better place,
+but you may be wondering, how would I be able to identify problems
+at the societal level that need to be addressed?
+The good news is the United Nations has put together a list of 17 goals
+as part of their 2030 agenda for sustainable development,
+and it spans issues ranging from ending poverty and world hunger,
+improving health and education, and reducing inequality and injustice.
+This will help you identify problems you care about
+so you can spend your time creating a solution.
+Now there are some challenges facing AI for social good,
+such as learning with limited data, geographical imbalances,
+biased data, and learning with limited memory and computation.
+But now there's a window of opportunity thanks
+to cutting edge innovations in TinyML.
+it's pushing the boundaries for learning with limited memory and computation
+and has other unique affordances like being
+battery-operated, on-device computing, low latency, low cost, and small size.
+Just take a look at this image of the world's smallest microprocessor that
+fits on the dimple of a golf ball.
+It will now be possible to explore the benefits of AI
+in domains that were previously inaccessible.
+We can sprinkle sensors across the forest to aid conservation efforts
+or embed TinyML in everyday household items to make our lives easier.
+With such exciting and new possibilities,
+we can't wait to see what you will create.
+Head into the discussion forum and let us
+know how you imagine TinyML being designed for social good.

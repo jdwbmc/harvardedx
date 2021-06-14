@@ -1,0 +1,89 @@
+VIJAY JANAPA REDDI: In this video, we're going
+to focus on what it means to train a visual wake words model.
+Specifically, we're going to look at what it means to train a visual wake
+words model in an efficient way, in a way that we can cut down the training
+time.
+Before we go there, let's take a look at where we are right now.
+We talked about collecting data.
+We talked about pre-processing and designing a model.
+No matter how well you design the model, be it big or small,
+you've got to train the model.
+Training the model can always be tedious because often,
+you're dealing with lots of data.
+For example, ImageNet has 1,000 classes, and for each of those classes,
+there are 1,000 images, which means there's lots of data there.
+And you've got to crunch through all of that data.
+And that requires a massive amount of computational horsepower,
+both from memory, the compute requirements, the server requirements.
+And that costs both time and energy.
+And typically, when you have a large dataset,
+you have to rinse through all of that data over and over and over.
+And epoch here is one complete pass through all of the data,
+and then you have to repeat it over multiple epochs.
+That's typically how you train the network.
+At the end of the day, you've got a network
+that has learned a key set of weights.
+That's what you're really trying to get to.
+Now, we want to ask ourselves this question about,
+do we have to train the network from scratch every single time?
+Before we get into the neural network mechanics,
+I want to focus on some very basic intuition.
+Our brain has a neural network, right?
+The question is this, let's say the first time
+we learn to drive a car, what did you do?
+You went through the tedious mechanics of learning what a car looks like,
+how to operate it, what are the rules that you have to follow, and so forth.
+And after a lot of time and practice, you went and got your driver's test.
+Now, let's say a couple of years down the road, you upgrade your car.
+Do you go back and get another driver's test?
+Or do you somehow just seemingly move and adapt to that new car?
+It's different, but why is it that you don't need a driver's test?
+Because it's got four wheels.
+It's got a steering wheel.
+It's the same exact mechanics.
+Sure, it's got a little bit of its own quirks,
+but that's something you can easily adapt to.
+When you look at a neural network, that's
+the same kind of thing that's going on.
+The first part of the network's generally
+learned some sort of general features, like in the case of a car,
+that it's got wheels and so forth.
+And the second part is really the one that kind of picks up
+the very task-specific features.
+So the question is this--
+as we need to train the models, do we need to retrain the whole thing,
+or do we just sort of take a pre-trained network that
+has gotten exposed to a wide variety of class
+and then specialize it for something that is of interest, or in our case,
+maybe just detect a person or a cat or dog and so forth?
+Well, that's where transfer learning really kicks in.
+Transfer learning is built on that observation
+that the first part of the network generally
+learns these basic features that are typically independent of the task.
+So we can reuse those weights that are in there from a pre-trained network.
+And then, for the task-specific features,
+we effectively allow the network to train.
+So the first part of the network layers, we freeze all of them.
+We freeze the general feature extraction aspects.
+And then we only train the last couple of layers.
+That allows us to very quickly take a pre-trained network
+and dramatically cut down the training time because you
+don't have to train the whole first part of it,
+and you only train the last layers, which
+allows you to very quickly pivot for a different task.
+We're going to do something like this in the Google Colab that's coming up,
+which exposes you not only for training for a particular visual wake words
+task, but it also teaches you how to do this efficiently.
+So there are two things that I'm trying to knock out here for you.
+That said, I do want you to keep in mind that transfer learning is a technique
+that might not always work well.
+For example, if you know how to drive a car, that does not
+imply that you can transfer that knowledge to flying a plane.
+You still have to go to school and learn everything over
+about that particular task.
+So keep that in mind.
+I have a reading that explains this sort of fundamental difference,
+and there are a couple of pitfalls and myths around transfer learning
+that are important to appreciate in order
+to know when and how it is actually a useful technique to deploy.
+With that said, have a little bit of fun in Colab, and I'll see you soon.

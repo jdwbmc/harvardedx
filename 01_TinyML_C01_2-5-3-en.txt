@@ -1,0 +1,128 @@
+SUSAN KENNEDY: Building off of our human-centered design framework,
+we want to ask ourselves, who am I building this for
+and how are they going to use it?
+If we think about these questions in the design phase,
+we can ensure better uptake in our product
+and identify potential problems so that we can improve our overall design
+strategy.
+The people who will potentially be impacted by the technology
+are referred to as the stakeholders.
+The direct stakeholders are the people who
+will use your technology otherwise known as the users.
+It's important to be specific when you consider the users of your technology.
+Try to envision the characteristics that describe your target users like age,
+gender, whether they're able-bodied or perhaps
+have some disability, where they're located, and so forth.
+Additionally, your technology may have indirect stakeholders.
+And these are the people who are not users but are nonetheless
+impacted by your technology.
+To see what this might mean, suppose we're developing an image
+classification for disease diagnosis.
+The direct stakeholders would be the doctors
+who use this technology to assist them in making a diagnosis.
+The indirect stakeholders would be the patients who are being diagnosed.
+Of course, there may be many different individuals or groups
+who might be indirectly affected.
+So be sure to think carefully about who your technology might impact.
+Once you have a clear description of your stakeholders.
+It will be easier to identify what values they might have.
+Let's return to our example of an image classifier for disease diagnosis.
+Suppose the doctor values the accuracy of this technology
+so they can provide the best care for their patients.
+They also care about whether they'll need additional training to utilize it,
+how easy it will be to incorporate in their day-to-day workflow,
+and whether it will allow for advances to be made in medical research.
+The patient, on the other hand, values a personal level of care,
+being fully informed about their diagnosis,
+being able to trust their doctor, and ensuring
+that their privacy is protected.
+Now that we've identified the stakeholders' values,
+you've probably noticed that the values for the doctor
+look very different from those of the patient.
+This is important because it helps us see where potential value tensions may
+arise.
+For example, the doctor may want the most accurate AI available.
+But it's possible that the algorithm's decision-making process
+will be opaque in such a way that the doctor can't explain
+how it arrived at a certain diagnosis.
+And this might interfere with the patient's desire to be fully informed.
+Relatedly, this might interfere with the patient's ability
+to trust that their doctor is making the right decision about their diagnosis.
+Let's consider a different value tension.
+The doctor values the advances in research
+that would be made possible by the AI's collection of data.
+But this collection of data might conflict
+with the patient's desire for privacy.
+So how can we resolve value tensions once we've identified them?
+There are three questions we can ask.
+Is one of the conflicting values considered a right?
+If so, we should be careful to follow laws and regulations that
+protect this right.
+Do the stakeholders prioritize certain values?
+Maybe the doctor values the AI's accuracy so much
+that they'd be willing to undergo additional training that's
+necessary to utilize it.
+And does the value have a threshold for sufficiency?
+For example, our patient's desire for privacy
+might be satisfied if we employ deidentification techniques
+on the personal data that's collected.
+While value tensions require some critical thinking,
+there's oftentimes a way to resolve them if we keep an open mind.
+There are some other important factors we'll want
+to think about during the design phase.
+For instance, you'll want to consider how this technology will
+look when analyzed from diverse perspectives, particularly
+those that are historically marginalized or underrepresented.
+Suppose we're designing a voice assistant
+to respond to speech commands.
+How would the choice of command phrases look
+to people who are non-native English speakers, people
+who speak African-American vernacular English, or people
+with speech impairments?
+Another thing to consider is the social context,
+in particular what features of the social context
+are likely to impact access, adoption, and use of the technology we're
+designing?
+Suppose we're designing a wearable health device.
+And our intended users span different countries.
+Will there be a digital divide where some people have restricted access
+to this technology?
+Do the countries have different rules and regulations for data protection?
+And do customs impact how users prioritize values?
+Once we have a picture of who we're building for,
+we should spend some time thinking about how we're going to use it.
+One of the earliest philosophers of technology, Don Ihde,
+explained that technology can end up being used in ways that it
+wasn't originally designed for.
+He coined the term for this phenomenon as the multistability of technology.
+Multistability matters from an ethical perspective.
+Because even if we design technology for some specific purpose,
+it may be compatible with malicious, immoral, or simply unintended purposes.
+We can see the problems surrounding multistability
+in these high-profile cases that made news headlines.
+For example, Google said it would hold off
+on selling facial recognition technology because it
+could be used for inappropriate forms of surveillance.
+And the research lab OpenAI said it would not
+release its fake text generator GPT-2 because of worries
+that it would result in the spread of fake news.
+In these cases, worries about malicious and immoral use
+resulted in the companies making a decision
+to ban the technology by refusing to develop it
+or after developing it refusing to deploy it.
+But not all instances of nonintended use will play out this way.
+It's important to anticipate the multistability of the technology we're
+developing so we can proactively address the issue in the design phase.
+If it's potentially very harmful like the cases we just saw,
+we may need to stop developing it altogether.
+But in other cases, it's possible that we just
+need to implement some design changes to prevent problematic uses.
+Lastly, there might even be some cases where
+we should embrace nonintended use like if we discover
+that the sensors we built to help athletes
+could also be used to improve physical therapy treatment.
+We may decide that we should redesign our technology for that purpose
+instead.
+If you keep in mind the stakeholders and potential uses of your technology
+early on in the design phase, you'll be one step closer
+to creating better, more successful products.

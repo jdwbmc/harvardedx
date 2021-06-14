@@ -1,0 +1,177 @@
+VIJAY JANAPA REDDI: Hi.
+In this video, I'm going to touch on embedded machine learning software
+frameworks a little bit.
+The reason I want to do this is because they
+have many different machine learning frameworks out there,
+and you need to understand how to choose the right one for the right problem
+that you're trying to solve.
+But before we get there, let's talk about the general ecosystem of what's
+involved with the machine learning frameworks,
+and what are some of the challenges as we try and take those frameworks
+and cram them down onto something that would
+fit in the constraints of a one megabyte flash or just 256 kilobytes of RAM.
+Let's take TensorFlow and open up the hood and see what's inside.
+Here is a general architecture of TensorFlow.
+As you can see, it looks quite complicated.
+There are many different pieces to it.
+For example, there's a lot of high level code that you might write in Python,
+or you might use languages like C++, Java, Go,
+and so forth in order to express your program or the neural network itself. .
+And then you want to actually train it.
+So you have a distributed execution engine
+which is capable of using different computing systems all concurrently
+in order to very quickly train the model.
+In addition to having capability of using different systems,
+each of these systems might have different types of hardware.
+They might have a CPU.
+They might have a GPU.
+And you've got to orchestrate all of that execution.
+You might also have a TPU, Google's Tensor processing unit
+which is custom-designed for just running machine learning tasks.
+Well, you've got to manage all of that capability and execution
+heterogeneity they have.
+So naturally, these systems end up being quite complicated.
+Just by that nature, or by that fact, you
+end up having to rely on big operating systems.
+So these frameworks like TensorFlow or PyTorch
+will rely on operating system capabilities.
+Operating systems-- like Windows and Linux, for instance
+--are very well capable of running these systems.
+However, these operating systems come with a fair bit of complexity
+themselves.
+For example, they have to support virtual memory.
+They have to support the ability to manage multiple threads that
+are concurrently running on the system.
+Why am I talking about all of this?
+Well, remember, we are talking about embedded systems.
+How can we take, for instance, our embedded system which has got a very
+limited amount of capability in terms of compute, in terms of memory,
+in terms of storage, in terms of power consumption,
+given that we're orders of magnitude smaller,
+we cannot have the flexibility of supporting a massive complex machine
+learning framework on top of a very simple device.
+Therefore, we need to think about how can we
+reengineer the machine learning frameworks
+so they are more aptly suited to run on the embedded device.
+So typically, when you're thinking about building an inference framework,
+there are three things that you would need to consider.
+What kind of model features do you need to support?
+What kind of software capabilities do you need to have?
+And what kind of hardware are you trying to support?
+If we break this down from a model standpoint,
+do you need to support training?
+The answer is no.
+We are doing only on device inference.
+Do you need a support inference?
+Obviously, yes.
+You need to support a wide range of ops.
+For example, TensorFlow has over 1,400 ops,
+but in reality, we often use only about 50 different ops.
+By the way, when I'm saying ops, I'm talking about things like convolutions
+and Mac spooling, those kinds of operators.
+So just from the model standpoint, you need
+to understand that when we're deploying things on to the embedded device,
+we only need some subset of the big features
+that the engines actually offer.
+Furthermore, when we think about software capability,
+should the toolchain actually support quantization?
+The answer is absolutely, yes.
+We don't want to typically be running f.p.
+32 models.
+We want to run Integer8 models, small models that
+take up less space where the integer [? earthman ?] can also
+be done efficiently.
+Then we cannot assume that we're going to have complex operating systems.
+So therefore, we cannot rely on things like virtual memory support.
+That is something that we take for granted with the big operating
+systems or the big frameworks.
+In addition, when it comes to the hardware, we got to think about,
+do we support a diverse range of processor or hardware device?
+Well, the answer is no because typically on a simple embedded microcontroller,
+you're looking at a very small subset of processing capabilities
+that you need to have.
+Do you need to support many different platforms and features?
+The answer is yes, you need to be able to build
+a framework that can easily target many different types of embedded hardware.
+But on a single device itself, the heterogeneity is quite limited.
+You need to keep these things in mind as we try and build
+an inference framework that actually runs efficiently
+on the embedded microcontroller.
+This has led to the proliferation of many different types of machine
+learning frameworks.
+So for example, TensorFlow Lite Micro which we are going to learn how to use
+is one amongst the ecosystem that is starting to thrive.
+The reason I'm touching on this ecosystem
+is because as a TinyML engineer, you need
+to know that there's more than just TensorFlow Lite Micro which
+you're learning about in this course.
+So there is TVM.
+There's uTensor.
+There's Glow.
+There's STM Cube AI.
+These are all different types of machine learning frameworks
+that support the different class of hardware that we're seeing.
+Let's take, for example, a particular framework
+and see how they go about deploying a model that's on the left hand side
+all the way down to a custom embedded system on the right hand side.
+Let's take STM, for example, which is a company that is well
+known in the microcontroller space.
+What they often do is they'll take a neural network model that comes in,
+and then they will generate some sort of code in their own proprietary way
+to run on the embedded system.
+Let's open up that box and understand this a little bit further.
+Typically, you have a network that's in PyTorch or TensorFlow.
+You'll take that into an importer which imports the model in, and builds
+an internal representation of what the network looks like.
+For example here, PINNR is some sort of internal representation
+that's used by the software framework.
+Then a compiler will actually generate optimized code for the target device.
+It does this because it knows the capabilities of the target
+that you're looking for, it'll bring in the best capabilities needed in order
+to achieve the best performance from optimized kernel libraries that
+are available.
+Remember, I talked about how the M0 the M3 the M4--
+a range of different microcontrollers all
+have different kinds of instruction level support.
+The reason I was showing you that is because now you
+can make the connection that depending on the type of microcontroller,
+you might want to choose the right type of instruction level
+support in order to maximize the performance of that particular device.
+So you can run inference much faster.
+And finally, you generate executable code that runs on the microcontroller.
+This is a very typical flow.
+Now, Implementations tend to vary quite a bit.
+For example here, if you take a model like this on the left hand side
+and you run it through STM cube as well as TensorFlow Lite Micro,
+there are differences.
+TensorFlow Lite Micro, for example here, consumes a little bit more flash,
+a little bit more RAM, therefore, it also
+consumes a little bit more runtime.
+While this is not always the case, it is very subjective and dependent
+upon the model you're using and the type of optimizations that are supported
+on the platform of your liking.
+Of course, there are also differences where TensorFlow Lite is positive.
+For example, it's an open source project.
+Does that matter?
+Well, that depends on your needs.
+But the general point that I'm getting across
+is that it's important to understand the many different frameworks that
+are out there.
+And TensorFlow Lite Micro is one that we will be going deeper into.
+How do you choose the right framework is an important question
+that you should really think about.
+You have to think about it from the hardware standpoint.
+You have to think about it from the embedded inference standpoint.
+And you also have to understand about things like the accessibility
+of the experience as a developer.
+Now we are going to try and convey some of those lessons
+through the lens of TensorFlow Lite.
+Specifically, Pete Warden, who is the Technical Lead for TensorFlow Mobile
+and Embedded, is actually going to talk us through the implementation nuances
+and details of TensorFlow Lite Micro, all of which
+you need in order to be able to start building the actual applications.
+So with that said, in the next couple of videos,
+I'm going to hand it off to Pete, and I'll
+pick up after you're done with that where we start
+talking about [? keyword ?] spotting.
+I'll see you there.

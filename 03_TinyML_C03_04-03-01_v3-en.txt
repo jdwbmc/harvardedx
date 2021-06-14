@@ -1,0 +1,173 @@
+VIJAY JANAPA REDDI: Hi.
+I hope you had a good time with Brian getting a TinyML system all set up
+and ready to go.
+In this video, and the next couple of videos, what I want to do
+is I want to talk to you a little bit about embedded systems at large
+and, specifically, I want to help you understand
+how the embedded system that I'm holding in my hand, the one
+that you are going to be working with, actually
+has the right building blocks that compare it with a production grade
+system.
+The reason I want to make this comparison
+is because I want you to feel confident that you're actually
+learning with a real embedded platform, and the lessons
+that you pick up in this particular course
+are actually something that are transferable
+well outside of the course itself.
+And that's important because I do want you to be a TinyML
+engineer when you finish the course.
+So let's start off by talking about what is an embedded system.
+I talked about this in course 1.
+Specifically, any given embedded system has got three fundamental building
+blocks.
+The first is the input stage, where you get input from the sensors.
+The second is a digital phase, where you actually
+process all of that analog signal and try and make some decisions about it.
+And then the third stage is the actual output stage.
+Typically, an embedded system, this might be analog output,
+or it might be a digital output.
+Let's take some real-world examples to actually understand what these are.
+For example, if you look at a Fitbit.
+A Fitbit might be looking at the angle of rotation of the wrist,
+based on IMU data that's coming in, or might be looking at the temperature,
+or so forth.
+And that data is then sent over to your processing system, which
+then actually runs the routines that were engineered by the Fitbit engineers
+in order to make some sort of decision and then act on it.
+And that actuation might be in the form of actually generating output
+to the screen, or it might be recording the data into the actual subsystem.
+Let's take something that we find around the houses, a thermostat.
+A Nest Thermostat, for instance, has a temperature sensor that
+detects what the temperature is around it,
+or it might also have a rotational sensor, which
+detects how much you're actually changing the dial so that it can,
+in reaction to that, actually update the screen,
+so it tells you what new setting you're reaching out for.
+Now, these are production-grade systems, and what I want to help
+do is actually help you make the connection
+between these production-grade systems and the TinyML system in your hand.
+Let's take an Echo Dot since we are often talking about keyword spotting.
+An Amazon Echo Dot reacts to Alexa.
+How does that happen?
+Well, if we take it apart, we see a set of different components in here.
+In this tear down we're seeing that the microphone array is on the PCB.
+There are four different microphones here that are actually
+are the source of input signals into the computing subsystem.
+These Texas Instrument's microphones take the data
+and hand it off to the processing system.
+From a processing standpoint, you actually
+see two different computing engines here on the two different boards
+that are inside Echo Dot.
+This actually should remind you of the cascade architecture, which is
+something I talked about in course 2.
+Now, if you don't remember cascade architectures,
+I strongly encourage you to go back and look it up.
+Cascade architectures are extremely critical for deploying keyword
+spotting efficiently.
+And the third stage is obviously the process or the output stage.
+Once you finish processing the data, you actually
+actuate on that input process data.
+So how does this compare with your embedded system?
+On the left-hand side is the Amazon Echo Dot PCB.
+On the right-hand side is your embedded system.
+One of the key differences is that, on the left-hand side,
+the Amazon Echo Dot is specialized for one particular task.
+It does one thing.
+It just listens to analog input signals, processes it, and then
+generates some sort of output on speakers.
+Your microcontroller actually has a bunch of different capabilities.
+It's more general-purpose.
+That said, there are very strong similarities between the two of them.
+Specifically, from the microcontroller sort of standpoint,
+all the limitations of memory compute and so forth that we've talked about
+are actually very much identical.
+So that should give you confidence that when
+you are working with this microcontroller,
+you are very much working on a production grade system.
+So let's go a little bit deeper into the developer embedded system
+and contrast it with the real embedded system.
+The punch line is really this-- a really Embedded system is designed
+to perform one particular task.
+A developer embedded system has a lot more bells and whistles
+because it is a developer platform.
+It allows you to explore different things.
+While you have the processor and the Bluetooth,
+you have a microphone on your embedded system.
+You have an IMU on it.
+You have a temperature and humidity sensor.
+You've also got a physical IO port there so
+that you can actually interface that embedded system with your computer.
+You don't have this sort of flexibility and features, general purpose
+flexibility, on the Echo Dot.
+Why?
+Because this is a developer system.
+So you got a couple of extra bells and whistles, all of which
+actually lead to an increase in the price of the board.
+Now, think about it, an Echo Dot doesn't need to be general-purpose.
+It's got one functionality.
+So you tend to strip all these things down and make it very focused.
+You can keep the cost as low as possible because it just
+needs to perform the task it needs to perform.
+Now, while we are talking about this one particular microcontroller board here,
+there are many different embedded systems.
+Later on I will explain why we have chosen the Arduino microcontroller
+board.
+For example, here is a Himax AI development board.
+Much like the Arduino, it's a development board.
+It's got a camera module on it.
+It's got a microcontroller on it.
+And it's got an IO subsystem that allows you to interface with your computer.
+Here's another example.
+This is the SparkFun Edge 2, which has got an Ambiq microcontroller, which
+can also interface with your computer.
+And it also has the exact same sort of constraints of an embedded system.
+Or the ESP-EYE, it's got a camera on it.
+It's also got a small, little microcontroller.
+And the form factors are all about the same size
+as the Arduino microcontroller.
+Why am I talking about all these different devices?
+The reason is because these are all different kinds of embedded platforms,
+and when you are actually going to work on these platforms,
+you need to know a little bit about them so that you're actually
+knowledgeable when something does not work and you know how to fix them.
+All of these systems come with a wide range of capabilities,
+specifically at the board level, the embedded system board
+level, what you find is that there are differences
+in the kind of sensors they support.
+For example, the Himax has an accelerometer, microphone,
+and a camera.
+Whereas, the Arduino, on the second row, has
+got a wide range of different sensors as I was already hinting earlier.
+So these are some of the differences that we end up having.
+In addition, there might be differences in the kind of communication module
+some might provide.
+For example, the Himax does not provide a radio option,
+whereas Arduino and the other devices have
+the Bluetooth capability, which allows us to do the magic wand for example.
+In addition, the embedded system also has the microcontroller,
+which has got both the processing engine and the memory all tightly coupled
+together.
+Now, there are differences in there as well.
+As you can see, the clock speeds go all the way from 400 megahertz
+to as low as 48 megahertz on the SparkFun Edge 2.
+That said, they are roughly in the same ballpark.
+In the order that they're all about megahertz not gigahertz.
+As for the memory, they're also very limited.
+You have very little bit of flash.
+You have very little bit of RAM.
+So these different embedded systems are roughly the same
+in terms of the constraints, though, they
+have different levels of flexibility.
+We happened to choose the Arduino microcontroller because it gives you
+a lot of different sensors which allows you to expand well
+outside the scope of the course, while also having
+the right set of constraints that gives you that practical hands-on feel
+about dealing with the microcontroller.
+With that said, in the next video, I'm going
+to go a little deeper into understanding the characteristics
+of the microcontroller itself.
+And after that, I'll talk a little bit about the software,
+and then I'll bring it all together so, you, at the end of the day,
+can feel confident that you are, in fact, working
+with what is a production grade microcontroller that's
+actually found in real world devices.

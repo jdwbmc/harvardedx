@@ -1,0 +1,107 @@
+VIJAY JANAPA REDDI: Hi, in this video I want
+to talk to you a little bit about the embedded computing hardware
+that you find on an embedded system.
+Recall, that there are many different kinds of developer embedded systems
+out there.
+And these developer embedded systems come with very different kinds
+of capabilities in terms of sensors, the communication modules, like the radio,
+and so forth.
+Similarly, they also come with different types of microcontrollers on them.
+We are specifically going to focus on the Adruino subset.
+Specifically, we are going to focus on the capabilities of the Nano 33 BLE
+Sense.
+We're going to try and understand what its computing capabilities are
+with respect to the general class of application processors
+that are out there.
+The reason I want to touch on this is because I
+want you to understand what are the pros and cons of what
+are the trade-offs that we're making here as we are going down to TinyML.
+By and large, when you look at the class of processors that are out there,
+there are many different types of processors.
+I'm going to talk specifically about the ARM Cortex profile.
+The ARM Cortex profile of processors are widely used for mobile applications,
+ranging from smartphones all the way down to small little microcontrollers
+that we find everywhere.
+So by and large, there are three tiers I would say.
+There are application level processors that you
+find in things like your smartphone, for instance, that are
+capable of running complicated tasks.
+Then, you have real-time processors that you
+tend to find, for example, in automotive vehicles.
+And then you have microcontrollers that are pervasive,
+where you tend to find everywhere.
+Now, all of these tiers come with many different variants in each tier.
+For example, the application processors go from A5 to A9 to A65 and so forth.
+The real-time processors have, again, a different tier
+of class of processors in there.
+And similarly, in the microcontroller space,
+you have a different set of tiers.
+One of the reasons that you tend to have these tiers of processors
+is because really you're trying to shave power off.
+For example, as we go from application processors that
+consume anywhere between like 3 to 4 watts, when you go down
+to microcontrollers, these consume something
+in the order of a few milliwatts.
+And what's the trade?
+Well, you simplify their functionality.
+By removing functionality, by limiting their ability,
+you actually lower the power down.
+Why do we care about having low power?
+Well, it's because it's TinyML.
+We want Tiny Machine Learning to be running at all times.
+And we want to do that on battery-based devices, things like a coin cell
+battery.
+And therefore, we are trying to focus on microcontrollers.
+That's why in this particular course, we're
+going to use small little m class microcontroller processors.
+Now, in addition to just sort of understanding
+that piece of the lay of the land, I also
+want you to understand what are the differences within the microcontroller
+space itself.
+Even in the microcontroller space, there are extremely low and simple
+microcontrollers, like the cortex M0 that we're
+looking at here, which are capable of doing general data
+processing and general input, output control tasks.
+Then you might have the M3 for example, which
+does a bit more advanced data processing because it has instruction set
+architecture or instruction support for things like bit manipulations, which
+allow you to do arithmetic a bit more efficiently.
+Then you have something like the M4 that we will be using,
+which has what we call as the Floating Point Unit, which
+allows us to do floating point arithmetic on device, which
+is a great thing to have, especially when we're dealing with things
+like keyword spotting and other types of applications
+where we might have to do a little bit of complicated math.
+It's also got capabilities as to what we call the DSP,
+or the Digital Signal Processor, where it can actually
+execute multiple instructions all as one instruction.
+Some of these details are reserved more for a embedded systems class.
+But the core thing that I'm trying to get to here
+is that even when you pick a small microcontroller class,
+there are many different variants in there.
+And you need to be conscious about that, because that choice of microcontroller
+is going to tremendously influence how you are actually going
+to be able to build your application.
+For example, if we didn't have the FPU, the floating point unit,
+we would not be able to do floating point arithmetic, which might actually
+limit some of the things that we would be
+able to do in terms of application design.
+So keep some of these details in mind, because it's
+extremely important to have an appreciation for how
+our applications will work.
+I will come back and touch on some of these concepts
+as I go through the application examples in the code itself later on.
+So bottom line what I'm trying to say here
+is that this small little microcontroller that we have chosen
+has got all the fundamental nuggets being
+limited in terms of its performance and memory because of the power efficiency
+that we get from it.
+And it's something that you actually find, for example,
+in devices like the Amazon's Echo Dot that we did a Teradyne of earlier.
+Now, in addition to this, there are a couple of other things
+that we need to touch on such as what is the software
+stack that actually enables these embedded systems to run code
+effectively?
+And we need to understand that as well.
+And that's where I'll be taking your next.
+And I'll see you there.

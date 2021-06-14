@@ -1,0 +1,86 @@
+SPEAKER: So far, we've seen how to build a neural network that
+uses dense layers or a DNN to learn how to classify images,
+as well as the principles behind convolutions
+that will learn filters that can be matched to features and images.
+Let's now take a look at enhancing our existing DNN's
+to add convolutions to them.
+So we can see the impacts.
+For a recap, here's our DNN encode that we've
+been using to classify mnist or fashion mnist images.
+For this example, I'll use the fashion mnist
+version, which is a little bit more sophisticated than the handwriting
+digits.
+And it makes it harder for us to get a higher level of accuracy.
+The model architecture is here.
+And it's a simple sequential, which flattens the input and it
+through dense layers.
+When we train a model with it, we'll be able to see the accuracy and validation
+accuracy reported back to us.
+And in this case, after 20 epochs, I got an accuracy of 89.53%
+and a validation accuracy of 86.77%.
+These results are great.
+But we might be able to improve on them using convolutions.
+So let's take a look.
+Now, here's the complete code for an updated neural architecture
+to use convolutional neural networks, instead of a straight up DNN.
+First, we can see that on our input layer, we need to use an input shape.
+But it's a little different.
+It's now 28 by 28 by 1, instead of 28 by 28.
+And this is because a convolution of layer
+expects the image dimensions to be fully defined.
+So a color image will have three channels for red, green, and blue.
+So it will be something by something by 3.
+But a monochrome image only has one channel.
+So it's specified here.
+Our image is 28 by 28 with one channel.
+So it's 28 by 28 by 1.
+Our output layer will be 10 neurons as before.
+It's because we have 10 classes.
+We'll also have a flatten before we get into the DNN.
+This will occur after the filters have done their job.
+The filters will act on the image as we saw previously.
+So they will still have a rectangular image.
+And once they've given updated pixel values,
+then we'll flatten that out before we get into the DNN.
+And then, the network can behave as before.
+So let's now look at how to define the convolutional neural network.
+First, will specify the convolutional layers using Conv2D.
+It's 2D, because the images have a width and height.
+And we'll pass filters across them to change the image to extract features.
+Remember, these filter values will be learned over time.
+The Pooling that we described previously is implemented
+by specifying max pooling as a layer.
+There are different types of Pooling.
+There's max, min and average.
+But for this, we'll use max pooling, where we
+take the largest value from the pool.
+Looking at the convolutional layers, we can explore the parameters.
+First is this number, which is the first parameter in the convolutional layer.
+And this is the number of filters to apply to the image at this layer.
+So in this case, we have 64 filters that will be applied to the image.
+Remember that the filter values are going to be randomly initialized as our
+Guess.
+And then, they will be learned over time.
+The 3 comma 3 here indicates the size of the filter.
+Recall that when we were talking about filters that we had defined a 3
+by 3 filter that multiplied across the current pixel and each
+of its neighbors.
+This could be a different value.
+For example, 5 by 5 to look at neighboring pixels up to two pixels
+away, and so on.
+But it will always be odd numbers--
+3 by 3, 5 by 5, 7 by 7.
+And it's similar for the Pools, where the size of the Pool
+is specified as a parameter, which in this case is a 2 by 2 pool.
+So we'll be picking one pixel out of four.
+If we want different size pools, we can define them here.
+Remember that by Pooling, we're also reducing the size of our image,
+helping us to emphasize and summarize the features that we extracted.
+The convolutional layer had 64 filters in it,
+which means 64 copies of the image are going to be made.
+So reducing the size of them will reduce the amount
+of data flowing through our network.
+OK, now that you've seen how to update your code to allow for convolutions
+and saw how you can improve the accuracy of a fashion mnist classifier using
+them, next you're going to try a Colab
+where you'll try it out for yourself, and measure the accuracy.

@@ -1,0 +1,81 @@
+BRIAN PLANCHER: The first sensor that we're going to test is the microphone.
+To get to that test example sketch, we're going to go to File, Examples,
+and we're going to scroll all the way down and keep
+going past this arrow down at the bottom until we get to Harvard_TinyMLx.
+And then we will open the Test Microphone sketch.
+As always, we need to make sure that the board is set to the Arduino Nano 33,
+and that the port is set to whatever port your Arduino is on.
+And then we need to click Upload to start compiling and uploading the code.
+And once that's uploaded, we'll talk about how we run this test.
+All right, so now that you've deployed the code,
+let's use it to test your microphone.
+To do that, we're going to use the serial monitor and serial
+plotter, which allow us to communicate with the Arduino
+over the universal [? serial ?] bus, or USB protocol, with which we've used
+to connect our Arduino to our computer.
+To get to the serial monitor, we're going to go to Tools.
+And one quick tip, make sure the port is still selected.
+Sometimes, after the board is uploaded with new code, it will reset the port,
+and it will sort of deselect.
+And so you may have to re-select it there.
+So if you run into an error, just go back to there and just check.
+So let's open up that serial monitor.
+And what we'll see is it'll be a message from our Arduino.
+It says, welcome to the microphone test.
+Well, thank you very much, Mr. Arduino.
+Use the on-shield button, or send the command click
+to start and stop an audio recording.
+So what we can do is up at the top here, there's this text field.
+And we can either send the command click there,
+or we can click the button on our shield.
+So let's just start by sending the command here.
+Now one thing to be careful of is you have to make sure you select NL
+and CR-- both NL and CR--
+for this to work with our code.
+So if we send that command, suddenly numbers
+are going to be dropping all over the screen here.
+And all of these numbers, this is actually just the waveform
+coming off of the microphone.
+And I can stop it by sending that click command again,
+or I can start it and stop it by clicking the button.
+Now this means that there is some communication coming
+from the microphone there.
+There is data coming off, but these numbers are a little hard to interpret.
+So let's open up the serial plotter, which
+should help us better visualize this.
+Now the serial plotter assumes the numbers coming in
+are some sort of time series data and plots it
+to the screen, which is kind of exactly what we want here.
+So let's send that click command over the serial plotter,
+noting that now the text entry field is on the bottom.
+And now we'll see a waveform coming across.
+And now this looks a lot more like somebody's talking.
+If I get closer to the thing and get louder,
+you'll see the scale numbers go up.
+And if I get a lot quieter where I move over here,
+the numbers go a little bit down.
+So it seems like at a high level, that's kind of working.
+Now one last test you can do, and this is a test
+that I am very bad at because I am not a great singer,
+is that if you can actually hum or sing a single pitch,
+you should end up with a perfect sine wave.
+And however far off you are from the perfect pitch,
+it's a less perfect sine wave.
+But what we're going for is something that's kind of repetitive.
+So, for an example, let me give it my best shot here.
+And try to make some tone.
+So like [HUMMING].
+And so that doesn't look like a sine wave.
+I'm not a great singer.
+But it is a nice repetitive sine-ish, we can call it, thing.
+And so I feel pretty confident now that my microphone is roughly
+picking up my mediocre singing, and delivering
+some sort of repetitive wave, which is exactly what we want.
+And so you should try something else yourself at home.
+If you're a great singer, if you have perfect pitch,
+I challenge you to see how perfect your sine wave can be.
+Mine will not be much better than that.
+I've actually tried doing this a couple times
+on a couple of different recordings, and I'm
+going to I'm going to call that good for me for now.
+So I'll see you in the next test.

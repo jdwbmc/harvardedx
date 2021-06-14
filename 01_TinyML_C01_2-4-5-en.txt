@@ -1,0 +1,117 @@
+LAURENCE MORONEY: The horses or humans data set is quite small.
+So when you're training on it, you might get
+lulled into a false sense of security that your network is
+more accurate than it is at seeing and recognizing images.
+This concept is often called overfitting.
+And we'll explore that in this video.
+It is really important to keep this in mind, in particular, on TinyML devices.
+Because ML can be power hungry, we want to make
+sure we're as efficient as possible in classifying.
+And misclassifications, due to overfitting,
+might really hurt your app.
+Imagine if the only shoes you had ever seen in your life were hiking boots.
+Now, even though hiking boots come in lots of different shapes, and sizes,
+and colors, and models, by looking at many of them,
+you'll soon think that all shoes were hiking boots.
+And then, you could get very good at identifying them.
+And as you're using the features that make up a hiking
+boot to determine that it's a shoe, things
+like the size or the location within the image wouldn't faze you.
+You'd have no trouble with an image like this.
+And you can see that this image definitely has shoes in it.
+But then you see a shoe like this.
+And you don't recognize it as a shoe.
+Even though it really is one, you've overfed yourself
+into thinking that all shoes look like hiking boots.
+To explore a technique to avoid overfitting,
+let's consider how convolutional neural networks work.
+Recall that the spot features in an image, like the ears of a cat,
+but if you only train on cat images that are upright,
+then the computer might only recognize ears
+that are oriented in that way as ears.
+So it may not recognize the image on the right as having the ears of a cat.
+They are oriented differently.
+Indeed, if your network for spotting cats
+was only trained on images like this, it might not think the image on the right
+is a cat.
+But what if we rotate the image a little before training.
+Now, we'll have a labeled image of a cat with ears
+that look like the cat on the right.
+So when we train a network with images like the one on the left,
+we'll better be able to recognize images like the one on the right.
+Earlier, we saw the image data generator.
+And we use it to rescale the image, in order to normalize it.
+We did this by using a parameter to the image data generator.
+The good news is there's lots of other parameters we can use.
+And here's a list of some of them, including rotation range,
+which will randomly rotate every image up to 40 degrees
+left or right, as it's read from the file system.
+By tweaking this parameter, you can impact how much the image is rotated.
+Similarly, what if all of our images have
+the subject in the center of the image, like the training image on the left?
+It might not recognize the picture on the right as human in the same way.
+She's much too far to the left in her frame.
+Now, we can't rely solely on extracting features.
+Because if the location of the feature is way off, then it might not work.
+So shifting images around within the frames when training can help
+us to prevent overfitting here too.
+Now, this is achieved using the width shift range and the height shift range
+parameters.
+And when set to 0.2 as shown here, the image
+will be randomly shifted up to 20% on width and height
+when it is streamed off the desk for training.
+Another augmentation that can be done is skewing.
+This can be useful in a scenario like this one, where the image on the right
+is clearly a human.
+But our training data has nothing like it.
+It does have this image like the one on the left, which is a similar pose.
+And our human brain recognizes it.
+But extracted features might miss it.
+But if we skew the left image, we now have
+pixels that look like the right one.
+And again, we artificially enhance our data set with more scenarios.
+So hopefully, our neural network will be better at recognizing them.
+This type of sharing is achieved using the shear range parameter.
+So we can set it to shear images up to 20% when training by setting it to 0.2.
+One more scenario was this one.
+The woman on the right is obviously human.
+But her legs are not visible in the image.
+The horses or humans data set has full body poses of each human.
+And the image on the left looks very like the one on the right.
+But the classification might fail, because of the missing legs.
+But if we zoom in the image on the left, it now
+looks a lot like the one on the right.
+So while training, if we had samples that looked like this,
+the image on the right might classify better in future.
+Again, we'd avoid overfitting for humans that have legs
+and avoid mistakenly misclassifying the one without legs as not human.
+The Zoom range parameter achieves this.
+By setting it to 0.2, every image will be zoomed up to 20% when training.
+And another really obvious one is flipping images.
+So say our training set only has humans with their right hand raised, like we
+can see in the image on the left.
+Then, it might not be able to categorize pictures
+like the one on the right, where the woman has her left hand raised.
+Again, we could overfit for right hand raisers mistakenly.
+But if we flip the image in our training data,
+we now have a left hand raiser too.
+So we can avoid overfitting for this circumstance.
+And as before, it's a parameter to the generator.
+By setting it's true, images will be randomly flipped while training.
+There's many more parameters to explore.
+And hopefully this whet your appetite for what's possible.
+Now, one last thing to consider as the fill mode.
+This is useful for when the augmentation removes pixels.
+For example, in the shearing that we saw earlier.
+And you want to fill those pixels back in.
+You pick a fill mode for this.
+And there's a number of different options.
+I usually use nearest, which picks neighbor pixels
+and fills the gaps in using them.
+So that's a quick tour of some of the techniques to avoid overfitting.
+Next up, you'll have a Colab where you can try this out for yourself.
+It's good to experiment.
+Augmentation can help with overfitting.
+But like anything else, use it in moderation.
+Too much of it can really slow down your training.
+Because it makes your images unrecognizable.

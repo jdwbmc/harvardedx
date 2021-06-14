@@ -1,0 +1,91 @@
+VIJAY JANAPA REDDI: From this section on forward,
+one of the exciting things that we're going to be doing
+is actually learning how to deploy the applications onto our Tiny machine
+learning system.
+Now I'm going to start off with keyword spotting
+and then walk you through the other applications later on.
+Specifically in the context of keyword spotting,
+we're going to go pretty deep.
+I'm going to start off this video by talking about the overall application
+architecture because I'm going to use this
+as an example to help you understand other applications more systematically.
+As you know, keyword spotting is all about having
+a critical keyword like "Okay, Google" and getting that
+to wake the machine up.
+Now we have talked about this in the previous courses,
+and we've talked about all aspects of it outside of the deployment phase.
+We've talked about how to collect the data set properly,
+we learned how to train the models, we learn
+how to optimize them and convert them for deployment.
+But we never quite got around to actually deploying
+the model, which is what this course and this module is all about.
+So how do we go about doing this?
+Well, for that I need you to understand what the application architecture looks
+like for keyword spotting.
+For any application there are generally two main structures.
+There's the initialization phase and then there's the main loop.
+The main loop is really where the grunt of the work
+really sits because it's something that is constantly
+running, whereas initialization is something that you just do once.
+In our keyword spotting application, in the main loop
+there are many different phases.
+Don't be alarmed.
+I'm going to walk you through each and every single one of them in detail
+so that you understand what's going on.
+The way I've structured this video and the next couple of videos
+is such that I first introduce the core components that are there,
+and then in the next few videos I'll actually
+go deeper into each of those components and help
+you understand the constructs better.
+Before we get started, here is a demo of Brian
+doing an example of keyword spotting as you will be doing later
+on in the lab portion.
+BRIAN: Yes.
+No.
+And there we go.
+VIJAY JANAPA REDDI: As you can see, when Brian says the keyword,
+the machine lights up.
+And that's exactly what you want.
+Now let's try and understand how we actually do this.
+Starting from the very beginning where we have the microphone, where
+we actually have to capture the data and then provide it in some way
+so that we can then extract features out of that audio signal.
+Once we get the features, which are coming
+in the form of this continuous signal that will then
+convert into spectrograms, all of which you learned in Course 2,
+we will then be able to feed the spectrograms
+into the machine learning framework.
+That is specifically TensorFlow Lite for microcontrollers.
+We're going to set the interpreter up in order to execute the TinyConv
+model that you know all too well at this point, which
+uses a few different types of operators in order
+to make sure the model is nice and small while still
+being able to recognize keywords.
+Once the system has actually made an inference
+and it thinks it's recognized something or it has not recognized something,
+the command recognizer module kicks in.
+And the command recognizer module is basically
+to detect whether you said yes, no, up, down,
+or maybe there was really nothing that was being said.
+And once it makes a decision, it lets the command responder
+know where you actually actuate the physical device itself.
+Specifically in our context, we're going to be using the LEDs.
+So that effectively covers the full gamut of the different components
+that are involved.
+Now there's a lot of nuance into some of these components which
+I'm going to break down in the next couple of videos.
+Specifically, we're going to start off by understanding the initialization
+phase.
+What are the things that we have to do?
+Then we'll move into what we call is the preprocessing stage.
+The preprocessing stage is the stage that
+comes right before we do inference.
+Then we do inference.
+After we do inference on the network, then comes the postprocessing phase.
+And these are all important conceptual components
+that I want you to keep in mind because once you have that sort of a framework,
+then you can port that framework over to different types of applications
+because that structure is not going to change.
+Only the details within each of those structures change.
+With that said, let's get started by understanding how to initialize
+a keyword spotting application.

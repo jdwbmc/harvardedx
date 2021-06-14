@@ -1,0 +1,182 @@
+LAURENCE MORONEY: As you just saw, dense and flatten
+aren't the only layer types supported in TensorFlow.
+Another very important one, particularly for computer vision, is convolutions.
+The main difference with a layer like this
+is that you move beyond just learning weights and biases in your network.
+In this video, you will explore how to learn filter values or convolutions
+and why they're important.
+And because convolutions are so efficient at helping
+a computer understand the contents of an image,
+you'll find they're extremely important in tiny ML too.
+To recap, a single neuron can learn the relationship between y
+and x, where y equals wx plus b.
+And layers of these functions can be used to take in more complex values,
+like the pixels of an image, and be trained
+to classify images like a cat or a dog.
+We then explored using the MNIST data set of handwritten digits
+that are 28 by 28 and how a couple of dense layers
+could be used to classify them.
+Under the hood, every neuron was learning linear relationships,
+and a complex set of these trained on pixel values
+could be used to classify the simple images.
+But what happens when the images get more complex,
+like these images of a human and a horse on a beach?
+With MNIST we had simple handwritten digits
+that were centered within a 28-by-28 frame.
+But with images like these, it can get much more complex.
+We're zoomed in on the horse, for example.
+The image may not take up the full frame,
+either, or it could be off center.
+Using convolutions or filters can help with this problem,
+and we'll look at how they work next.
+So for example, if you take a look at this image from Fashion-MNIST
+it's a 28-by-28 grayscale image of an ankle boot.
+We can use this to demonstrate a very simple filter.
+For every pixel in the image, we'll take its immediate neighbors.
+So for example, if the current pixel has value 192,
+we can see that its neighbors above are 0, 64, 128.
+Its neighbors below are 142, 226, and 168, for example.
+We can then define a filter where we multiply each pixel
+by the respective filter value.
+So the pixel above and to the left, which is zero,
+is multiplied by the top left filter value, which is minus one.
+That gives us zero.
+We do the same for each pixel, and we sum up the values.
+This will become the new value for our current pixel instead of 192.
+This might seem really unusual, but it's actually
+a common tool in image processing.
+And if you've ever done any kind of image processing
+such as what you might do on Instagram or Photoshop,
+that's pretty much how it works, by having a filter
+and applying that filter to the image.
+Here's a simple example.
+Consider the image on the left.
+If I apply the filter shown to it, I'll get the results on the right.
+It greatly enhances the vertical lines, and it dims everything else.
+So you could consider this to be a vertical line detector.
+And similarly, this filter can spot horizontal lines,
+darkening almost everything else in the image that isn't a horizontal line.
+By applying filters like these, you can remove almost everything
+but a distinguishable feature.
+And this process is called feature extraction.
+When combined with a process called pooling,
+we can also do something really powerful.
+Pooling is simply the process of removing pixels
+while maintaining important information.
+So for example, if you look at the four-by-four square of values
+on the left of the screen, these emulate what pixels in an image
+might look like.
+We can break this down into four two-by-two blocks of pixels,
+and then we can see that in the center of the screen.
+So our 0, 65, 48, 192 from the top left becomes the first block.
+The 128, 128, 144, 144 from the top right
+becomes the second block and so on.
+From each of these blocks, we pick the biggest value
+and we throw the rest away.
+We then reassemble these, and we have a new set of four pixels, which
+was pooled from the original set of 16.
+Now, where this gets really interesting and powerful
+is if we apply it to an image after filtering the image.
+It can have the effect of enhancing the features that we extracted.
+And not only that, if you're applying many filters to your image in a layer,
+you're in effect making many copies of your image.
+So if it's a large image, you end up with a lot
+of data flowing through your network.
+So it's good to have a way to compress that data without losing
+the important features.
+And this is just one layer.
+When you apply multiple layers of filters,
+then really complex features, such as faces or hands
+instead of the vertical or horizontal lines I've shown here,
+could be spotted and extracted.
+Recall the image earlier where we had that filter that
+extracted vertical lines.
+After a pooling, the image will look like the one on the right.
+We can see that those lines pop a lot more.
+And importantly, the image, of course, is now one quarter
+the size of the original.
+How does this impact computer vision?
+Well, let's consider a scenario.
+Here's a picture, and you don't know its content.
+I've simulated that by making the image really blurry.
+So say there's a filter or a set of filters
+that can be passed over the image that extracts these pixels.
+It's two vertical shapes, and they look a little bit like human legs.
+And then maybe other filters can extract features like these.
+They're blobs with cylinders that stick out of them.
+Now our human brain sees these instantly as hands,
+but an untrained network doesn't know that yet.
+It just knows that a filter can extract something that looks like this.
+And yet another filter extracts this, roughly a circle
+with another two circles on it as well as some parallel features.
+Our human brain recognizes this as a face with eyes and a mouth.
+But, again, the computer has no context for what these are.
+It only knows that a particular filter could extract this.
+So then the computer could match the features that
+were extracted by the first filter--
+in other words, the legs--
+with those from the second filter, also known
+as the hands, and those from the third filter, also known as the face.
+And if all of these features are present in a picture that is labeled human,
+then when training a neural network, we could
+have it learn the filters that extract information
+that's consistently present in images that are labeled human.
+So then these could be used to spot future pictures
+to see if they contain a human.
+And perhaps the network could spot different features
+that are present in images of horses.
+By learning sets of filters that can then spot human or horse,
+we now have the beginnings of a computer vision model
+that can handle sophisticated images and predict what's within them.
+So to recap, filters or stacks of filters
+can extract features like hands or ears.
+And then during training, they can be combined
+with the labels of the known images to help us train a network that
+can predict image contents.
+So our model, instead of just weights and biases, can now also learn filters.
+So when we pass in data like an image, we can predict its contents.
+Remember, the network learned filter values
+that it has a high confidence that if they can extract features
+and those features are present in the image then
+it can match that to a label.
+So now our inferences are going way beyond just y equals mx plus b.
+So in this case, we know we have a human.
+If we return to the machine learning paradigm diagram,
+we remember it's looping through, making a guess, measuring our accuracy,
+and then optimizing our guess repeatedly.
+In this case, instead of weights and biases,
+we initialize the filter values randomly,
+and applying these to the images will give us our guesses.
+By measuring our guesses as to the class of the image
+based on the extracted features against the ground truth,
+we can now measure our accuracy.
+And as before, we can use an optimizer to tweak our filter values,
+knowing that we'll be stepping in the right direction
+before we repeat the process.
+So if my filters end up turning my image into these three images
+where I have extracted features that look like legs,
+hands, and a head and this image is labeled human,
+then these filters will be associated with human.
+And then they can be used to predict pictures.
+In this case, we can see that he's human,
+but the computer could only recognize that by looking at the filter values,
+extracting features from them and if they extract the features as expected.
+Do note that I'm using legs and hands and faces here
+as examples of things that were extracted that match a filter.
+Now, these are things that our human brains will recognize as features,
+so I used those to demonstrate the concept.
+When the computer is matching features to an image,
+it might see things in the image that a human doesn't.
+There may be patterns of pixels that consistently
+match on a labeled image that mean nothing to us as humans.
+And these became the basis of DeepDream, where
+parts of an image that match features in a data set
+called Inception with millions of images of thousands of classes are extracted,
+and then the original image that matches that feature is partially overlaid.
+So for example, the patterns in the sand around the woman
+closely match features that were extracted
+from what looks like animal skins in the middle image
+and are then overlaid and then later match the animals themselves,
+which you can see overlaid in the third image.
+And the effect ends up being trippy and dreamlike.
+I thought it might be just fun to see this.

@@ -1,0 +1,203 @@
+VIJAY JANAPA REDDI: More on quantization, specifically
+a quantization-aware training.
+Now, previously, when we talked about post-training quantization,
+one of the key things that I was trying to emphasize
+are the positive aspects of post-training quantization.
+Take a minute and think about what are the reasons
+that we want to do quantization?
+It is about size.
+It's about latency.
+And it's about portability--
+all wonderful things to achieve, which we get with post-training quantization.
+However, there is a trade-off, if you remember.
+The trade-off that we make is that when we do quantization,
+our accuracy, which here is being shown for floating-point values,
+is going to drop when we do post-training quantization.
+As you can see, across all three random sample networks,
+there is an accuracy drop.
+In MobileNets, you see an accuracy drop that is as much as 1.46%.
+Now, the question you've got to ask yourself at this point,
+is this accuracy drop OK?
+Is it worth it in order to reduce the size of the model?
+Or is it not something that is actually acceptable?
+This question is really a function of the application use case.
+You've got to ask yourself, for your particular application,
+is this accuracy drop actually tolerable?
+For example, if I'm looking at a cat or a dog in a picture on my camera,
+maybe it's not the end of the world.
+But if I'm a doctor looking at an image that's
+using machine learning to try and detect cancer cells,
+now, is an accuracy drop there the same as being
+able to have an accuracy drop on that cat versus dog?
+I think you know where I'm going with this.
+Accuracy drops in medical applications are extremely sensitive.
+And that's going to be the case in whatever deployment you have.
+So is there anything we can do to improve
+the accuracy while keeping the benefits that we
+get from post-training quantization?
+And the answer is yes.
+But before I give it to you, pause and think for a moment.
+Where do you think the error is coming from when
+we do post-training quantization?
+We're taking a floating-point value.
+We're converting it into integer 8-bits.
+That's where the conversion problem is.
+The conversion problem effectively is chopping off
+some bit of information that the floating-point values have,
+which is a much wider range.
+Now, is there anything we can do?
+Yes, the answer is.
+Can we try and recoup that error?
+What if you could tell the network, hey, you
+are going to have this error if I do quantization
+on you while the network is training.
+Can it automatically learn that error to become resilient, effectively,
+against that error?
+That's the critical observation here.
+By making the observation that when you do post-training quantization
+you're getting an error, and then saying,
+oh, I know I'm going to do post-training quantization later
+and there's going to be some amount of error, which is not so great.
+Then how about I can train the network to automatically learn
+that I'm going to be doing this sort of a quantization later
+and then inject that error into the training, into the training pipeline,
+so that the network naturally learns to become resilient against that error?
+And so when it's doing its forward pass and back propagation to fix the error,
+it'll naturally learn over that time to become resilient against that error.
+And the accuracy will go back up.
+Now, that is a critical observation about quantization-aware training.
+So quantization-aware training effectively
+emulates the inference-time quantization behavior
+by creating a model the downstream tools will use
+to produce the actual quantized models.
+The quantized models, naturally, will be using lower precision.
+And so knowing that we'll be using lower precision
+and introducing that into the training pipeline
+while its training will effectively allow the network to become resilient.
+Let's take an observation about where that accuracy drop is coming from.
+Remember, we took an original continuous signal.
+That's in the floating-point values up on top-- nice curvy line.
+Then we discretize that signal because we're now
+representing it using integer values, which
+means now you can see that the lines are more choppy,
+which is effectively what we're doing when we go into integer 8.
+And that's because we're going from floating-point integer 8 values, which
+doesn't have the same sort of resolution.
+Now, in addition to that, there are many other conversions
+that happen behind the scenes.
+It's not just the weights.
+You might be about how you're actually doing your multiply accumulates
+for the weight computations, where you might
+have to accumulate things into an integer 32 value
+after you do the additions.
+And then you bend them back into int8 and so forth.
+There's a lot more nuance, which I'll cover in the reading materials.
+But for now, N I'm trying to get across is the critical point that there are
+many sources of accuracy drops, the biggest one being the one that we
+talked about, floating-point to 32-bit integer--
+floating-point 32-bit to int8.
+So in order to introduce the error into the training graph, what we want to do
+is we want to modify the original graph that we typically
+have in floating-point values so that when we're doing the computations,
+we are implicitly quantizing the values.
+And when we do the calculations, the natural output that goes out
+when we're doing the weights times the inputs plus the biases,
+that computation effectively should have the error
+that we are going to have in the post-training quantization.
+And by injecting that error directly into the training pipeline, what
+happens is a network is only seeing that error be propagated through.
+And so when it does its back propagation and it does its gradient descent
+and the loss functions are working on it,
+it's naturally going to try and become resilient to that issue.
+And so effectively, by exposing the training pipeline to the error,
+we're going to be able to naturally get the neural network
+to learn to improve its accuracy by itself.
+And that will allow us to then later on be able to use the network effectively
+by using the int8 multiply accumulates.
+So as an interesting result here, let's take a look
+at what happens when we are comparing post-training quantization
+versus quantization-aware training.
+The first thing you will notice is that in MobileNets, we won.
+Our accuracy for post-training quantization, which was 69.5%,
+got better with quantization-aware training because it is now 71.06%.
+However, in the second one, if you see, our post-training quantization
+had 70.2%, whereas our quantization-aware training is only
+at 70.01%, which means quantization-aware training is not
+guaranteed to always be able to do better.
+It'll mostly do better.
+That's the general wisdom out there.
+This is part of the black box magic with machine learning.
+You have to play around with it a little bit.
+Some of you probably already witnessed this
+when you're trying to choose what the loss function should be
+or how you should optimize your learning rate.
+Well, this is yet another one of those hyperparameters
+that you will have to think about.
+Another interesting thing I want to point out in this particular table
+is that if you look at MobileNet--
+we want the first line--
+an interesting observation is that the original floating-point value actually
+had an accuracy of 71.03%.
+But if you look at the quantization-aware training cell,
+it is 71.06%, which means that the quantization-aware model is actually
+outperforming the floating-point baseline, which
+is a really interesting observation.
+And this, again, goes back to the point that, hey,
+you cannot control exactly what's happening in quantization because when
+you're doing quantization-aware training,
+the network is learning a little differently from the way it originally
+learned.
+So key takeaway, though, is that in general, quantization-aware training
+has a lot more benefits.
+And it almost always tries to do better than the post-training quantization
+because you're learning to be resilient against the error.
+And this is why Lawrence was earlier showing you,
+hey, you can take certain tools that TensorFlow offers
+and you can extract the operators that allow you to do model quantization
+original graph.
+So when you go to quantize model, you take the original model
+and you give it this graph.
+And what that API is doing is that it's extending that original network
+graph with the ability to actually mimic the quantized behavior that
+would be happening during the inference time, during the training time.
+And so when you train the network, the network
+is implicitly learning to be resilient.
+And therefore, what you find is that when
+you're running a quantization-aware trained INT8 model,
+its accuracy is very close to the FP32 model.
+So in summary, what I hope you take away is
+that you have learned what is quantization.
+Then I hope you learned that there's post-training quantization.
+And then it's quantization-aware training.
+And that why quantization is especially important for us
+in the TinyML context given size, portability, and latency.
+And that what happens in post-training quantization
+is that you are introducing a little bit of error
+as a result of mapping everything from floating-point into 32,
+but you get the benefits of the quantized smaller model.
+And you can also get the benefits of improved latency
+if you use the numerical methods involved for doing int8 calculations,
+where your multiply accumulates are actually
+happening in int8 instead of FP32.
+And hopefully you learned what is quantization-aware training
+and that quantization-aware training is something
+that happens during the training phase, where you're actually
+injecting the error in order to reduce the quantization loss.
+And with that said, that effectively wraps up
+the whole thing about quantization.
+Hopefully you understand when Lawrence was talking about with respect
+to quantization APIs.
+I've now kind of opened up for you.
+And so you're able to peek a little bit into the box.
+There's a lot more nuance in quantization.
+You can go pretty deep into post-training quantization
+and quantization-aware training.
+But the nuggets that we touched on here, these
+are the fundamental building blocks.
+And this is the high-level intuition that you need to be successful.
+Anything beyond this is going to be really just kind of specializing
+in the quantization screen.
+Now, that's great for researchers.
+But if you want to be a TinyML engineer, you
+don't necessarily have to push too much harder beyond what we have covered.
+And with that, I'll see you in the next video, my friends.

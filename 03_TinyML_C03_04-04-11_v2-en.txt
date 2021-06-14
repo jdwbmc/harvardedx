@@ -1,0 +1,57 @@
+PETE WARDEN: Hi.
+In this talk, I'm going to talk about one
+of the most mysterious parts of the TensorFlow Lite Micro interface--
+op resolvers.
+Op resolvers exist to help reduce the amount of space
+that the library code takes up.
+The functions that make up the library compile down
+into machine code instructions.
+And these will take up space typically in flash.
+But flash is a limited resource on embedded devices.
+There are often just tens of kilobytes available.
+This means if a library's compiled code is too large,
+it won't be usable by applications.
+To help minimize the binary footprint of the library's executable code,
+TensorFlow Lite Micro is broken up into two main sections.
+The core functionality includes things like model loading and the interpreter
+and is always required.
+But we aim to keep it sized below 20 kilobytes.
+The second section contains the code that implements the operator
+calculations, also known as kernels.
+These are divided up by layer and designed
+so that they can be independently included or excluded
+from the compiled library.
+The reason for this design is potentially
+a lot of different operations that you might
+need to support with over 1,000 available in the TensorFlow training
+environment.
+Most models though only use a handful of these operators.
+This means it's important for binary size
+to only include the operators that you need for your model.
+And this is what op resolvers are for.
+They're a way of specifying what operators you need at compile time
+so that other code can be removed.
+Most models only use a handful of different operations.
+So the majority of the space taken up by op implementations is wasted.
+In order to avoid linking in this unused code,
+we use this op resolver mechanism.
+This class is a way to let an application developer specify which ops
+they want to be included in the binary.
+For example, the micro speech model uses just four different kinds of layers.
+This means we can use the micro mutable op resolvers class to pick just
+those four operator implementations.
+We create an instance, parse in how many operator types we'll
+want as a template argument, and then add in each layer that we'll need.
+Each layer in the graph corresponds to an operator type that's in the model.
+We're hoping to add more user friendly ways to create the op resolver
+code you need in the future.
+But for now, the simplest way to understand what ops are required
+is by using a visualizer program like NETRON to view the graph
+and include the operator types that are visible.
+If you're not mentally limited, you can also
+use the special all ops resolver, which pulls
+in all supported operator types at the cost of a larger library size
+footprint.
+Even though the code can be a bit fiddly, using op resolvers
+can dramatically reduce the binary size of your executable.
+So I hope this has helped you understand them a little bit better.

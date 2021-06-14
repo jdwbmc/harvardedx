@@ -1,0 +1,289 @@
+VIJAY JANAPA REDDI: All right.
+Back at Keyword Spotting.
+Specifically in this video, we're going to try and understand
+some of the challenges and constraints that we have around how
+to deploy keyword spotting effectively.
+We're going to focus on bandwidth, latency, privacy, security,
+and various kinds of challenges that we have.
+I'm not going to go specifically into every single one of those things that
+have extensive depth.
+Instead, what I'm going to try and do, is try and get you
+to think about how we should deploy notion of keyword
+spotting in a responsible manner.
+That's what the focus of this particular video is going to be.
+So let's start.
+What are the challenges and constraints?
+Broadly, I would bend them into performance characteristics
+like latency and bandwidth from a system standpoint, from a model standpoint,
+in terms of the accuracy and the personalization that we would expect,
+from the safety, security, and privacy standpoint
+of preserving our data carefully, and then looking at the resource
+constraints that we have on a microcontroller,
+and how we deploy things effectively.
+Let's go through each and every single one of these,
+systematically, starting off with latency and bandwidth.
+Latency, the notion here, is that we will
+want to provide the results quickly.
+And we want to respond when a user says some sort of keyword,
+we want to respond very actively.
+Imagine you say, "OK Google," and then you have to wait about three seconds.
+Do you have any idea how many contact switches
+your brain is doing if you have to wait three seconds?
+The brain can only focus on things for about 100 milliseconds.
+So if there's a gap of about 100 to 200 milliseconds,
+your brain automatically switches off and goes on to doing other things.
+So think about that aspect of responsiveness.
+It's about understanding how we, as humans, operate in general,
+and then trying to provide a quality of experience
+from a system standpoint that meets that expectation.
+And therefore, latency is crucial.
+When we use a keyword, we want to see some sort of responsiveness.
+Think, for example, when you have an OK Google or an Alexa device sitting around.
+Why do you think they tend to have lights or some way
+to communicate that the machine has actually heard you?
+It is a way for us to be able to take a device
+and be able to show the human, who's interacting with this device,
+that the machine has actually heard them, that it's actually awake
+and that it's doing something.
+It gives us a sense of satisfaction in our brain.
+That's a means to mask latency, effectively.
+Fundamental point I'm getting across, is that latency is extremely crucial
+because it matters tremendously in deploying
+keyword spotting applications.
+The next one is about bandwidth.
+One of the things that you want to do, is
+that you want to minimize the amount of data movement.
+In any computing system, you've got data and you've got compute.
+Guess which one is the most difficult thing to actually deal with?
+It's actually data movement that's really costly.
+Computing is actually very cheap.
+The notion of, for instance, when you do an addition doing a 1 plus 1,
+from a pure logic standpoint, it's extremely cheap in terms of energy.
+But when you have to move data inside the computing processor, from point A
+to point B, oh, that is significantly much more expensive.
+So you take that and you want to minimize that data movement, not just
+within a chip, but across the network.
+Because you don't want to send every single word that you say all the way up
+into the cloud where you have the big computers process that data,
+and then bring it back.
+Because that's going to be significantly slow.
+So what you want to be able to do is minimize that data movement.
+Because it's not only about the slowness,
+it's also about the energy that's going to cost in order to move that data.
+The more local you keep the data, the better
+it is from a battery and lifetime sort of perspective.
+The next aspect is accuracy.
+Remember, when you want to enable keyword spotting,
+you want to wake the machine up.
+Well the machine's got to be continuously listening to us.
+And it's only got to show that light or some sort of cue
+that it's actually heard you when it's the right time.
+Because you don't want false positives.
+And neither do you want false negatives.
+So accuracy is extremely critical.
+We're going to try and understand what are
+the fundamental metrics that are used in order to assess keyword spotting.
+So when you train a model, what are the right metrics to use,
+and how do you deploy them?
+We'll go pretty deep into that over a series of courses
+corresponding to keyword spotting.
+Then there's the aspect of personalization.
+You got to remember that the machine is simply listening to sounds.
+And it's trying to find interesting patterns
+in the sounds that happen to resemble a word that might match the keyword.
+When we do spectrograms, we will understand this much more deeply
+from a visual standpoint.
+But in doing that, what you will you realize
+is that our sound can sometimes be completely the same
+as some sort of background sound.
+That sounds crazy, but it's true.
+So somehow we've got to be able to teach our neural network model to only
+be able to respond to the user's voice and not necessarily any background
+noise that might seemingly look like that.
+So it's got to be very personalized.
+You can push this personalization to quite an extreme.
+Specifically, you might want the machine, for instance your phone,
+might want to unlock only when it hears you
+say, "unlock", not when my wife, or my friends, or my daughter,
+comes along and says "unlock".
+Well in that particular case, it's got to learn not only the keyword,
+it's got to learn to recognize that it's you in addition to actually
+being able to recognize the keyword.
+You can certainly complement that and do that perhaps through a camera.
+So detecting that it's me, has a facial recognition,
+and then be able to couple that with the audio signal.
+Sure, you can do that.
+But I'm talking about getting a device to respond to you just purely based
+on audio signals.
+We'll talk about that more.
+Now, the other thing that you've got to really worry about
+is, when you're dealing with data because your audio signal is data.
+And if you're going to do this processing up in the cloud,
+for instance, if you record the sound and you send it up into the cloud
+in order to do the keyword spotting in the cloud.
+Because for instance maybe we're not able to it on a tiny device.
+Well then you've got to realize that all this data might actually
+get compromised when it's being sent to the cloud.
+So you want to keep that data secure.
+The other aspect is about privacy.
+You will be surprised at how little we think about privacy in the real world.
+But our data, when something bad happens, we get very upset about it.
+And so when data is going up to the cloud,
+there's a remote chance that that data privacy could be violated.
+And people can use it in ways that you were not expecting.
+And so therefore security and privacy is something that we got to protect now.
+Susan Kennedy, who you met in course one,
+and if you haven't you will meet her again in this particular course,
+is going to help us understand what it means
+to be secure and private about our data and how
+to do things in a responsible way for keyword spotting.
+Then, of course, there's the aspect of just overall efficiency.
+Remember that tiny ML devices are operating with battery so we got
+to do things with extreme efficiency.
+So they have to consume very little energy.
+And the second thing is that memory on a tiny ML device
+is very constrained as well, which means we
+have to be extremely good about training our neural network model for keyword
+spotting to be resource-constrained or resource-aware.
+So the network has to be really small.
+So we will understand how to do this soon.
+There are many other constraints that come up, countless of them,
+but these are the big ones.
+So hopefully you can kind of recognize why they are actually important.
+So how do companies deal with keyword spotting today?
+Because we're going to try and mimic a little bit of that.
+And at the same time I'm going to try and teach you
+something that's a little different so that you're prepared for what's
+coming down the road in the future.
+Today the fundamental idea when you open up
+the box in say your Google device, or your Google Home device,
+or Alexa device, you've got a microphone that's
+there that is continuously listening.
+I'm sorry.
+Yes, the device is continuously listening.
+But of course it's only listening for the keyword.
+It's not constantly recording the data.
+It's listening.
+That's it.
+So at some point, what happens is that you might say, "Alexa".
+And at that critical junction, what ends up
+happening is that the neural network will pick up those sounds
+and it'll process them.
+We'll figure out how to do that.
+You will actually go through that process.
+It actually processes that data.
+And if the keyword is detected, and if the network is confident enough
+that it is really a keyword and it gives a strong thumbs up,
+then the remaining part of the data.
+For instance, when I say, "Alexa, dim the lights",
+"Alexa" is the keyword part.
+"Dim the lights" is a command that usually is offloaded to the cloud.
+Because that requires you to do natural language processing because you now
+understand what exactly you are trying to do there.
+And that's a very simple example.
+You can actually have more complex things.
+For instance, when you say "Play my favorite songs",
+that's a rather complicated process.
+Because I need to maintain history about what kind of songs you like,
+and then go pick some songs and then be able to start playing them.
+So that's a very complex process.
+But you could think of the fact that you still have to start with "Alexa".
+And all of that back-end processing for more complicated tasks
+is usually done in the cloud and now, that's how things typically work today.
+Now you might be thinking for instance, hey, I've just got a single device.
+And sure, I've got this cloud where I've got this big neural network that
+can do full on speech recognition.
+Well you're only thinking about one microphone
+and using the database as a single user.
+But in reality, you have to remember that there are thousands of users
+out there.
+Billions of Alexa words go out to Amazon on a regular day.
+That's a lot of people trying to invoke the thing.
+Imagine if every single one of these keywords themselves
+were actually being processed up in the cloud.
+That would pretty much, I think meltdown the internet.
+Not quite, but you get the concept.
+That's going to be a huge volume of data going up
+into the cloud for very small little bits of information.
+Now you might be thinking about the end point, which
+is the microphone on your device, and the network, that's
+the neural network that's got to run and all the computing horsepower that
+is up there in the cloud.
+Yes.
+But there's also a lot of computing infrastructure
+in the middle that is going to be boiling up a lot of energy.
+And you have to keep that in mind because applications are using up
+a significant amount of energy.
+And that results in a lot of carbon dioxide production that's really
+bad for the environment as a whole.
+And this is becoming an important problem to solve.
+Green AI is actually emerging as a key topic.
+So you don't necessarily want all these devices and their keywords
+also going up into the cloud.
+Instead what you really want to be able to do,
+is to come up with an architecture that allows
+us to provide that sort of keyword spotting capability
+such a way that it scales billions of users.
+Now of course, as I have said this in Course I,
+we can go out and build massive data centers,
+put them right next to resources, like water,
+that can be used to cool and power these data centers,
+and build custom processors like the Cloud
+TPU that consume 300 watts of power.
+But that's not what we want.
+Because if we have to scale to billions of users
+and really bring the whole planet up with these kinds of AI capabilities,
+it's not going to work.
+Because we're going to have a serious energy problem.
+Why do you think in fact, Google went ahead
+to build this custom machine learning processor that consumes so much power.
+It's specifically because you need to be able to run this extremely efficiently.
+So yes, they ended up building a custom processor.
+But if they did not do this, they would be
+using so much more power per processor in order
+to be able to handle OK Google, for instance.
+And what are we trying to get to?
+We're trying to get to something that would run in the order of milliwatts
+or microwatts with extreme efficiency, which
+is mind blowing really complicated.
+So we have to somehow figure out how to be
+able to run that keyword spotting sort of a task on a tiny ML device.
+And that's what we're going to figure out.
+Now, the key thing that keyword spotting really enables,
+is that by running the keyword spotting application directly at the end point,
+we're effectively acting as a net or a filter,
+in curbing the amount of data that is actually going up to the cloud, thereby
+effectively improving the overall system efficiency of how we provide speech
+recognition capability to the planet.
+So keyword spotting allows us to wake the machine up and then
+provide some complicated services of back end
+rather than having even the keywords actually going all the way up
+to the network.
+So it's a very powerful system level optimization.
+And this is one of the reasons why keyword spotting has
+become ubiquitous on so many devices.
+And of course, as I said earlier in the previous video,
+you can do more than keyword spotting.
+You can actually expand and do keyword spotting
+with the limited vocabulary set.
+You can potentially do, "Dim the lights" on the microcontroller.
+That's an extension of the very specific,
+more than just one word to wake the machine up.
+And that's doable.
+And we'll get there.
+So what I'm trying to get across to you in this constraints and challenges
+video, is that you really need to understand the full end-to-end picture
+and why keyword spotting has become so important.
+There are of course, latency, bandwidth, security, privacy, personalization,
+accuracy, memory constraints, battery constraints.
+There are all kinds of things that you need
+to think about when you're building the model at the end of the day
+and you're trying to deploy it.
+But you also need to be aware of the full end-to-end picture of how
+this particular tiny ML application is deployed in the bigger context.
+And hopefully you got a little sampling of that.
+We will soon start going into the machine learning pipeline that's
+involved to build the application.
+And we will be building with some of these constraints
+and challenges in mind.
+And I'll see you in that video.

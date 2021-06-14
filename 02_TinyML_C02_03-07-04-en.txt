@@ -1,0 +1,211 @@
+VIJAY JANAPA REDDI: What are some of the interesting challenges that
+come about with visual wake words as compared to keyword spotting?
+That's the key thing that I'm going to try and focus on
+in this particular video.
+Specifically, I want to highlight the interesting attributes
+that are there around the sensor and what
+the sensor is going to do in terms of feeding the network the data
+and how there's a tight coupling between the two
+that you need to understand in order to deploy a practical TinyML
+application that deals with visual data.
+Let's go back and do a quick recall.
+This is a figure that you might recognize
+from keyword spotting where there's a core audio block that
+is running a voice trigger detector for something like Alexa,
+or OK Google, or something to that effect.
+In this particular case, it happened to be Hey Siri.
+And what it's doing is it's actually using a cascade architecture--
+I hope you remember what that means--
+in order to figure out whether to send the data to the cloud.
+There's a TinyML model that's running on the microcontroller which,
+if it's got enough confidence, might actually
+wake up a much larger model in order to get a much more
+precise or accurate inference.
+And then, based on that decision, together they
+will decide whether to go to the cloud.
+Let's take the scenario where you actually
+want to use the cloud for visual information
+and see how things work out in the context of an image sensor.
+That's going to be the key focus here.
+Let's focus on offloading the work to the cloud.
+And let's try and understand what the implications would be.
+If we look at a simple little image, let's
+say we want to build a detector that can detect cats.
+That's what you smart doorbell is going after.
+I want to know if there's a cat in front of my house.
+OK?
+Well, an image in neural networks is around 224
+by 224, sometimes 300 by 300 pixels.
+That's typically the resolution that most of the endpoint
+related TinyML applications are dealing with.
+So you tend to have a camera that has a high resolution image,
+but you down scale it down into a very small image.
+Because neural networks are very good at picking up
+features, even at those small dimensions.
+If it's a 224 by 224 image, that means you have 224 by 224 pixels times 3.
+Because there are three channels, since it's a color image.
+There's a red channel, there's a green channel and a blue channel
+for each one of those primary colors, which then creates our compounded
+picture here.
+And if we assume that each of those pixels
+is occupying 4 bytes, like a floating point value,
+then it comes out to be around 602,000 bytes.
+Now let's talk about what this means in the context
+of uploading this data to the cloud.
+OK.
+So here are some very typical characteristics
+of what a typical network might look like.
+You have a ping of about 25 milliseconds.
+This is the latency just to be able to send something to your local gateway
+and be able to get a response back.
+That's a fixed sort of latency.
+Then you've got the download speed and the upload speed.
+Download speed is often much faster for internet than your upload speed.
+Either way, download speed's about 35 megabits per second.
+Upload speed is about 4.62 megabits per second.
+Now let's go back to our image.
+We have about 602,000 bytes of data that we would like to actually upload.
+If we do the math on the upload speed of about 4.6 megabits per second,
+it's around 570 kilobytes per second.
+Given that we have 602,000 bytes and we've got 570,000 bytes,
+that's going to take about one second in order
+to transfer this little image across.
+Now let's kind of look at that from an end to a network perspective.
+You've got to upload the data, which is going to take you about one second.
+Then you've actually got to do inference,
+which tends to be really small once you're inside the data center,
+inside the cloud.
+Then you've got to pull that response back.
+For example, the question here is that I take an image,
+I want to know whether there's a cat in the image or not.
+Well, it's going to take one second to upload, 10
+milliseconds to do the inference, another 100 milliseconds
+to come back to the machine to say yes or no.
+That's about 1.2 seconds.
+Now this can be pretty bad, because in certain cases,
+if the object of interest moves away within the one second, well,
+by the time you've gotten a decision and you say,
+OK, take a picture, because there is a cat in the--
+well, the image might have changed.
+OK, fine.
+The cat might not move so fast.
+But in certain other cases, depending on your application use case,
+you could totally imagine that this latency is not tolerable
+and therefore you would end up with poor quality of service due to the lag.
+Let's kind of look at this in the perspective of keyword spotting.
+For instance, when we were previously looking
+at the spectrogram, which is shown on the left here,
+it was a much smaller image.
+It's a 49 by 40 two-dimensional image.
+While we're showing you a color image here, when you did your Colab,
+you're only dealing with one channel.
+And let's assume that you were having 4 bytes,
+because you're using floating point values in order to train the network.
+Well, that's still pretty small.
+Because that's only about 7,840 bytes, as
+compared to the cat image, where it's about an order of magnitude larger.
+So the concern here is that if you look at it from a sensor standpoint,
+where you're looking at an audio signal versus a video signal, two
+different types of sensors.
+The volume of data that an image sensor is going to produce
+is going to be substantially more.
+And that's where we're going to get into trouble.
+Lesson number one is that the sensor and the data that it produces
+are crucial to understand.
+Because the more amount of data you have coming
+from a sensor, the more implications it has on terms of having always
+On machine learning models
+Specifically, more data means higher latency
+if you are going to go to the cloud.
+It also means higher power consumption, because you're
+going to have to transmit the data.
+So that's not a good thing.
+Because either way, you end up with lower user satisfaction.
+At that point, you killed a end to end application use case.
+So what I'm trying to get you to understand here
+is about how the sensor plays a very critical role in terms of the data
+it's producing for us to be able to think about the networks.
+All right.
+So let's say we don't go to the cloud.
+And instead, we do on device processing, TinyML style.
+Then what are some of the issues we're going to run into?
+We obviously have to worry about the processing latency
+because, as you know, we're running things
+on a microcontroller, which means that we have to make
+sure our models are kind of small.
+Now remember that, as compared to the data
+centers, the amount of computational horsepower
+that you have on your microcontroller is orders of magnitude smaller.
+And furthermore, you have a huge latency to be able to get to that server
+if you want to be able to run the model there.
+So you might have the beautiful, nice, big, precise model there.
+But by the time you get there, you've already lost a lot.
+Because that latency to get to that actual computational horsepower
+is too high.
+So you want to do things on device if it's possible.
+The second thing, obviously, is around memory.
+At this point, you know that we don't have too much memory.
+I know you know that.
+But what I do want to point out is in the context of visual data,
+where you are building visual models now to recognize things
+or to identify things, typically, the visual models are much larger.
+Which is why I'm highlighting some of the state of the art models
+here and showing you that they tend to be in the order of megabytes
+in memory size versus your microcontroller
+is typically around kilobytes of memory.
+So we have to somehow bridge this gap.
+So we need to learn how to actually train small, little models, which
+is not necessarily an easy thing to do.
+But we'll see how to do it.
+OK.
+And finally, the last thing is yet again about the accuracy of the model
+and how well you were able to perform your task.
+You ideally want to be able to run the model and achieve good accuracy.
+But you have to still worry about subtle things,
+like false positives and negatives.
+This is an image showing you about how the Dazzle Club in London
+is actually using interesting shapes and lines in their faces
+in order to trick cameras from recognizing
+that there's a human in front of them.
+This happens because the camera and the neural network
+running there don't know any better.
+They're just looking at raw pixels.
+So as long as, like, the network is not able to tell
+that there's a certain sort of distance between the eyes
+or what the distance is between your nose and your eyes and so forth,
+you can totally do that masking by just adding
+new lines to your faces and the cameras are not able to perform well.
+So you have to think about the false positives and negatives, which we
+talked a lot about in keyword spotting.
+The same things come about here, but just
+from a totally different representation perspective.
+As I've always said before, any kind of computing system
+has a whole bunch of things that it's running.
+It's not just in the neural network model.
+It's got a full stack.
+Of course, this stack is quite comprehensive,
+because it's got an operating system kernel, it's got middleware,
+and so forth.
+None of which are available or there in the context of a TinyML device.
+That said, though, you still have to think
+about things more than just the model.
+Because you have to think about what does it
+mean for the inference engine that is supporting
+this particular visual model, how much memory do
+I need in order to house the visual images that
+are coming in from the camera.
+Because all of that makes your TinyML application.
+So you've got to think about the model as well as the whole rest
+of the stack that needs memory.
+And the same thing is also true when it comes to latency.
+Because you've got to run the whole stack, not just your neural network
+model in order to build a proper application.
+So I've touched on a couple of interesting challenges
+that we have that are unique to visual wake words when
+we look at it from a sensor standpoint as an image sensor compared
+to an acoustic or audio sensor which we talked about previously.
+So take a moment to kind of reflect on some of these crucial differences.
+Because I will be testing you on them.
+With that said, we're going to next move on
+into understanding how do we actually start
+building out a TinyML application.

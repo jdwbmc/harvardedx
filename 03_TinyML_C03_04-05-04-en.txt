@@ -1,0 +1,177 @@
+SPEAKER: This is the first of many screencasts
+that I will be doing in order to help you understand some of the TensorFlow
+Lite microcode in a bit more detail than we looked at in the videos previously.
+As you may recall, there are many different components
+involved in the keyword spotting application,
+starting with the initialization phase.
+In this particular screencast, I'm going to focus on the initialization stage,
+and I'm going to walk you through the different steps that are involved.
+I'm going to do this in a lot of detail this particular time around.
+But in subsequent applications, I will go a little bit faster,
+just because it is a repetitive template that you'll find
+used in many different applications.
+So looking at our IDE, the first thing you will see here
+is that there are a couple of header files.
+Many of these header files are all about the TensorFlow Lite Micro.
+For example, lines 26 through 31 are all about setting up the default TensorFlow
+Lite Micro ops.
+There are a couple of application-specific files here.
+Now, these correspond to activities that are
+part of the application architecture, which we'll get into later.
+Now going back to my slides, one of the first steps
+is to actually declare the variables.
+So let's look at what the code says.
+Scrolling down a little bit, between line 34 and line 50, what you see
+are the actual variable declarations that are needed.
+The first part of the code is mostly centered around things
+that are needed for the TensorFlow Lite Micro interpreter itself.
+There's an error reporter, which is responsible for logging errors.
+You will find this in almost every single application.
+Then there is the model pointer, which actually holds the flat buffer
+model that we need to load that corresponds to the application.
+For example, here we're interested in the [? TinyCam ?]
+network that does the keyword spotting.
+Then we have the interpreter itself, which
+we have to initialize with a certain amount of required state.
+Then we have an input pointer for the input
+that's going into the neural network.
+And the next two correspond to actually the application specifics,
+which are about getting the features that are needed-- in other words,
+where is the spectrogram sitting--
+and the output that comes out of the network, which
+is stored in RecognizeCommands, which tells us if a keyword was actually
+recognized or not.
+More on the previous time later.
+And the second half of the variable declaration scope
+says that we first have to define the tensor arena.
+Now, if you remember from what Pete said and what I have said before,
+the tensor arena is extremely critical, and you have to size it appropriately
+if you do not want your application to crash with an error.
+So here you have experimentally determined what the size needs to be.
+And then you go ahead and allocate the tensor arena
+buffer, which has got a certain size.
+Then we allocate the feature_buffer, which
+contains the actual spectrogram features which we will be using in order
+to do the inference on.
+And it's of a certain size as well.
+And then we have the model_input_buffer.
+This is basically pointing to a buffer that
+will be initialized later in order to tell the interpreter where
+the inputs are coming from.
+The next step in our timeline is to actually load the model.
+So if I were to scroll down a little bit and go into the setup routine, which
+as you should recall, is only executed once,
+you will find that here there's a function called GetModel.
+GetModel's job is effectively to take a pointer to a single-dimensional array,
+which has actually got the flat buffered file
+schema, which defines the neural network model that we want to load and run.
+And the next couple of lines are basically
+doing some error checking to make sure that the schema version matches,
+because you always want to make sure that the network output file that you
+have in your schema is actually corresponding to the latest TensorFlow
+version that we will be using.
+So this is quite standard, and I expect you to do the same.
+After that comes resolving operators.
+Scrolling down a little bit further, you will
+see that between lines 79 and line 99, we
+have a chunk of code which is all about the op resolver.
+The op resolver is taking in four different ops in here.
+Now, how do you know what the ops are?
+Well, you should have looked up what the officer using the Netron
+app that I told you about earlier.
+And if you look at the network architecture using Netron
+you would know that these are the different ops.
+Now, if you do not know what ops that network is actually using--
+let's say, hypothetically, you missed one of the ops--
+it's not the end of the world.
+TF Lite Micro will actually tell you through an error
+that you are missing one of the ops when it's actually trying to run it.
+That's one of the ways you can easily figure out
+what are all the ops that you want to include in your ops resolver.
+As Pete and I both mentioned, you have the AllOpsResolver,
+which is a cop-out way of doing op registration.
+In other words, if you do not want to explicitly register all these ops,
+you can easily say, just use all ops, bring in all your ops.
+But of course, as a TinyML engineer, at this point
+you should know what the pros and cons are of bringing in all the ops.
+Bringing in all the ops is not necessarily a good thing,
+because it ends up wasting a lot of space.
+So keep that in mind.
+Then as we scroll down further, you will see
+that we are arriving at the next major step, which
+is initializing the interpreter.
+Initializing the interpreter requires us to pass a whole bunch of variables
+in here, starting with the model that we're actually
+bringing in-- what are the ops, where is the tensor arena, how big is it,
+and what is the way by which we have to report errors?
+Once you have this bit of code here, you are effectively
+ready to start using the interpreter.
+Then going back to our timeline, we see that the next step
+is to allocate the arena, which is what is happening on line 107.
+We are actually allocating the tensors.
+This is using the tensor arena space that we had previously
+told the interpreter to use.
+Once again, we do error checking as always.
+It's a good practice to have.
+Finally after that we, tell the neural network
+where the model's inputs are really coming from.
+And that is happening between line 113 and line 123.
+So what we are asking the interpreter to do
+is to give us a reference to where its input buffers are actually stored.
+Now, you will see that it says the model input has got a dimension of 2.
+And you might be wondering, why does the input buffer have two dimensions?
+Well, the first one is purely a wrapper.
+That's why you're seeing that here when we
+look at the dimensions of the data of the first element,
+it's got only one entry in it.
+And that single entry, which you then, if you poke at,
+will just have a single size 1, and subsequently
+the second entry that's in there is actually our spectrogram size.
+In other words, it is kFeatureSliceCount times kFeatureSlice.
+Now, if you remember how big our spectrogram is,
+it's going to be 40 columns wide, and it's going to be 49 rows in height.
+And that's what this is--
+SliceCount time SliceSize.
+So if you want to look this up, let's do a quick search.
+I'm going to do kFeatureSliceSize.
+I'm going to find it.
+It's used in a couple of places.
+But we'll get to the actual definition soon.
+There it is.
+It's declared as a constant.
+And you can see that the kFeatureSliceSize is
+40, which is effectively our column size, and kSliceCount,
+is 49, which is the number of rows we have in our spectrograms.
+And so now if we go back up to our micro_speech file,
+we're just making sure that the spectrogram dimensions which
+we are going to be feeding into the network
+are exactly the same as what the network is expecting.
+So this is actually what the network is expecting.
+And of course, we've got to make sure this is the size that we pass it in.
+And we want to make sure that the data type is correct--
+that it's not an FP32, it's actually an int8 value that we're passing in.
+And that's effectively what we're defining here.
+Finally, the next step in our process is to set up the main loop.
+In setting up the main loop, you can clearly
+see down here is that there are two stages here.
+The first one is called setting up the feature provider.
+The feature provider is the one that actually accesses the audio buffer
+and generates the spectrogram.
+And that spectrogram is what we actually feed into the network later on.
+And after you do the inference, that's when
+we go into RecognizeCommands, which will actually help us recognize.
+More on this later.
+For now, all you need to know is that we're just
+simply setting these variables up.
+All right.
+With all of that said, you should at this point
+be quite comfortable having gone all the way from declaring variables,
+to loading the model, to resolving ops, to initializing the interpreter,
+to allocating the arena, to defining the model inputs,
+and setting up the main loop.
+This is a process that we will repeat over and over and over
+in all the different applications.
+So get comfortable with it.
+And you will naturally be feeling comfortable with it
+as you start writing a little bit more code.
+With that said, I will pick you up in the next video.

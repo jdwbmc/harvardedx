@@ -1,0 +1,166 @@
+VIJAY JANAPA REDDI: In this video, we're going
+to start off by talking about what are the challenges with anomaly detection?
+Specifically, I'm going to take a real world example
+scenario where people are really excited about TinyML, which is
+in the context of factory applications.
+In factories or in manufacturing plants, there's
+a lot of interest for doing predictive maintenance.
+Doing predictive maintenance specifically with TinyML
+is a really hot topic.
+Why?
+Predictive maintenance is this idea that you
+want to be able to replace a particular part that may fail,
+or is likely to fail in the near future, before it actually fails.
+And if you can do that proactively, the benefit
+is that you don't have to shut down the factory or the manufacturing plant
+in order to be able to replace that particular part.
+Instead you might be able to schedule ahead of time
+that you want to replace this part perhaps on a weekend,
+or sometime when the manufacturing plant is actually inactive.
+In doing so, you effectively cut down your overall downtime
+for your manufacturing plant, which is awesome, because it dramatically boosts
+your production capabilities, while keeping your overall factory
+or manufacturing plant quite safe.
+Now let's talk about this in the context of what
+it means to actually enable TinyML and how to actually deploy
+TinyML in the context.
+So let's say you have this small little sensor, that is actually
+attached to perhaps a ball bearing.
+And this sensor, like an accelerometer, for instance,
+is collecting a lot of data about the vibrations and things like that,
+that it's picking up from the ball bearing.
+And what it's doing is that you want to be able to look at that data
+and decide if there's some sort of anomalous behavior.
+Now, this gets us into a set of issues, which you might be quite familiar with.
+Latency, limited constraints, and accuracy aspects.
+So keep in mind that you've got a sensor.
+That sensor is actually attached to the device
+and it's going to be looking at a whole bunch of time series data
+that's coming through it.
+How can I processes this efficiently?
+I want to tie things back to whether you should do this in a TinyML context
+or whether you can offload it to the cloud or some sort of large computing
+server that's in the manufacturing plant.
+Let's take a little closer look at this.
+From a latency standpoint, if we look at this particular sensor here,
+this SKF sensor, what the sensor is actually doing
+is it's collecting a bunch of data.
+This is actually a real part that is used in production.
+It has a whole bunch of sensors that tracks the speed, the position,
+and the angle of the ball bearings.
+And this data is continuously available for us to access,
+because this time series data is getting pumped out continuously
+from this machine.
+And what we want to be able to do is we want
+to be able to intelligently process this to see
+if there's some sort of anomaly in the activity of this particular sensor.
+Now, let's say we're collecting data and we
+want to offload it to some sort of nearby computing machine.
+Is that even possible?
+Let's say if every measurement is two bytes of data,
+and there are eight different sensor streams that are coming out
+of this particular device.
+And the data that's coming out is at about 20,000 samples per second,
+or 20 kilohertz.
+That translates to about 320 kilobytes of data per second.
+Is that a lot?
+Let's see.
+Let's say you want to offload this data.
+Let's take, for example, this standard Zigbee
+radio, which you might be able to attach directly next to that sensor which
+is collecting all this data.
+A Zigbee radio is commonly used in wireless sensor networks,
+and it reaches only about 30 kilobytes per second in terms of its ability
+to stream data.
+This basically means that as compared to our 320 kilobytes of data
+that's coming out per second, the Zigbee radio
+is not going to be able to keep up.
+We would be producing data faster than we can actually
+transmit it off the particular device.
+Now, in addition, one of the problems you have
+is that a Zigbee radio consumes about one joule of energy per second.
+Now at that rate, that means a standard coin cell battery would pretty much
+be depleted in about 40 minutes.
+So every hour you're going to be going and replacing batteries.
+So that's not going to work.
+So the point here is that you've got to think about both the amount of data
+that these sensors can actually generate and how do you process all of that data
+locally, rather than trying to move it.
+That's why TinyML is super exciting in this space.
+Therefore a lot of companies are now trying
+to figure out how can we put in the intelligence needed
+real close, right next to the sensors.
+Now remember, we just gave an example where
+we're just talking about a single unit.
+What happens if you have a whole factory of these different machines
+that you want to instrument?
+Think about the volume of data that they're going to be generating.
+So in order to cope with that scale, you need to have TinyML.
+And that's why the industry is super excited about this particular solution,
+if we know how to solve it.
+Now, talking about limited resource constraints,
+you know this all too well.
+Our devices, our TinyML devices, have very tight constraints.
+We only have about 256 kilobytes of RAM, typically,
+on this one particular device.
+Most of the other TinyML devices are just as small or even smaller.
+So, you know this all too well.
+I'm not going to go in too deep into this anymore.
+But let's talk about accuracy for a second.
+What does it really mean to have a model that is actually
+being deployed and doing detection, things like anomaly detection,
+in order to identify dangerous situations like,
+for example, if there's a gas leak.
+Let's say you have this small little clever sensor that's
+tethered to a gas pipe, and its job is supposed
+to be detecting whether there's a gas leak.
+And what happens, for example, if you have a false negative?
+In other words, your machine predicts that there is no gas leak,
+but in fact, there is actually a gas leak and somehow
+your model mispredicted.
+Well, that can have a catastrophic impact.
+Lives could be lost as a result of your model making a misprediction.
+And on the other hand, you might say, OK, well I'm
+going to be a bit more lenient.
+I'm going to allow some false positives to come through.
+Well, be careful if that happens.
+Because if you have too many false positives,
+then people will kind of take that machine to be rather crappy.
+In other words, they're going to say, ah,
+this machine always seems to generate false alarms.
+Just ignore it.
+And that one time when it really matters, well, too bad.
+The other aspect is that if you are generating
+false positives and the concern you have is
+that you might have to stop the overall machines down and then go and actually
+inspect it because you are doing predictive maintenance.
+And if it turns out that most of the time there's really nothing wrong,
+then that is also a penalty in terms of the expenditure.
+So what I'm trying to hint at is that there
+are lots of interesting potential applications for doing
+TinyML in manufacturing plants.
+Specifically around detecting faults and doing predictive maintenance,
+which is going to be our topic of interest in this particular course.
+But I'm trying to give you and highlight about some
+of the critical differences between how you
+need to think about this particular application
+as compared to keyword spotting or as compared to visual wake words.
+Remember, in those kinds of applications,
+if your machine does not wake up when you say, hey
+Alexa, or OK Google, or something like that, it's not the end of the world.
+We'll say it again.
+Sure, you'll be frustrated.
+OK, fine.
+Well, I might not buy that product.
+OK.
+In this particular scenario, if you are relying on these tiny little sensors,
+these intelligent tiny little sensors that we're going to build,
+and you're deploying them, and you're relying on them for safety,
+you have a serious job and you have a big responsibility.
+So keep that in mind as we go through the exercise of building
+TinyML models for things like anomaly detection, which
+are very powerful concepts.
+There are a lot of dangers, but there's a lot of potential good that we can do.
+With that said, in the next video, we can just
+get started with trying to understand what it means to build a TinyML
+model for anomaly detection.

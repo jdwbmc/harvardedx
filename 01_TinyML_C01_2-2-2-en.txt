@@ -1,0 +1,97 @@
+PROFESSOR: Previously, we looked at how you could fit parameters
+to a linear equation and using this you could have a computer
+learn over time the best set of parameters to solve that equation.
+This really is the fundamental underpinning of machine learning.
+And in this video, we'll see how that principle forms
+the concept of a computational neuron, which is
+the building block of a neural network.
+Earlier we saw the code for what I like to call the Hello World of neural
+networks, where you'll use a neural network to learn the relationship
+between a set of x's and a set of y's.
+The architecture there was a neural network with a single layer.
+And this contained a single neuron indicated by this line of code
+where we have a sequential defined and it only has one entry for the one layer
+and that entry has only one unit for the single neuron.
+So our neural network will really look like this, a single neuron with x in
+and y out.
+After training the neuron to learn the relationship between x and y,
+we can then ask it to predict the y for a new x.
+So for example, what is the y when x equals 10?
+We know that the relationship between x and y is y equals 2x minus 1,
+and the neuron learns something close to that.
+When you print the results of model.predict(10.0),
+you'll get something close to 19, but not exactly 19.
+It'll be more like 18.998.
+To see why, let's look under the hood a little.
+Revisiting our neuron with an x in and a y out,
+we can say that y is a function of x.
+And that function is y equals wx plus b, the linear equation.
+So we could redraw our architecture a little bit,
+thinking in terms of parameters.
+If y equals wx plus b, we need to know the values of w and b
+in order to get y from x.
+So how can a computer figure these out?
+Well, we can start by emulating the neuron.
+And here we can do so with a class called Model.
+This has internal values w and B, and we can initialize them
+to anything we want.
+Say, we set them to be 10.0 each.
+The class will also have a call function that will return wx plus
+b for a given x.
+So for our known set of x's, let's see what this model will give.
+As we initialize w and b to be 10, y equals wx plus b will give us this set.
+Where x is minus 1, y be 0.
+Where x is 0, y will be 10, and so on.
+Now this, of course, is very different for the set of y's that we already
+know.
+When x is minus 1, y is supposed to be minus 3.
+But we got 0.
+When x is 0, y is supposed to be minus 1, but we got 10.
+Indeed, when x is 4, y is supposed to be 7, but we got 50.
+We're clearly way off.
+So recall the paradigm diagram where we make a guess, measure our accuracy,
+optimize based on this information, and then repeat.
+You can see at this point with w equals 10 and b equals 10,
+we've made our first guess.
+And by comparing our y's with the expected ones,
+we can see that our accuracy was way off.
+If we want to measure that accuracy, we can create a loss function in code
+where we give it the predicted y, which is the set we calculated,
+and the target y, which is the set that we were supplied.
+And from there, we can calculate the root mean square of the difference
+as explained in an earlier lesson.
+Then this code is our underlying training code.
+We'll use a gradient tape to keep track of our differential variables.
+And within it, we can calculate our loss using the loss function
+that we just saw.
+And you can see that here.
+Our current loss is the result of the loss function if we pass it the values
+returned by the model and our real y's.
+The next step is to optimize our guess.
+And as we're using a gradient tape which tracks our variables,
+we can differentiate our model's w's and our model's
+b's against the loss function to get the gradients for w and b.
+These gradients then help us get the direction
+towards the bottom of the loss curve, so we can generate our next guesses
+by reassigning w and b within our model to a new value in the direction
+that the gradient gave us.
+So on our machine learning paradigm diagram, the next step was to repeat.
+We now have a new w and a new b, so we can make a guess with them
+and repeat the whole process.
+We can see that in simple code like this,
+where we loop through the training function
+that we just looked at 50 times.
+So 50 times, we'll make a guess, measure the loss,
+differentiate to get the gradient of the variables with respect to the loss,
+and then use that to tweak their values in the direction of loss and so on.
+By the time we've done this, our initial w
+equals 10 and b equals 10 will have changed to something like this--
+w equals 1.98 and b equals negative 0.94.
+Now you and I both know what the desired values are based on the x and y
+that we were given and they're supposed to be 2 and minus 1, respectively.
+So this process has gotten us pretty close.
+And now if we want to use this neuron to give us the y for any future x,
+it will calculate y equals 1.9 x minus 0.94.
+OK, so now it's your turn to try this out.
+I've given you the code in the colab, so try it out
+and you can see it all in action.

@@ -1,0 +1,129 @@
+VIJAY JANAPA REDDI: Hi, In this video and the coming series of videos,
+we're going to start dipping our toes into our second application, which
+is Visual Wake Words.
+Visual Wake Words represents a common microcontroller vision use case
+where the goal is to identify whether a person or an object of interest
+is actually present in the image or not.
+As we did with keyword spotting, I'm going to start off
+by talking about the sensor.
+In this particular case, it's going to be the image sensor, which
+is going to be generating RGB channels of input data
+that we will be feeding into our neural network.
+At this point, I'm going to make sure that we
+go a little deep into neural network design.
+So far, we have been training on neural networks from scratch.
+In this particular module, I'm going to show you
+how we can shortcut that process in order to accelerate the training
+time by reusing some of the information that the network has
+retained from a prior experience.
+More on that later.
+Finally, we'll get into metrics and learning
+how to assess this particular application.
+Specifically, we will look at it from a system standpoint,
+as well as the overall quality of experience standpoint.
+As I've said before and as I'm going to say it again,
+we're going to focus on the end to end application level design,
+not just on the neural network part.
+Now let's get concrete and say what's an application of visual wake words.
+Here you're looking at a smart device where the machine is actually
+waking up only when it recognizes me.
+Now you can't see me in the picture, but that's the implicit assumption.
+Another example of this might actually be
+when you have a smart device that's perhaps
+sitting on the outside of your house.
+It's a smart doorbell.
+And the goal is this.
+It recognizes when someone shows up at a door,
+or perhaps it does not recognize someone who shows up at a door.
+In which case, it might send you an alert.
+Now clearly, both of these examples that we're talking about here
+are about processing the information that's coming in.
+Now these are applications you might already
+be familiar with in some capacity.
+What's interesting, of course, here, is that we're
+talking about untethering the device, which
+has remarkable potential for real world deployments.
+Think about trying to deploy a TinyML device in an office which
+is looking for occupancies.
+If there's no one who is occupying the room,
+perhaps you want the system to turn off the lights.
+Now that seems like a very simple thing to do.
+Well, let me tell you why TinyML version is different from a non-TinyML version,
+again, from a real world perspective.
+In the real world, if you want to put a device in any particular building,
+you often have to get permits, you have to get electrical certifications,
+you have to get permits in order to be able to actually drill
+the hole in there, because that building is not yours.
+So you're trying to install a new piece of equipment.
+So there's all these mechanics that kind of
+come into play that actually cost a lot, which has got nothing
+to do with the actual technology itself of simply, is there anyone in the room.
+That's where TinyML becomes extremely powerful from a practical standpoint,
+because I can take a small little device like this and I can just stick it.
+And then I can set it up to automatically communicate
+to a server on Wi-Fi and then turn off the lights.
+It's so much simpler, and this is why people are actually
+excited about TinyML even though some of these applications
+are things that you could typically do by tethering them to the wall.
+Let's go ahead.
+What's another interesting application?
+Smart glasses are a remarkably powerful application for TinyML.
+You've got to have all this remarkable sensing capability where
+you're processing the visual cues that are coming
+in where you're triggering for interesting actions
+to happen when that data comes in.
+For instance, here perhaps, the camera is actually
+picking up this tag of 30% off sale, for instance, and it triggers,
+and then the lens automatically focuses in on the image that's
+actually of interest in order to guide you there
+for effective retail shopping.
+Or perhaps you are using these lenses in your navigating through.
+Instead of having to look at your phone, your smart glasses
+are detecting critical waypoints and automatically projecting information
+into your lens.
+Remarkably powerful mechanisms that are going to transform the way we
+actually experience things around us.
+And TinyML is right at the forefront of those.
+And these are just a handful of example applications.
+So, we're going to learn about some of the challenges
+associated with trying to achieve that sort of future.
+But we're also going to discover some of the opportunities
+that we have around there.
+Specifically around challenges.
+As we did previously, we'll touch on performance-related aspects,
+like latency and bandwidth.
+We'll talk about model capabilities, in terms of accuracy and personalization.
+We'll talk about the criticality of the data itself,
+how do we keep it secure and private, as well as
+how do we deploy models so that they don't consume too much energy
+and make sure that they fit into resource-constrained devices.
+All of the same things that we've touched on for keyword spotting,
+however, I'm going to focus on the aspects that
+are actually quite unique and relevant to this particular application.
+Finally, we're interested in trying to figure out
+how we can get this model to actually run on device,
+and what are the capabilities that we can unlock if we do that.
+We're not going to deploy the model on the device yet.
+We're going to try and shrink the model down through all our techniques
+so that it's ready to fit on device which we will do in course 3.
+So that said, what are we going to learn?
+We're going to learn a little bit about the data collection process, which
+I'm not showing here, because we're not emphasizing it as much, because we've
+already spent a lot of time talking to you about what it means to actually get
+the requirements for your data, then gather it, then validate it, and then
+actually sustain it.
+So I don't want to harp too much on that.
+Hopefully, you know a lot about it by now.
+But we'll focus on some of the interesting aspects
+around training the model and learning how to optimize it for deployment.
+We're not going to focus on the aspects in deployment
+from inference standpoint, yet.
+We'll get there.
+For now, what we are going to focus on is primarily
+about getting the model down with the right characteristics.
+And we'll do this in Google CoLab.
+And finally, when we actually finish all of this,
+we'll get around to deploying things onto the real hardware.
+With that said, let's get our feet wet and get
+started with learning how to build a TinyML application around Visual Wake
+Words.

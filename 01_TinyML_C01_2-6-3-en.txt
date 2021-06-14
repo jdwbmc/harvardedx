@@ -1,0 +1,380 @@
+VIJAY JANAPA REDDI: Hi.
+What I want to do in this video is do a quick recap of where we started
+and where we are wrapping up in this particular course.
+I want to particularly focus on the fundamentals
+that we tried to teach you.
+Recall that this course is all about machine learning.
+While machine learning is in itself a subfield within
+artificial intelligence, what we specifically focus on in this course
+is deep machine learning.
+Deep machine learning is a type of machine learning
+that leverages neural networks and lots of data
+in order to learn interesting patterns about the data.
+So these deep learning networks learn based
+on data, based on patterns they have seen in the data,
+and so when a similar pattern repeats in the future,
+they can actually make an intelligent prediction about what's
+likely to happen.
+The key thing here is to remember that they learn from the data
+that they have.
+So if there is something in the data that they do not know about,
+when the new data that they don't know about comes around,
+they don't know what to make of it, so they will likely give you an error.
+That's a trade off that we have to make, because when they work,
+they work remarkably well.
+And deep learning leverages lots of big data.
+So as long as you do a good job in collecting the data,
+you're going to be good.
+Now, how do we train these neural networks that we talked about?
+The fundamental machine learning paradigm
+is this rinse and repeat cycle that we're looking at here.
+We start by making a guess.
+We see if we got the accuracy right.
+In other words, is a cat a cat or a dog a dog,
+or are we saying that a cat is actually a dog and that a dog is actually a cat?
+We measure the accuracy often in terms of metrics known as top 1 or top 5.
+And if we are right, then we reinforce that.
+And if we are wrong, we correct that.
+And so we repeat this cycle.
+We continue to make a guess, we measure the accuracy,
+and optimize based on the guess.
+At the heart of this fundamental pipeline
+is stochastic gradient descent, a really buzz word for something quite simple,
+where the goal is you want to minimize the error, which Lawrence, as you might
+recall, talked a lot to you about by using this ball that kind of rolls off
+the hill.
+What you want to do is you want to minimize the error.
+And you're going to move to a place where
+the ball is in a nice stable place, which is right at the bottom.
+In order to do that, you can adjust the learning rates
+so that you can actually move faster or you move slower,
+and that's what the loss function is trying to help you do.
+We talked a lot about this because there are
+lots of nuances in terms of how the network learns
+based on the loss function.
+Sometimes you can overshoot and the ball goes all the way over to the other side
+and then you can go back up.
+Ultimately, you kind of do this back and forth motion
+until you minimize the rocking that's happening on the ball.
+So that's the fundamental notion, minimizing that error.
+And out of that comes a neural network.
+The topology of a neural network, in other ways,
+the number of neurons you have and the way you
+actually connect each of these individual neurons, that topology is
+totally up to the developer's choice.
+It's your choice.
+It's my choice.
+It's whoever is developing the neural network.
+And the key function here is once you have a certain topology, what
+you want to be able to do is to figure out what the weights in the network
+are going to be and how you're going to adjust those weights.
+And that's where the loss function comes in,
+is that as you do a forward pass through this network
+to make a prediction, what you want to do
+is as you're training the network with the right weights,
+you're trying to minimize the loss or the error
+that the network is experiencing.
+Now, Lawrence walked you through this by using the MS data set.
+The MS data set has a whole bunch of images with handwritten formats
+that allow you to kind of look at these images
+and say whether it's a number that's between and 0 and 9.
+And one of the things that you did by using the Google Colab
+was to take these individual images, which
+are 28 by 28 pixels in height and width, and feed that
+into a densely connected network, sometimes known as MLPs,
+or multilayer perceptrons.
+And the key thing is that every neuron in there
+has a connection to every other neuron on the output side.
+And by doing that, there are lots of connections that show up in the middle.
+That's why the mid region between the two layers of neurons
+is extremely dense.
+And effectively, this network will output a probability of 1
+on whenever there's a strong indication that a certain digit matches
+the output.
+So, for example here, when it's a 7, the output neuron number 7
+is actually going to go up.
+Now, this is a very simple thing, but it's a very powerful concept
+because you're going straight from an image to recognizing that image.
+How do we do that?
+One of the key things that we learn is about data augmentation or data
+transformations.
+Both are actually important concepts.
+First we'll talk about data transformation.
+You took a 28 by 28 two dimensional picture
+and you flattened it into a single tensor.
+28 by 28 is equal to 784 pixels.
+You flatten it out.
+That's how many inputs you have going in.
+And that flattening can also be skewed in many different ways.
+You take the 7 by 7, you can do data augmentation tricks,
+which is extremely important because it is a nice way
+to not have to collect lots of data.
+For instance, a 7 that is really nice and straight
+is one way of looking at it.
+A 7 that's written at a slight angle is a different way of looking at it.
+And you can do all these data transformations
+without explicitly collecting pictures manually through human effort,
+but instead using simple little imaging techniques,
+you can skew the data set around so you can augment the data
+and effectively sometimes double, triple your data set.
+And by doing that, you teach your neurons
+to be able to be a bit more flexible and generalized through the data set
+that's coming in.
+That's actually a very important concept that we learn.
+So in addition to the data transformation of putting it
+into the right format of the single tensor,
+we also learned the data augmentation.
+That's a critical concept.
+And we're going to be building on this quite a lot once we
+get into tinyML applications in the next course.
+Now, we take this fundamental primitive that we have here
+and then we rinse and repeat.
+We feed in a whole bunch of different images, one after the other,
+after the other, after the other, until the network reaches
+a stable point where the accuracy is really high
+or the loss is really, really low.
+And we learned about how to split the data set up carefully between test,
+training, and validation, which is extremely important in order
+to be able to make sure that you are actually not overfitting to the data
+that you have.
+Rather, you're fitting to the data just enough.
+Because overfitting is a very dangerous problem.
+Because when the network sees a new behavior,
+it's not going to recognize things.
+It will only make predictions about the data you already have,
+which is not a very useful model.
+Now, after that, we moved on to extracting critical insights out
+of the data set that's coming in or the input that's coming in.
+For instance, in this picture that Lawrence showed you,
+it's a very complex picture with a lot of rich information
+and the picture on the right largely contains the same amount of information
+in a very distilled format.
+What are we looking at?
+We're looking at the line edges for the characteristics that
+are inside picture on the left.
+Effectively by running this filter, which has got numbers,
+and running that filter over the image on the left,
+we're effectively distilling a new image on the right.
+And this filter or the concept of a filter
+is an extremely, extremely important concept
+that you need to really internalize.
+Because a filter, in effect, filters out noise.
+Let's say if I'm only looking for the edges, the picture on the left
+has a lot of edges.
+The picture on the right has only edges.
+So we're effectively removing all the noise
+that we don't care about on the left hand side
+and only keeping whatever we want on the right hand side,
+and that is extremely important.
+And neural networks effectively operate very well
+when there are a whole range of these different filters
+because each one of these filters is going to act and try and find
+critical things.
+For instance, this filter is trying to find all the edges that are there.
+And another filter could be able to isolate certain levels of brightness
+in the filter image.
+So therefore, you tend to end up composing different filters together.
+And we did that by writing code in Colab.
+Lawrence just kind of walked you through a variety of different scenarios.
+What we have seen is that you take TensorFlow and you learn
+how to write using the Keras API calls.
+And one of the key things you start off with
+is knowing the syntax structure of how to program
+in TensorFlow, which is a really powerful thing to be able to do.
+Second thing you learn is how you actually
+compose a neural network architecture.
+For instance, in this particular model, you have convolutions,
+then you have max pooling, and then you have dense layer networks at the end.
+Now, the convolutions, it's not just a single convolution you have.
+You actually have multiple convolutions, because each of these completions
+is effectively trying to filter for a particular characteristic.
+And so as you have multiple convolutions all kind of tied together,
+they're filtering out data as it's moving through.
+Nothing that you're trying to do is pulling.
+If you recall, when you pull, what you do is you
+minimize the information flow that's happening from the start of the network
+to the end of the network.
+You're effectively trying to pick out the most salient features from.
+Every time you filter, you do a max pull in order to filter out
+the most salient parts of that data.
+And then you move it into the next filter, which
+is looking for something different, and then the third filter
+looks for something different.
+And then you only continue to propagate the most salient features
+after each filtering.
+Finally, you get around to the dense network,
+or sometimes it's also known as a fully connected network where
+the fundamental idea is to be able to match
+the filters to the labels of the output characteristics
+that you and I really care about.
+Now, with that fundamental network structure in place,
+which you can end up doing is you repeat the network's training
+process over and over and over.
+The keyword here is epochs, which is something
+that we will use a lot when we're training our tinyML applications.
+Here, epochs 12 means that we are going to repeat the training
+cycle over the data 12 times.
+We're going to go over all the data we have 12 times.
+All the data.
+And so by doing that, we can actually get a much better accuracy
+because the more time we train, the better it is.
+Now, that's great.
+But remember, training for longer is not always the right thing.
+There's often a trade off overfitting to the data
+or another thing is to remember that when you're training,
+you're using very costly resources, so that drives up
+the cost of training the network.
+And that's not necessarily a good thing if you're strapped for cash.
+One of the things that's happening behind the scenes
+when you're training the networks that you might have taken for granted
+is the fact that there are these big, beefy processors that you're
+running these machine learnings on.
+Training is a very, very, very costly process in reality.
+So therefore, companies like Google have gone out
+and built custom hardware just dedicated for training machine learning.
+While in this particular course, you have yet
+to use something like a cloud KPU, you are most definitely using
+GPUs, which help you train faster.
+Over the course of your experience in machine learning,
+you will use CPUs, GPUs, KPUs, DSPs, NPUs.
+There's a wide variety of different kinds of hardware.
+I will try and teach you a little bit about this
+as we get into the more advanced concepts way down in the later courses.
+Now, remember that these TPUs are all packaged
+into big data centers and these pods, as Google likes to call them,
+are what are powering some of the machine learning services.
+So when you train a network, it might very well
+be running on one of these servers for all you know.
+Now, that's all on the algorithm side.
+Now, one of the key things is that that fundamental knowledge that you acquired
+has been repurposed so many times over by big companies by building
+deeper, and deeper, and deeper, and deeper, and deeper networks, so much so
+that the number of parameters that are involved in these machine learning
+models, sometimes algorithms, depending on how you refer to them,
+are so big that it's in the order of billions of parameters now.
+And that's what this chart is showing.
+It's showing that the state of the art models
+has so many billions of parameters in terms of the number of neurons
+you have in the network and the number of connections
+that are there between all the neurons.
+It's so big that it can actually learn a lot of information.
+So this computational capability and having a lot of deep networks
+allows us to learn a lot of things.
+That's great.
+One of the things that's been happening, obviously,
+is from AlexNet, which started out in 2012, as you might recall.
+Models have been getting better.
+In other words, they've been improving in terms of accuracy.
+We talked about AlexNet moving into VGG as a big, major milestone.
+Why did we do that?
+Because as you saw, the VGG models improved
+accuracy, which is on the y-axis here.
+And the x-axis, if you don't recall, is actually
+the amount of computational horsepower.
+And the size of the circle here tells you
+how big the model is, how big or lean and thin it is.
+As models got bigger, we wanted to make them smaller because we were becoming
+more aware that resources are costly.
+It does cost a lot of money to train them all,
+so we want to make them smaller.
+But making them smaller does not mean that we lose accuracy.
+We're actually able to boost accuracy.
+For example, in going from EGG to ResNet,
+we actually are able to boost the accuracy
+while keeping the models smaller.
+But then as smartphones came about, we felt a desperate need
+in order to make the models much smaller,
+and so we tried to shrink them down.
+Now, the question is this.
+As we move from big data centers, to mobile devices,
+to the next major horizon and ecosystem, how
+are we going to make these models very small?
+How small?
+Well, if you recall, a typical MobileNet model,
+which is designed for smartphones, for instance,
+occupies as much as around 17 megabytes, which is a lot of memory.
+When, in fact, the microcontroller, for instance,
+that we will use in course 3, which is a very typical microcontroller,
+has only about 256 kilobytes.
+That's a massive order of magnitude difference between where we are today
+and where we need to be in the future.
+And if we want to deploy machine learning, all
+these billions of microcontrollers, we're
+going to need to do something big.
+And that means we have to innovate on the machine learning model stat.
+We have to figure a way out not only to make the machine early model smaller,
+but we also have to figure out how to cram those models
+on tiny little hardware resources.
+Now, that's all in the machine learning algorithm side.
+But remember I also told you that there's an embedded systems side.
+So we talked a lot about this and we tried
+to really understand what are the fundamental constraints
+in a microcontroller as compared to a microprocessor
+that, for instance, is running one of those machine learning
+models in the cloud or running it on your laptop.
+From compute, to memory, to storage, and the amount of power
+they consume, there is a significant order
+of magnitude difference between the capabilities of a regular processor
+and what the capabilities of all these tiny machine learning processors are.
+Now, this seems really bad.
+But remember, we want to do this because tiny devices are everywhere.
+They're ubiquitous.
+They're everywhere.
+In the future, believe it or not, I won't be surprised
+if we put machine learning on a tiny little device with a quantum battery
+and we forget it.
+We just forget it, and it's processing, and collecting information,
+and doing interesting sensing things.
+And someday it just biodegrades and so we're not polluting the Earth.
+Rather, we have this remarkable technology
+providing value add to all of us.
+But all of that means we have very limited resources.
+So one of the key things that happens, because power
+is so critical in these systems, we understood, for instance,
+how vendors have to make trade offs in how to build the device.
+So in the embedded ecosystem, you tend to have
+a lot of fragmentation, hardware fragmentation, software fragmentation.
+We talked about how the floating point unit, a simple floating point
+unit that sometimes is present on a device
+might not be present on another device, which
+means you have to recompile all the code for a special device.
+That becomes a major problem.
+Why do we do something like that which breaks compatibility?
+We do it because it lowers the cost, it lowers
+the amount of power consumption needed, and it also
+reduces the engineering effort, which means
+we can crank out these tiny little devices like no other.
+But the trade off is portability, which introduces problems
+to us that we will learn how to address in course 2 and course 3.
+FP example is on the hardware side.
+Remember I also talk to you about how the laptop and server
+ecosystem has these rich operating systems that virtually
+dominate all of these computers?
+Same thing in the mobile ecosystem.
+We have iOS and Android, and they're amazingly dominant,
+and they basically run the entire world.
+But what happens when you go to an embedded system?
+On EmbedOS and FreeArc OS, these are operating systems that exist,
+but not every embedded system uses them.
+Sometimes there there's no operating system.
+There's no concept of running multiple programs on the same embedded system.
+Every device is different, so this creates a massive problem
+for being able to systematically make models smaller
+and being able to deploy them efficiently.
+But don't worry.
+All this said, we have solutions that are coming about
+and that's what we're going to really learn next.
+As we learn about models in this, when we go to the course,
+you will learn much more about making the models smaller.
+In addition, we'll also learn about the run times that need to be adapted,
+and I'll talk about this in the next video.
+And also, we need to understand what the capabilities of the hardware
+are and do a codesign between the models, the runtimes, and the hardware.
+Remember, I promised you one thing when we started off this course,
+and it is that we're going to learn not only about each
+of the individual layers, but we're actually
+going to learn about the interactions that happen between the layers.
+And that's extremely critical because that's
+what's going to make you stand out from the rest.
+Now, with that said, I'm going to leave you with some things to reflect
+and I'll come back to you in the next video.

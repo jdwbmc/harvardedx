@@ -1,0 +1,244 @@
+VIJAY JANAPA REDDI: Welcome back, my friends.
+It's good to see you again.
+I hope you learned a good deal about the fundamentals of machine
+learning from Laurence.
+Now I'm here to tie things up in Course 1
+and prepare you for what's coming next.
+Now as you may recall, the goals of Course 1 were twofold.
+First and foremost, we wanted to introduce the concept of TinyML.
+Then we wanted to make sure that we all spoke
+the same language of machine learning.
+Now, different people might have different backgrounds.
+Some of you might know a little bit of embedded systems.
+Some of you might know a little bit about machine learning,
+and we wanted to level the playing field.
+So hopefully at this point you and I and everybody else taking this course right
+now are all on the exact same page.
+Now let's take a little step back and kind of recall why, for instance, we're
+all so excited about TinyML.
+Machine learning has been widely deployed for about the last 10 years
+or so.
+It's a very exciting area still.
+Machine learning was originally being deployed
+in big data centers that are as big as football fields that enable us to have
+a wealth of application services.
+For instance, when you do a Google search.
+For instance, when you say you like something
+or you don't like something on Netflix or Facebook.
+All of those services are using machine learning, and they run up in the cloud.
+But increasingly what we are seeing is that we're
+witnessing that machine learning is moving more towards where
+you and I are as physical beings.
+Machine learning first started showing up on our smartphones.
+Why?
+That's because machine learning deployed at the endpoint
+has the ability to provide more interactive and interesting
+applications, and what we are seeing now is
+that the capability that we tend to see in our phones
+is now increasingly moving on to the endpoint devices like the Google
+Assistant.
+Why is this happening?
+Well, first and foremost, data centers are large,
+and they're made up of big, big servers that consume lots of energy.
+They're extremely capable.
+So for certain application tasks like, for instance,
+when you search for information on the web,
+there's a lot of benefit in going all the way up to the cloud
+and looking at data across many servers and being
+able to pull up a list of those results and sending them back to the end user.
+That requires a remarkable amount of computational horsepower.
+All these machines need to work collectively
+to give us a search result, for instance.
+While that is great, some of the penalties around that
+is that the latency is high.
+In other words, for instance, when you make a search query,
+when you type something into Google search,
+it has to go all the way from our device on our phone or on our computers
+all the way up into the cloud.
+There's a latency.
+There's a high latency involved in there.
+And when that latency shows up, it really
+makes it hard to enable real-time machine-learning services
+at the endpoint.
+For instance, imagine you're taking a picture on your phone.
+And from the time you take the picture, if it had to get saved locally,
+sent to the cloud, and then brought back again with some enhancements,
+you would actually feel that latency.
+You would literally be able to see two phones, one that does it locally
+and one that does it based in the cloud, and you
+would say I want the phone that's able to do it locally.
+And that's increasingly why we are seeing machine learning moving
+more closely to where you and I are.
+This does not, of course, imply that machine learning deployed in big data
+centers is no longer useful.
+It is absolutely useful.
+It is an evolution that we're seeing.
+We're seeing machine learning moving from big servers
+out in remote cloud servers to endpoints like smartphones
+and then onto devices that are all around us like the Google Assistant,
+for instance, here.
+Not only that, these devices are pervasive.
+There are many devices like Google Assistant.
+These endpoint devices are everywhere, and there are loads of them,
+and they're all around us.
+They're inside our homes.
+They're on us like a smartwatch.
+They're around us as well as they're also around our homes.
+So I'm talking things like smart speakers, hearing aids, thermostats,
+smart toothbrushes, even smart parking meters, for instance,
+that know when you've actually parked your car automatically.
+So TinyML is everywhere, and the fundamentals
+that we have learned so far in Course 1 are the foundations for TinyML.
+Based on that, we can unlock a whole new range of applications.
+Now, what is the key thing for those applications?
+It's not the device itself.
+It's what's inside that device that gives you access to data,
+to rich, rich real-time data, and that data is really,
+my friend, what you want to capture.
+Let's take a smartphone, for instance.
+A smartphone that you and I probably have in our pockets
+today is loaded with sensors.
+For instance, there's an accelerometer.
+An accelerometer measures the acceleration
+that the handset is experiencing relative to freefall.
+That allows us to determine a device's orientation along the three axes.
+Then there's a gyroscope, for instance, that provides orientation information
+with much greater precision.
+There's a magnetometer that detects the magnetic fields, for instance,
+when you open the compass app.
+There's a proximity sensor that knows, for instance, when I pick up the phone
+and put it right next to my ear that it can dim the screen down
+and save battery life.
+There's a light sensor that measures how bright
+the ambient light is and then adjusts the screen display brightness
+so that it can both be easier on the eyes as well as save battery.
+There's a barometer inside that measures the pressure,
+and that data is used to kind of figure out where exactly the device is
+with respect to the sea level because that allows you to actually
+have a much better position on GPS.
+There's a thermometer to know how hot the phone is because sometimes they
+do optimizations based on how hot the phone is.
+When the phone gets very hot, they actually slow the phone down.
+That's another sensor.
+There's a pedometer inside, for instance, that
+knows how many steps you have taken.
+There's a heart-rate monitor that knows whether you're working out or not.
+Just think about all these things that you
+probably have been using on a daily basis
+but not really been reflecting on it.
+What I'm trying to get you to realize is that these sensors
+that are on our devices already today have remarkable potential.
+While I'm talking about these specific sensors
+that I've just given you a variety of examples of, the reality of the fact
+is that we're not fully exploiting these sensors to their maximum capability.
+In fact, if we did that, there would be so much data being produced
+and so much data being translated into rich knowledge and information
+that we would have uncovered a whole new range of applications,
+but we're nowhere close to that.
+There's lots of good data that we don't actually leverage.
+As you might recall, less than 1% of the data is being analyzed today,
+and already that's changed the way we interact with machines
+or what kind of application services we benefit from.
+And imagine what happens when you touch the remaining 99% of the data
+that we're yet to see.
+So that's very exciting, right, because that can open up
+a whole new range of applications, many of which
+I've talked to you about right at the beginning of the course.
+So I'm not going to go over them, but I want you to take a moment
+and reflect back based on the fundamentals you've
+learned what kind of different applications you can enable.
+Now, in addition to looking at all these forward-looking applications
+like robotics, drones, smart glasses, and all this stuff,
+I also told you to take a moment to reflect
+on how you can use this technology to actually impact the planet.
+That sounds rather grandiose, but I told you,
+you can do it one tiny step at a time.
+You can use it for wildlife monitoring.
+You can use TinyML, for instance, to monitor planets, the planet
+forests, the oceans, and so forth.
+There's a lot of different applications you can enable,
+and we talked a little bit about this when we talked about the ElephantEdge
+project, for instance.
+So the key thing that we're getting to is that AI is everywhere.
+As we go into Course 2, we're going to talk much more about AI everywhere.
+As we do this, as exciting as it is, there
+are lots of benefits we're going to get out of it,
+but there are also serious risks that are about to come about,
+and there are going to be some serious ethical challenges we
+need to be concerned about.
+Now, AI is fundamentally disruptive.
+I don't mean to scare you, but it's a disruptive technology.
+And whenever something disruptive comes about,
+it changes, influences, or replaces things as we know them.
+We need to be cognizant about what's going on.
+And therefore companies are increasingly coming together,
+and they're wanting us to think about what the implications are going
+to be when we deploy this technology in the industry
+like for predictive maintenance, for instance,
+or when you use it for environmental applications
+or, for instance, when we start putting all these smart devices on our bodies.
+And I've talked about many different application use cases.
+As we go into Course 2, we'll get much more deeper into these things.
+The key thing is this.
+As we start using all of this technology,
+if we're going to be scared about it, we can completely
+stop developing all this remarkable technology.
+We don't need to learn about machine learning.
+We don't need to get excited about TinyML possibilities.
+We can do that.
+But it's a double-edged sword.
+I often like to say that you can use a knife to cut vegetables
+or you can use a knife to harm someone.
+It's a tool.
+It's a question of how we use that tool.
+And as long as we're responsible, we can use the technology for good.
+And hopefully you learn something from Dr. Kennedy
+when she talked about what are the considerations for AI when
+we are deploying it.
+In fact, before we get to the deployment,
+we actually have to think about it at the design stage.
+The design influences the development, and the development
+influences the deployment.
+Dr. Kennedy talked to us a lot about what the implications are
+when we are at the design stage.
+As we move into Course 2 and Course 3, we
+will talk much more about what it means in terms of the development of the AI
+algorithms and in terms of the deployment of the algorithms.
+So what I'm trying to say is that if we shift our mindset from being
+afraid of this technology being deployed everywhere and embrace it,
+then companies and users will feel very good about actually enabling
+this technology at a much wider scale, the scale at which we're talking
+about when we talk about TinyML.
+This is why you see that companies are all coming together and creating
+partnerships or collaborations or consortiums
+because they want their future engineers,
+you and me, they want us to not only understand the technology
+but to also be responsible when we're deploying that technology.
+Remember the stat that I gave you earlier right at the beginning?
+It was something like around 60% of people
+just in America are afraid of all of these new devices
+that we're talking about.
+They don't know what information is being processed.
+So what do they do?
+They shy away from it.
+Is that really what we want?
+No.
+We want people to feel comfortable when they're taking the technology on.
+And to that end, companies for hiring the next generation of engineers,
+they want us to be aware of this.
+This is why Dr. Kennedy is teaching us all these different things
+about responsible AI.
+The cost of making a mistake when we deploy these things is really big.
+It not only affects the product, one product within a company.
+It affects the whole company.
+It has grave consequences.
+So ideally what we want to do is we want to nip these things in the bud.
+The right way to do it is to learn about it
+and to proactively think about it right as we are understanding technology.
+And hopefully as we move into Course 2 and Course 3,
+you will learn to appreciate the whole notion of responsible AI
+and how it intersects with TinyML much more.
+With that, my friends, I want to say I'm very much looking forward
+to doing a quick recap of all the fundamental concepts
+that we learned in Course 1, and I'm going to do that in the next video.
+So stick with me, and then after that, we'll go on to Course 2.

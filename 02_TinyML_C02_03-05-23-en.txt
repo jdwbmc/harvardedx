@@ -1,0 +1,170 @@
+VIJAY REDDI: In this video, I'm going to wrap keyword spotting up
+by talking about yet another interesting paradigm for a real world deployment.
+We've talked previously about streaming audio
+and how that's actually important.
+Now, I'm going to talk about how to efficiently deploy keyword spotting
+in a production situation.
+Remember that a lot of our problems really stem from the fact
+that TinyML is extremely resource constrained,
+though it can do this with extreme efficiency from a power perspective.
+There's a trade-off we make, and therefore, we
+end up with these very, very small little models that we can train,
+that are efficient in terms of the number of parameters they have.
+But we end up with making many trade-offs.
+Think for a second about the kind of trade-offs that we end up making.
+What happens to the number of words that you can actually
+get the keyword spotting model to recognize?
+It's a very small network, so you really can't get it to remember too much.
+The other thing is that even if we have only a handful of keywords,
+getting that accuracy to be really high is difficult,
+because the network is really simple.
+Ultimately, these two things add up to limited user experience
+or quality of experience for the end user
+because the model is extremely simple.
+Of course, you can make enhancements to increase the model slightly and so
+forth.
+But you get the general idea that no matter what you do,
+you have that strong confinement in which you have to live in.
+So is there something that we can do to alleviate this sort of a problem?
+Well, think about the overall system as a potential solution.
+By the system, I mean everything from the TinyML device, to your smartphone,
+or to your laptop, all the way up to the cloud computing infrastructure that
+is on the other end of the extreme.
+So you have this massive computing infrastructure that's available to you.
+What can we do?
+How can we use that to improve the vocabulary or improve the accuracy
+and effectively improve the user experience?
+Well, let's take a look at the big picture.
+When we start off, we're right at the microcontroller.
+From the microcontroller, which is running the neural network,
+we can do a little bit of processing there.
+But if we need more capabilities, we need
+to somehow be able to move the data up to the cloud
+where there are more computational resources that
+can run much bigger neural networks.
+In that way, we can effectively do some bits and pieces on the local device
+and then do more on the remote device.
+So if you remember that GIF that I keep showing you, which is the Alexa.
+And then it says, hi, Vijay.
+Then, I say, dim the lights-- that animation that I've shown you.
+The key thing that's happening there is that in a typical world,
+that Alexa is what wakes up the machine.
+And the dim the lights is actually something
+that requires a bit more processing, so that's typically
+offloaded to the cloud.
+That's one way we have effectively increased the size or the processing
+capabilities of the network in terms of its overall vocabulary.
+So you've got to think about keyword spotting in the context of the bigger
+picture, not just the keyword.
+There are applications with just the keyword.
+But there are also bigger applications that you
+can enable through keyword spotting.
+Now, instead of always going to the cloud, which
+can cost a lot of energy, which I mentioned right at the beginning,
+are there other ways to mitigate this?
+Are these the only two extreme endpoints?
+No, right?
+Because you go from your TinyML microcontrollers.
+You might have a phone, or you might have a watch, which
+might have a slightly better processor.
+And then, you might be able to actually offload to your PC,
+or maybe then, send it to the cloud.
+So there's a lot of this computational hierarchy that you have.
+And the question is, how do you leverage that?
+And that's where the cascading comes in.
+The cascading is this idea that you have a little model
+do something and a bigger model do something else in order
+to unlock the overall capabilities that you actually want for an application.
+Now, instead of going to the cloud, one of the things that you can obviously do
+is change that step in the middle.
+We can use a secondary larger model on a larger local device, like your phone.
+So run a very small model on your microcontroller,
+and if it detects something that you think is interesting
+and maybe it's not very confident, you can also run that in nearby element.
+That communication energy between the microcontroller and your phone
+is going to be much less than the communication energy that
+is needed between your microcontroller and trying
+to get it to talk to a cloud server, just from a pure infrastructure
+standpoint.
+So you can intelligently try and do a system architecture
+to try and get that TinyML application to be
+a bit more powerful than what you want.
+Let's take a real world example, for instance,
+of how this is actually done on a smartphone.
+A smartphone has a lot of capabilities, but it also has TinyML in it.
+Think about the fact that, for instance, when you say, hey Siri,
+it's something that your phone is constantly
+able to recognize throughout the day.
+As long as it's got battery, it's able to respond to, hey Siri.
+But how do you think they're able to do that by having you continuously listen
+to an audio stream?
+Turning the mic on and doing the signal processing actually
+costs a fair bit of energy that drains from your battery.
+So can you architect the system to be efficient, is the key question.
+So in the example that we kind of just looked at, hey Siri comes in.
+You have some mechanism, the detector, that wakes the phone up,
+that allows you to get more capability that's up in the cloud.
+For instance, when you say, hey Siri, play my favorite song,
+well, OK, that's pretty complicated.
+So that requires, hey Siri to activate your phone.
+The phone then has to recognize that there's something else you have said,
+which is, play my favorite songs, which means
+you've got to figure out what your favorite songs are in the cloud
+and then start playing things.
+So there's a fairly complicated pipeline.
+But how can we enable this to be continuous, always on ML?
+Well, that's where the cascading aspects really come in.
+What you want to do, is that you have a TinyML subsystem, or an always
+on processor module that is physically on the chip, a computing subsystem that
+is separate from your main application processor, that is constantly
+listening to this audio that is coming in,
+and then using a TinyML model that is continuously running.
+And then, if it detects something interesting,
+then it wakes up a bigger processing engine.
+And that bigger processing engine, which is much more accurate,
+can then figure out, for instance, with much greater confidence, if it should
+really be invoking the cloud, which is very energy
+inefficient if you get it wrong.
+And of course, you also don't want to have false accepts.
+So this is the fundamental idea behind cascade architectures.
+And in fact, this is exactly how Siri works.
+And in fact, this is almost also how OK Google really
+works on your smartphone devices.
+TinyML is part of virtually every single phone that's out there.
+So taking a step back, the TinyML aspects, the always on processor
+is the kind of stuff that's running exactly
+like on the microcontroller that we'll be using, which is a Nordic processor.
+While your board is about the length of my finger,
+the actual chip, the microprocessor itself, is really, really small.
+And that actual microprocessor is found in many phones.
+Now, by comparison, the bigger network, which has much more capability
+and is much more accurate, is actually running on a full on Apple
+processor, which can consume anywhere from 1 to 3 watts.
+That's a lot of energy compared to the milliwatts of energy
+that a TinyML device typically consumes.
+And that's the critical thing.
+A cascading architecture is a coupling of the different models
+working together on different physical subsystems.
+That's the key takeaway here.
+And that's what cascade architectures are all about.
+And the reason we end up doing cascade architectures
+is because they give us two ROC curves, which at this point,
+you should know what they mean.
+And so on the x-axis, we have the false accepts.
+On the y-axis, we have the false reject rates.
+And this is something, by having two models,
+you can have effectively two operating points
+simultaneously that you can move around.
+And that gives you much more flexibility in the space.
+When we get into course 3, we'll go much deeper
+into the cascade architectures as well as the streaming audio.
+With that said, the next time you say, hey Siri,
+I want you to think about all the brilliant mechanics,
+from the machine learning, to the embedded systems,
+to the streaming audio, to the cascading--
+all of this stuff that's actually happening behind the scenes.
+It's beautifully executed.
+And that's what really gets me excited about TinyML.
+And again, remember, this is just the tip of the iceberg.
+There's much more exciting stuff that's coming down.
+Stay tuned for that.

@@ -1,0 +1,201 @@
+VIJAY JANAPA REDDI: In this section, we're
+going to get started with the anomaly detection machine learning pipeline.
+As always, I like to start right at the beginning talking
+about data collection.
+Because I'm going to say this yet again, you get the data collection part wrong,
+everything else down the pipe is a wasted effort.
+So let's try and understand a little bit about what it means
+to collect data for anomaly detection.
+Let's roll back a bit and reflect on some of the data set principles
+that we learned about previously.
+Here's an example of the speech command data set,
+which we use in keyword spotting.
+Previously, when we wanted to do keyword spotting,
+we knew what the requirements were for the data set implicitly.
+Because you knew what the keywords were going to be,
+you could then go about collecting data for those keywords.
+Sure, you got to be careful about gathering the right keywords
+under the right situations, and making sure that the data is correct,
+and making sure you can sustain that pipeline.
+All of that good stuff that we learned, yes, they're all important.
+But there's one very important fundamental assumption, or baseline,
+that you can take for granted there.
+It's that you know your keywords.
+That makes a world of difference because when it comes to anomaly detection,
+you don't know your keyword.
+What do I mean by that?
+Specifically, you don't know the numerous ways
+in which a machine can fail.
+So when you're talking about anomaly, you're
+talking about finding in 1 of 10 ways, 100 ways,
+1,000 ways a particular machine can fail.
+Compare that and contrast it with keyword spotting or the Visual Wake
+Words data set that we talked about.
+We knew exactly what we were looking for.
+In keyword spotting, we knew the keywords.
+In the Visual Wake Words, we know the particular item
+of interest in those images.
+Here, you don't know which way that the machine is going to fail.
+All you know is that you're trying to predict a failure.
+So that presents a real problem.
+That's one.
+Number two, it is quite hard to capture a wealth, or a volume, of data
+for something that is inherently rare.
+Recall that you're trying to collect anomalous data.
+What that means is that you're trying to collect a lot of data for something
+that happens extremely rarely.
+So it's like a really hard problem that you're trying to solve.
+And if you wanted to collect that data very fast,
+then you have to go about buying machines and intentionally breaking
+them.
+Well, that doesn't sound like an easy thing to do.
+Or it does not sound like a cheap thing to do.
+Usually, you're trying to use TinyML and anomaly detection on costly machines
+because you want to predictively do maintenance on these costly machines
+so that they don't break down at critical times.
+Well, you're not intentionally going to go and break down a jet engine
+or break down 1,000 or 100,000 jet engines just
+because you want to be able to do predictive maintenance on one or two
+jet engines when it's timely.
+Think about that.
+So this presents a really hard problem for us
+because normal data is usually a closed set, meaning the normal operation.
+You know what it looks like.
+And then therefore you can easily capture the data
+because you have a lot of normal data.
+Abnormal data presents a really big problem
+because abnormal data is an open set.
+It's a set where a system can fail in any number
+of different and unpredictable ways.
+It's the unknown unknowns.
+Therefore, we need some way to train a model
+to detect something that we can't actually capture in our data set.
+Think about the difference here.
+In the case of keyword spotting or Visual Wake Words,
+you would just go and get that data.
+But here, it's very hard to get that data.
+And even if you could get that data, it's going to cost a lot.
+So you need to be clever about how you would actually engineer the system
+in order to detect these abnormalities.
+One of the biggest problem is that you have
+unbalanced data in anomaly detection.
+In the context of traditional detector cat versus dog and all the data
+engineering that we taught you, there was lots of that data
+that you could create in order to create a balanced data set.
+Here, because anomalies are really rare, the problem you're going to have
+is that you're going to have very little data available for you.
+So one of the things that has been going on
+is that there's been a lot of interest in the community
+to try and build data sets for anomaly detection, specifically around sound.
+I'm actually introducing sound in here because we've done stuff around sound.
+So here's MIIMII data set that you should know about,
+which is a data set which is specifically
+designed for malfunctioning industrial machine investigation.
+It's a collection of sounds.
+And what they had done is they had gone out
+and instrumented things like pumps, fans, valves,
+and so forth for different kinds of sounds
+that they make, both during normal operation as well as abnormal operation
+in real factory settings.
+And so the spectrograms here are kind of showing you the visualization
+for different kinds of sounds.
+In fact, you're going to have a deep reading that's coming up,
+which is specifically on the MIIMII data set,
+so I'm not going to go too much deeper into this.
+The reading will do so.
+Now, this is in the context of a real factory setting.
+But what about getting creative in order to get lots of that data, that hard
+to get data?
+Well, there's a ToyADMOS, which is a really interesting way
+to think about collecting data.
+The ToyADMOS data set is basically a data set of miniature machine operating
+sounds.
+This data set happens to have 540 hours of sound for anomaly detection,
+again based on sound.
+It's based on toys--
+car, conveyor, trains-- and it's about the sounds that they make,
+and you're trying to detect anomalies from them.
+So the way they kind of set it up is that there's a track here
+that you're seeing where there's small little trains--
+yes, they're toys-- that are actually going
+around doing the job of continuously doing what a toy does.
+And there are different microphones that are positioned in different places,
+and their sounds are recorded.
+And one of the key things that the authors have done
+is that they deliberately damaged a toy.
+So you can collect different kinds of sounds.
+So they're damaged in many different ways, for instance.
+And that allows you to have a diverse portfolio
+of sounds inside the data set.
+Looking one level deeper, the data set is
+spread across three different types of toys, as I said earlier--
+toy car, a toy conveyor which is actually fixed,
+versus a toy train which is actually continuously moving around tracks.
+So you get very different kinds of sounds coming from them.
+And you're collecting different machine types of sounds.
+And you also got data in there that's actually quiet,
+which is the background noise, or the environmental noise
+that you have of that operating situation,
+as well as the data when the machine is actually running.
+Now with that, you can actually think about how
+to collect the data intelligently because, as I said earlier, the four
+different microphones they use.
+Why?
+Because you want to look at the data from different angles.
+So if you use one microphone alone, it does not
+give you a full representation of what the sound would look like.
+So there are a lot of nuances about how you actually collect sounds.
+And when you're building a model, for instance, you can decide,
+am I going to use the data that's coming from all four,
+or I'm actually going to use all three, or only two, and so forth.
+Point is, there's a lot of flexibility in this data set.
+They also have multiple machines.
+For example, they have multiple cars.
+They have multiple conveyors.
+They have multiple trains for the exact same class.
+And that leads to variations that are inherently there
+[? between ?] these different machines, which
+gives you different kinds of sounds for the exact same class.
+And the data is recorded several times.
+So the anomalous sounds you end up picking up
+tend to have diverse characteristics, which is a good thing.
+Ultimately, you have about 180 hours of normal machine operating sounds
+and over 4,048 kilohertz samples of anomalous behavior.
+So it gives you a fairly different behavioral pattern
+about what the entire data set looks like.
+The reason I'm talking about this is because I'm
+trying to highlight two key differences [? between ?] the way
+the MIIMII data set is kind of done from a real world factory
+setting and the ToyADMOS, which is kind of done with the mock environment.
+While you can train models on both of them,
+one of the key things I want you to keep in mind
+is the issue about transferability.
+Let's say you come up with this magical model,
+which we'll get into next, that can actually do
+anomaly detection on a given data set.
+We talked about transfer learning in these kinds of things.
+I want you to know that, in the context of anomaly detection,
+it's actually quite hard to easily be able to transfer the application
+environments.
+For example, if you're collecting sounds for something
+like about how the airplane landing gear works,
+the data that you collect there is not easily repurposable for something
+like an oil rig.
+So just kind of keep that in mind because sometimes anomaly detection
+models tend to overfit to their training data
+within that particular sound context.
+And this is just one of the pitfalls.
+So keep that in mind because that is extremely
+tied to your data engineering aspects.
+So with that said, I want you to go on and do your Colab.
+And you're going to be doing a little bit of hands-on programming.
+Specifically, you'll be touching up on things around some of the thresholds
+that we can change, and what are the differences
+k-means versus anomaly detection, and so forth.
+So we'll be getting pretty deep into that.
+With that said, I'm going to next talk about how do we
+actually build an anomaly detection model
+because that's also going to be new.
+It's different from the other types of networks
+that you've actually played with so far.
+And I'll see you there.

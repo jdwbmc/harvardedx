@@ -1,0 +1,92 @@
+VIJAY JANAPA REDDI: Hi, in this video I'm
+very excited to introduce a TinyML Course Kit.
+This is a kit that we developed in conjunction with Arduino
+and is widely available to everyone across the world.
+One of the cool things about this kit is the fact
+that we designed this kit to be extensible.
+In other words, while this kit serves as a basis for you
+to experiment with everything that we teach you in this course,
+it's also got capabilities that allow you
+to expand outside of this course using the learnings that you
+get from this course.
+Let me introduce you to the kit components
+so you get familiar with what's in it.
+First and foremost is the Arduino Nano 33 BLE Sense.
+Now, this is the brains of your TinyML Kit.
+Now, you know the Nano 33 by now because I've shown it to you
+a thousand times on my slides.
+But hopefully, you're finally excited to hold it in your hand.
+This is a small little microcontroller development
+board, which has got all the elements of a modern embedded computing
+system on it.
+For example, it's got a rich number of sensors, it's got a microphone,
+it's got an IMU, it's got a light sensor, it's got an intensity sensor.
+And it's also got actuators in the form of RGB LED indicators
+that allow you to understand if the machine is trying
+to communicate something to you according
+to what you've written in the code.
+It's also got a communication hardware module, specifically
+in the form of Bluetooth, which allows you to transmit data
+without having a cable tethered to it, which makes it quite exciting.
+And it's something we will be using for the magic wand example.
+We can actually interface that Nano 33 with a camera module, as shown here.
+The OV 7675 camera module is a low voltage color CMOS image sensor which
+got a couple of break out pins on it.
+Now, this camera module outputs a resolution
+of about 0.3 megapixel, which is sufficient for the kind of things
+that we will be doing for our TinyML use cases.
+Now because it's got so many pins, one of the problems
+that we often tend to have is that students will incorrectly
+wire the different pins.
+And that leads to a lot of problems in debugging.
+In order to get rid of that problem and make things easier,
+we designed the TinyML shield.
+The TinyML shield is basically a daughter PCB board
+that's designed to have many I/O pins that
+allow you to easily interface the Nano 33 and the camera module together.
+But not only that, it's also got a lot of flexibility built into it.
+Specifically, if you look at the bottom of the board,
+that's where your Nano 33 is going to easily plug in.
+Now if you look at the top of the board, that's
+where the pins of the OV7675 camera module get plugged in.
+Now, that's it.
+You don't have to worry about any wires in order
+to connect those bazillion pins that are staring at you on the camera module.
+No mistakes.
+We'll be able to get started immediately.
+Another nice thing about this particular TinyML shield
+is the fact that it allows you to interface the Nano 33 BLE
+Sense with many other kinds of sensors.
+You're not restricted to just the sensors that are on the board.
+So on the right hand side of the board, you'll
+find standard Grove connectors that allow you to have serial communication
+with other types of sensors.
+On the left hand side of the board are also another set of Grove connectors
+that allow you to break out with analog and digital GPIO pins.
+In other words, you will be able to use these GPIO pins to interface with LEDs,
+buzzers, buttons, and so forth.
+Here are some examples of the kind of sensors that you
+might be able to interface with.
+For example, you might be able to interface with the thermocouple sensor.
+Or you might be able to interface with an optical rotary encoder.
+And these are sensors that you would buy separately.
+And they come with a cable that can easily
+plug into the sides of the board.
+So therefore, the TinyML shield allows you
+to explore much more than what we do in this particular class.
+Finally, right on the bottom, there's a programmable button
+that's on the left hand side.
+And it's got a screw terminal for external power on the right.
+The screw terminal allows you to easily and safely connect a battery
+to make the system fully independent.
+In other words, you can completely disconnect all the wires
+and be able to interact with the device while it's still
+on using battery power.
+In other words, you might be able to hold the device up and take
+a selfie just like that.
+So with all that said, I hope you're excited about the TinyML Kit.
+We spent a lot of time thinking about what's
+the most easiest and convenient way of packaging up the materials for you
+so that you can focus on what really matters and not get distracted
+by the physical components and the mechanics that are
+needed to get the whole thing running.

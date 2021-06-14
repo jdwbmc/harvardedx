@@ -1,0 +1,144 @@
+VIJAY JANAPA REDDI: In this video, I'm very
+excited to introduce a whole new neural network architecture to you
+called the autoencoders.
+Before I do that, let's take a step back and look
+at what you learned in the Colab.
+One of the things that we introduced to you
+was K-Means, which is a machine learning algorithm that is specifically
+based on clustering, that allows you to sort of segment data
+into different clusters as centroids.
+Now hopefully by doing machine learning using K-Means,
+you learned that one of the key problems that K-Means has as that data
+set increases, or the number of observations
+you have in your collection actually increases,
+K-Means starts to fall apart.
+Especially when you have high dimensional data, it does really poor.
+But that still leaves us with this fundamental question about what
+do we do with anomaly detection.
+Remember, with anomaly detection, the problem
+is, that we have a lot of data for the normal behavior
+and those really important, yet rare events are the ones
+that we care about the most.
+So how do we go about solving a problem?
+Well, let's take a step back and look at it more intuitively.
+We have to come to terms with the fact that we don't know what we don't know.
+Do I mean by that?
+You and I don't know the 1,000 ways in which the machine might fail.
+But there is one thing that we do know really well.
+We do know how the machine is supposed to work.
+You do know what you know.
+In other words, if I take you back to this data
+and show you the wealth of data that we have
+here as to when the machine is working normally,
+well then, you know how the machine is supposed to work normally.
+You don't know the various anomalies that you might see,
+but when everything is good, you know what that pattern is supposed to be.
+Can we exploit that, is the key question?
+And the answer is, yes.
+We can exploit the fact that we have lots of normal data,
+forgetting the anomaly itself.
+How do we go about doing that?
+What we want to do is, effectively, we want
+to build in an ideal class, a neural network that
+can act as an identity function.
+In other words, it's supposed to be able to take an input
+and regenerate the exact same input.
+Can we train a neural network to do that?
+The answer is, absolutely yes.
+Because we have lots of normal data, we can certainly
+architect a neural network to be able to take
+a set of inputs on the left-hand side and split them out
+on the right-hand side.
+The key question is, what is this architecture in the middle?
+And what does it need to look like?
+Well, that's where the interesting aspects come in.
+When you have a lot of input signals that are coming in,
+there's a lot of noise in these signals.
+What you really want to do, is you want to compress that input signal down
+to its core fundamental elements.
+In other words, you want to eliminate the noise that's in the signal
+and really get to the essence of that signal.
+And that's where the autoencoder comes to bear.
+The autoencoder idea is this.
+That we create an encoder network on the left-hand side,
+whose job is to take this high dimensional data that's
+coming in on the input neurons and then compress it down
+into this core compressed latent space representation, which we can then
+deconstruct via the decoder, reconstruct the original signal.
+Effectively, this would mean that you have
+a set of neurons that are on the left-hand side for the encoder, a set
+of neurons on the right-hand side for the decoder with this sort
+of architecture where you are compressing the information down
+on the encoder side by pushing it through fewer and fewer and fewer
+neurons, so that the network effectively learns to figure out the hidden code.
+And then from that hidden code, you train the decoder side
+of the network to learn how to correctly reconstruct the original image.
+Now because we have a wealth of normal data,
+we can certainly do the back propagation process
+and repeatedly train this neural network through all the traditional mechanisms
+that you have learned so far.
+And in doing so, because you have so much of that normal data,
+it is possible to get a reconstructed network that
+minimizes this delta between what the input signal looks like
+and what that output signal needs to look like.
+In effect, you want to minimize the reconstruction loss.
+To be more specific, let's say I give you this example here.
+And I want this network to be trained repeatedly
+until it's able to reproduce this output on the right-hand side.
+At every stage, I'm going to take the input on the left,
+I'm going to take the output on the right,
+and I'm going to compare them and do a diff
+and see what's the error, what's the reconstruction loss
+or what's the Mean squared error between these two.
+And I'm going to push the network repeatedly through the training process
+until it minimizes that Mean Squared Error.
+At that point, my network has learned for a given set of input
+how to reconstruct that input when it sees that signal.
+That's great, because this means I have really good low reconstruction error.
+Now here's the critical thing.
+Now that your network has actually learned
+how to reconstruct your wealth of normal data, when
+you throw in an abnormal data, like something
+that's coming from MNIST Fashion data set instead of the numeric data set,
+now suddenly when you ask it to reconstruct,
+it's going to reconstruct something like this
+that does not look anything similar to what the original left-hand image looks
+like.
+At this point, if you were to compare the two, what you would end up finding
+is that the left-hand image does not match the right-hand image,
+and therefore, you have a high error.
+And that is the key nugget for anomaly detection.
+Because voila!
+Suddenly you have trained this network to raise a flag or say, hey, here's
+an error that I have.
+I have a high error on this, because I'm not able to reconstruct it.
+That's a beautiful thing.
+Because unlike traditional supervised-based learning methods
+where you typically want that error to be as small as possible, here,
+it's almost like you want the network to try and generate that image.
+But it's not going to be able to generate that original image.
+And when you do the diff between the two of them,
+it's going to be significantly larger, because it only
+knows how to reconstruct the normal data that it's trained on.
+So when it sees an abnormal data, the error
+is going to be large in its reconstruction.
+And that, my friend, is the key for doing anomaly detection
+using autoencoders.
+And with that said, congratulations.
+I'm super excited you learned about autoencoders, because they're
+a very powerful piece of technology that everybody is quite excited about,
+and it's got many applications.
+Because anomaly detection is a very fundamental thing.
+It can be used in so many creative ways to find all kinds of anomalies
+that can be used to signal for predictive maintenance
+or other kinds of applications.
+So I'm really excited that you got the chance
+to learn about anomaly detection.
+One of the things that you'll be going through in your Colabs
+is learning how to tune the anomaly detector so
+that you have a deeper understanding of how
+to calibrate the thresholds before you flag as something being anomalous
+or not.
+With that said, congratulations.
+There are a couple other things you're going to pick up in this class,
+and I'll see you back when I'm about to wrap up the course 2.

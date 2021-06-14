@@ -1,0 +1,30 @@
+BRIAN PLANCHER: Let's now take a look at the code behind the Blink example.
+If you look, it's actually mostly a comment.
+So let's up that text size and just scroll down to the bottom here.
+And what we'll find is that the Arduino Blink example is pretty much just two
+very short functions--
+the setup function and the loop function.
+And it turns out that any Arduino sketch boils down to a setup and a loop,
+whether it's the simple Blink example or a full keyword spotting application.
+In the setup function, we, well, set things up.
+You can imagine in a keyword spotting application, that
+could be as complicated as turning on the microphone
+and initializing a neural network.
+Here, it's as simple as just telling the device that we're
+going to use the LED is an output.
+And then in the loop function, we're going
+to run whatever we need to run over and over and over again.
+So in the keyword spotting example, that's
+recording audio, doing pre-processing, passing it through the neural network,
+getting the output, and then doing whatever
+we want to do with that output.
+In this case, it's just turning the LED on, waiting a second,
+and then turning it off.
+And in general, it's just to remember that every Arduino sketch is
+going to do some amount of setup, and then it's
+going to do something in a loop as fast as it can over and over again.
+And so you just need to get into a mindset
+of that's how your code will work.
+It's set something up once, and then infinite loop forever.
+So hopefully, that explains the code a little bit.
+And I'll see you all in the next test.

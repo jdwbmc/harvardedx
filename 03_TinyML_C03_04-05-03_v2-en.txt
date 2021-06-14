@@ -1,0 +1,95 @@
+VIJAY JANAPA REDDI: In this video, I'm going
+to walk you through keyword spottings initialization step.
+Remember that the keyword spotting application
+has got many different components to it, going from the initialization
+into the main loop.
+Now, the initialization, which is the first step,
+has got many subcomponents to it.
+Don't be alarmed by the large number of steps we have to take.
+I'm going to walk you through each and every single one of these
+in greater detail.
+The most important thing to take away from this slide
+is that these are the steps you're going to be doing regardless
+of what application you're building.
+Let's get started.
+The very first step is to simply declare the variables.
+Specifically, you want to declare the variables that
+correspond to TF Lite-- for example, that you need an error_reporter,
+that there's a model pointer, that there's
+a pointer to the MicroInterpreter, and so forth.
+These will tend to happen regardless of the application you're doing.
+I'm going to get more into the details in the screen test.
+For now, just kind of get the general idea.
+The second portion really focuses on the Tensor arena.
+Now, remember, you have to experimentally determine
+how big your Tensor arena is going to be.
+Bigger is always OK from an execution standpoint, as long as the model fits.
+But remember, if you make the Tensor arena too big,
+then you're effectively wasting space, which you might not be needing at all.
+So you want to try and figure out what's the minimum amount of Tensor arena size
+that you really want, and then allocate an array that
+can actually hold that space.
+After that comes loading the model, which
+you can do using the get model function, which takes a pointer called g_model.
+G_model is nothing but a pointer to an array that
+actually contains a hexadecimal dump of the actual neural network we're using.
+In our case, it's a tiny [INAUDIBLE] network, which is effectively
+expressed here in a raw format.
+Now, out of these, you've actually got to determine what are those operators.
+Now, you've got to know what the operators are
+that are used by your neural network.
+In the context of tiny [INAUDIBLE] it happens
+to be Reshape, DepthwiseConv2D, FullyConnected, and softmax.
+And you tell tflite micro that these are the ops you're using as such,
+by showing you the code on the right.
+Now, the key thing to remember here is that you could always
+use the AllOpsResolver, but you don't want
+to do that, yet again, because you want to keep the amount of binary space
+that's occupied by TF micro as an executable, small.
+And you can do that by only bringing in the ops that
+are used by the neural network, which in our case, DepthwiseConv2D,
+FullyConnected, softmax, and RESHAPE.
+And that allows us to only use the code that's
+needed for actually getting the neural network.
+Now that we have all the bits and pieces,
+we can actually allocate or instantiate the interpreter,
+which we're doing here by passing in the model, the micro_op_resolver,
+the Tensor Arena, the size of the Tensor arena, and the error_reporter.
+Once we're done with that, we're going to actually allocate
+the memory for the TensorFlow arena, where the model is actually
+going to be executing out of.
+Next comes actually defining the model inputs.
+Now remember that you're going to have your input
+audio data coming in from someplace.
+Now, that might get processed, and then it
+needs to be handed off to the interpreter, which is actually going
+to run that input through the network.
+So you have to link those two things together.
+And the first thing you do here is actually figure out
+the interpreter's input coming from.
+And then you express that by making the connection to model_input.
+More on this in the screencast, but the key takeaway
+here is that you need to be able to link the input that the model is
+going to be getting to the actual input that you're
+going to be providing it with.
+Now that we have effectively set up everything
+we need for TensorFlow Lite Micro itself,
+then we can set up other parts that are relevant to our application,
+such as the feature_provider and the RecognizedCommand.
+Feature_provider is the one that in keyword spotting
+will generate the spectrograms.
+RecognizeCommand is the one that will actually
+do something based on the words that it might recognize, such as yes or no.
+All that said, I'll just walk you through the steps
+from declaring the variables down to set up main loop.
+Now remember, again, the takeaway here has really
+got to be that these are the general steps you're going to be following,
+regardless of your application.
+All that said, in the future slides, I'm just
+going to be using Initialize Interpreter to refer to many of the steps
+above because these are things that we will be doing repeatedly.
+So just kind of keep that in mind.
+With that said, in the next video, I'm going
+to pick up talking about the actual code in the screencast
+and help you understand how to navigate the large number of files
+that we'll be looking at.

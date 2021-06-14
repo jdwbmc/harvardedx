@@ -1,0 +1,60 @@
+PETE WARDEN: Hi.
+So, we've talked about how an interpreter needs
+a list of operators, weights, and other information to run a model.
+But how is this data stored?
+The model format is the link between training a model
+and running it on a device.
+So in this video, I'll run through the format and how we use it.
+If you look near the start of the Hello World sketch,
+you'll see this section of code.
+This is how we set up the model data structure.
+The most important call is this line.
+The g_model variable is an array of bytes
+that we've exported from TensorFlow held as a C array in a source file.
+This array of bytes is the raw data for the model.
+And the GetModel call the turns a C++ class that lets us access
+the model's data elements.
+As the comment mentions, this call doesn't
+do any data movement or copying, so it's very memory efficient.
+It just creates a thin wrapper to read the information in place.
+Once we have this C++ class, we can read the operations and weights
+to understand how to run the model calculations.
+The underlying bytes of the model are stored
+in a read-only array, which means it can be held in flash memory
+on devices that have it.
+If you're used to programming desktop computers,
+you can think of this array of bytes as the equivalent of a file on disk.
+But since embedded systems usually don't have file systems,
+we store the data in read-only memory.
+Serialization turns a data structure in a language like Python
+into a form that can be stored as an array of bytes
+and then understood by many other languages.
+You might be familiar with other ways of serializing
+data like JSON or ProtoBuffers.
+For TensorFlow Lite Micro, we're using FlatBuffers.
+And the key reason for that is that they're very memory efficient.
+This matters because there's often very little memory available.
+A typical embedded chip might only have a megabyte of flash memory
+and 256 kilobytes of SRAM.
+This means we need a library that uses very little memory
+and doesn't need operating system support,
+since that's often left out to save space.
+So we have this model stored as an array of bytes,
+the equivalent of a file, that holds all the information we
+need about a machine learning model.
+The FlatBuffer's format allows us to keep that information in place
+without needing any additional memory and also has
+the benefit of not requiring any operating system support.
+The serialization format is defined as a text file, called a schema,
+and specifies what elements are held within the data structure.
+The FlatBuffer compiler takes a schema definition and to create C++ code
+to access all of the data held in a serialized byte array.
+To give you an idea of what's held in the model data,
+the main parts are metadata about the model, like the version, quantization
+parameters, inputs and outputs, the list of operations to perform,
+and the size and values for all of the weights.
+If you want to get a better feel for what's inside a FlatBuffer model
+structure, we've created a Colab that lets you explore reading, modifying,
+and writing out a model in Python.
+This will let you change the sort weights, for example.
+So it's a great way to get your hands dirty with this.

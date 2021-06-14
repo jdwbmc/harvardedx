@@ -1,0 +1,362 @@
+VIJAY JANAPA REDDI: Hi.
+In this video, I'm going to take you through the realm of quantization.
+Lawrence introduced us to a variety of different APIs calls,
+like the code that you're looking here, where in TensorFlow Lite,
+you can ask the system to optimize the network for different characteristics.
+Specifically, you can ask TensorFlow Lite
+to optimize the network in terms of size or latency,
+or there's some sort of default setting.
+What I want to do is try and explain to you what
+is really going on behind the scenes.
+Lawrence gave you a little bit of intuition
+about the fundamental concept.
+We're going to take that concept much further so you have a deep appreciation
+for why we want to do quantization.
+What exactly is quantization?
+Quantization is an optimization that works
+by reducing the precision of the numbers that
+are used to represent a model's parameters, which
+by default, in TensorFlow, happen to be in 32-bit floating-point numbers.
+Now, if you can reduce the precision from 32-bit floating-point numbers
+into something smaller, then you will be able to reduce the model size.
+And you will be able to increase portability of that model.
+Why?
+Because the model is smaller so it can fit onto smaller constrained devices.
+Not all embedded systems have a large amount of memory.
+And if you also make the model smaller, there's
+a chance you might be able to increase the speed of the model,
+the inference performance of the model.
+We'll talk about how that actually happens in this video.
+When we're talking about reducing the precision, what we mean
+is that we're going to take a value that's
+expressed in float 32-bits, which takes 4 bytes,
+and compress that value down into an int8.
+An int8 is only 1 byte.
+So immediately, if you do that, you get a 4x reduction.
+You go from 4 bytes down 1 byte.
+That sounds wonderful.
+Now nothing's a free lunch.
+There are critical trade-offs that we have to make when we do this.
+We'll learn about them.
+But first and foremost, let's do a quick recap
+on why we actually want to quantize.
+Given that quantization is so important, it
+is extremely crucial we appreciate it.
+The three fundamental reasons-- size, latency, and portability--
+let's step through each one of these.
+The first thing is about size.
+What about size is actually critical?
+The first thing that comes to mind is when you have a neural network model,
+you've got to store that model someplace.
+That storage size becomes critical.
+Now if you remember, the storage size on our microcontroller
+is a 1 megabyte size.
+Now if you bounce back a couple of videos earlier,
+I had mentioned that a MobileNet model for instance, which
+is something that is often used in vision tasks
+on small little mobile devices or even embedded devices,
+tends to be in the order of several megabytes.
+But we only have 1 megabyte of storage.
+You can't even store it on the device.
+So we've got to think about how we can compress the models down.
+If you can take a 32-bit model and reduce it down into an 8-bit model
+where each weight, for instance, is expressed in 8 bits instead of 32 bits,
+then there's an automatic 4x reduction in memory.
+So you might be able to fit that onto your device.
+That's the first reason.
+There's a second reason.
+The second reason is primarily from the RAM size.
+Now you've got a model that-- let's say you're able to store on the device
+right now.
+Now you compress that model down and you want to be able to run it.
+Well, even during execution time, there are implications of that.
+For example, the graph on the right here is showing you the RAM size
+collected from our junior device.
+And what you will see is that the TensorFlow stack, which
+is the orange color, and the red, the model size,
+effectively are the neural network parts.
+And the rest of it, there's a whole bunch of stuff
+that's actually just dynamic memory and the normal memory usage of the program.
+So what I'm trying to get across is that even though we are talking about having
+a RAM of 256 kilobytes, you cannot assume that all of that is purely
+dedicated for your machine learning model or even the machine-learning
+inference engine, the TF Micro.
+You have to make assumptions for the fact
+that an application is comprised of machine-learning tasks
+and non machine-learning tasks.
+So there's a bunch of goo that actually holds the application together.
+And that also requires memory usage.
+So the lesser amount of RAM you can actually take,
+the better it is because it frees up the memory
+for other aspects of the application, which is crucial in the embedded system
+world.
+One of the reasons we can actually do this massive reduction in terms
+of going from floating-point values down to 8-bit values
+is because the weights that are in the neural network
+tend to be very concentrated around certain critical ranges.
+For example, here is the network distribution weights for AlexNet.
+What you are seeing is that it's a histogram, which
+shows that most of the weight values, which is really all these bars,
+are all kind of clustered together into two ginormous lumps.
+It's not a very broad distribution.
+It's a rather narrower distribution.
+So therefore, it's possible that you can actually take these values
+and then be able to express them in a limited range, which
+an int8, for instance, might be able to offer.
+That's the critical observation.
+We'll get into this more in depth in this video later.
+That's for the size.
+Now let's talk about latency.
+Where does latency improvement come from if you do quantization?
+Think about this.
+If you're operating on a floating-point value versus if you're
+operating on an integer value, a big difference
+is the fact that floating-point arithmetic
+as implemented in any silicon is often slower, much slower than an integer
+arithmetic.
+Integer arithmetic might only take a cycle or two cycles,
+as we would see, as compared to a floating-point arithmetic, which
+might actually take over 10 cycles to 15 cycles or so.
+So it's almost an order of magnitude different in terms
+of the computational performance requirement.
+So reducing a model from using floating-point values
+to int8 values that are easier to physically compute in silicon actually
+gives you a massive improvement in performance.
+Another benefit that you get by doing this translation
+from floating-point integer values is that you can cut down the power.
+Now think about where that reason might come from.
+Why would the power go down if I'm changing
+from floating point to integer?
+Well, it's the same reason as the silicon aspect.
+Floating point arithmetic, which takes longer to compute,
+is also more power hungry.
+And so by switching to a cheaper way of doing arithmetic inside the processor,
+we're able to reduce the power consumption down.
+This is quite substantial.
+So here, I'm showing an example for three different models that
+are operating in either floating point, which is the top gray bar,
+or integer, which is the green bar right next to it.
+And what you're seeing is in all three models, the green bar is much shorter.
+The reason is because the arithmetic is actually running faster.
+The latency for the model is much, much better.
+What this ends up translating to is you get better experience if you are,
+for instance, deploying a Tiny ML application
+onto a resource-constrained device, it's actually
+able to perform many more inferences per second, which is awesome.
+So what a quantized model is giving us is
+that it's making the models run faster, and it's also shrinking them down
+so they can actually fit on the limited memory that we have.
+So overall, this is awesome.
+Now another key reason is portability.
+Often when people talk about quantization,
+they only tend to focus on the size and latency and tend to ignore portability.
+But portability in embedded systems is extremely crucial.
+Why?
+This goes back to the fundamental message
+that I tried to convey to you in course one that I'm repeating here again.
+Embedded systems are not easily portable.
+The systems often make very aggressive trade-offs.
+For instance, one piece of an embedded silicon
+might support floating point arithmetic.
+Another might not support it.
+So then imagine, you are training the model here and preparing it
+for inference.
+You want to deploy it on some embedded microcontrollers.
+So you do your optimizations and then you're ready to deploy it.
+And it happens to be in floating point values.
+Well, that's only going to work on a subset of the embedded systems.
+It's not going to work on the other subset.
+So now suddenly, you have a model that's not generally
+applicable across the ecosystem.
+And recall why embedded engineers make this trade-off.
+They make this trade-off because they want
+to keep the cost of the embedded system low.
+And also they want to keep the power consumption on the embedded system
+low, which means by removing functionality like the floating point
+unit, they can effectively improve the overall system power
+efficiency, which is number one and it's king in the embedded system world.
+So you can effectively quantize the network
+into integer, which is a common baseline numeric that
+is actually available across all of the different systems.
+Then you get better portability, and you get better efficiency.
+Great.
+So now let's go deeper and ask a question
+of how exactly do we do the quantization.
+I don't mean what function calls you call.
+I mean what happens behind the function calls.
+OK.
+So when you take a neural network, calculations are all over the place.
+Hopefully, you will recognize some of this.
+One of the first things you will notice is
+that we have neurons that have weights.
+Then, these neurons also have biases.
+For every single computation you're doing,
+there's a bias that's associated with that network.
+There are many different bias vectors all over the network.
+Then you have activations that are actually going out the neuron.
+So you can perform quantizations at various different levels.
+One of the things that we're going to focus on
+is on doing quantization with weights because weights
+play a major role in terms of storage, for instance,
+because those are the things that you actually physically
+store inside your flash memory.
+Now earlier, I showed you this graph on the left, which
+is showing you the weight distribution, the values for all the weights
+across all those neurons across the entire network.
+And what you're seeing is that there's limited range.
+That's a first point.
+Second is that you can actually quantixze these values
+without losing the general representation of that space.
+So the values in the right graph are quantized values.
+Quantization effectively means, again, binning the floating point ranges
+into little buckets.
+We'll talk about that more.
+But effectively, if you look at the graph on the left,
+and you look at the graph on the right, you discretizing the data.
+But can you still help the same trend?
+Yes.
+You still have those two big lumps.
+And you have that tailing effect in the second lump.
+So how can we go further with this then?
+Effectively, what's happening is that when
+you are taking those original weight values, which are in floating point
+representation, you are then binning them into an 8-bit encoding scheme.
+Remember, because we are using 8-bit integer values,
+we have 2 to the 8, or 256 potential values,
+including 0 all the way up to 255.
+That's 256 values.
+So we discretize that long floating point range.
+And we took those values and we bucket them.
+We hash them into this 8-bit range that we have.
+Then when we are ready to do the computation again--
+now that the network is actually 8 bits in the middle stage, you save it.
+Then when you start running it, what you want to do is you take the 8-bit values
+and you reconstruct them into a 32-bit floating point value.
+And you can run it.
+This is the first step of the quantization scheme,
+because now imagine that you've taken a floating point values
+and you've compressed the weights into 8-bit encoding,
+so it's shrunk the model down by 4x.
+And so you're able to fit it.
+At this point, let's assume that you have floating point arithmetic
+capability.
+And so therefore, you would effectively decompress it and then
+be able to run it.
+Now, one of the things that's going to happen
+when you do this is that certain values that are inside the floating point
+original range will get bucketed into some bit encoding.
+For example, negative 5.4 gets bucketed into 0, which later you
+decompress into the negative 5.4 value, because 0 happens to map for that.
+However, sometimes you can have a situation where two floating point
+ranges are so close together, the two floating point values
+are so close to each other, they fall into the exact same integer bucket.
+The unfortunate side effect of this is that when you decompress the value,
+it's going to come out into the exact same floating point value, which
+means now you've lost a little bit of that resolution
+that you previously had in the original.
+This is a trade-off you will be making.
+There's also the aspect that, again, you have the issue that one of the values
+may not precisely map into an exact value.
+So this generally gives you a flavor for the issue that you might be seeing.
+The first red box being the most important one.
+Now let's go a bit further in this quantization.
+When we're talking about post-training quantization, which
+is on the left-hand side, you can go further into this
+and talk about weight compression and calculating the inference
+much more effectively.
+Now remember, when we're talking about weight compression
+on the left-hand side, what we're doing is we're taking the integer value,
+converting that into a floating point value when we're about to run it.
+And that's exactly what the pseudocode here is showing.
+When we have compressed volume, we are storing it on the disk.
+And then we're about to run the model.
+For every time we get the quantized value, which is an integer value,
+we convert that or decompress that value as you
+can see in the below box into a floating-point value.
+The arithmetic map here is very simple.
+Take a moment to look at it and you will understand.
+It's effectively looking at what the range is and scaling the range back
+into its original value.
+That's it.
+I can give you some pointers that you can
+look at later in the reading section.
+In the end, once the decompress function finishes,
+you now have a floating-point value back from the stored integer value.
+And then you perform the multiplication.
+One great benefit is that the size is now smaller.
+But recall here, as you're doing the input n times the decompress,
+that multiplication is still a floating-point multiplication.
+So we have addressed the first part, which is we have compress network.
+But we're decompressing it into floating points, so we can actually run it.
+Now there's the other alternative where you actually
+want to speed up the inference.
+If you want to speed up the inference, you've got to get rid of that multiply
+from being a floating-point value.
+And you've got to convert that multiply in the output box
+into an integer value.
+That's where the second leg of post-training quantization comes in.
+You take the input and you quantize the input itself into a lower value.
+And you take the weight and you also do the quantize on the weight value.
+And effectively, this way, what you have done
+is you've converted the floating-point value into an integer value.
+That's ideally what you want to get to.
+In doing so, now you can actually use integer multiplication,
+instead of using floating-point multiplication,
+which again is much slower than the integer multiplications.
+Now at a very high level, this should cover the core nugget
+that post-training quantization has two legs to it.
+You have one way of just compressing the network
+and this is storing it as integers.
+The second is rather than kind of decompressing it back
+into floating point, you can actually use integer arithmetic on it.
+But then you would also have to quantize inputs.
+Now hopefully, that's the key takeaway that you're
+going to remember from this part.
+Now what are the trade-offs?
+I said earlier, there's no free lunch.
+When you quantize, yes, the network is smaller.
+Yes, you can run the network faster.
+But then you end up losing accuracy.
+That's the critical trade-off you're going to make.
+What this graph is showing you is that you're
+able to take a point on accuracy versus latency
+and move that point to the left, which means you have
+decreased the latency of the network.
+But then you see that it's also a little lower, which
+means you have dropped the accuracy.
+And the same thing happens for a variety of different models.
+This is actually coming from the original MobileNet's model.
+And they are looking at what happens when
+you do quantization across a whole range of different kinds of MobileNet models.
+Now what else happens?
+We have quantized the weights.
+Now weights are just one portion of the network as I was saying earlier.
+There are many other portions that you can potentially
+quantize within the neural network.
+You can quantize the activations.
+You can quantize the channels.
+There are many, many different places you can actually do quantization.
+And they offer different trade-offs.
+There is no one silver bullet answer.
+But that said, weights are often the place
+you tend to quantize because they are all over the network.
+So in summary quantization is great because if you use 8-bit integer
+values, you get faster arithmetic.
+At the end of the day, ideally, you not only
+want to store the model as integer 8-bit.
+You also want to compute in 8-bit.
+And that gives you faster arithmetic which improves both latency.
+And then by doing the quantization, you can also
+cut down the memory because your models are now a quarter of the size.
+Finally, overall, for microcontrollers, it's
+extremely important that we do integer arithmetic because they don't always
+have floating-point hardware.
+So you almost always are going to be quantizing.
+In the context of a tiny amount, it is extremely important
+that you really take quantization to heart.
+And with that said, I'm going to leave you recalling
+the critical aspects of quantization, specifically
+from post-training quantization.
+And in the next video, I'm going to pick up on quantization aware training
+in order to address the accuracy loss that we saw as a result of making
+the accuracy latency trade-off.

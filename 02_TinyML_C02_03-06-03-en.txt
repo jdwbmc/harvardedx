@@ -1,0 +1,196 @@
+VIJAY JANAPA REDDI: In this video, I'm going
+to talk about data engineering using speech commands as a specific example.
+In the previous video what we learned about
+was that data engineering is a crucial process
+and that there are a set of steps that we have to execute.
+And I introduced each of those steps in abstract terms, as general concepts.
+What I want to do now is actually ground that.
+I want to talk about speech commands in each of those different buckets.
+So recall that speech command is the dataset
+that Pete Warden put together in 2018.
+Now this data set pretty much had to go through these fundamental steps.
+Any dataset goes through these steps.
+You've got a set of requirements that motivate
+you to kind of build this data set.
+Then you have to figure out how you're actually going to gather the data.
+Then you're going to have to clean the data.
+And then you're going to have to continue improving the data.
+So let's go through each and every single one of these.
+Let's talk about what actually motivated him to actually build the data set.
+First and foremost, keywood spotting was just
+starting to take off back in 2017-18.
+But the problem was that it was largely limited to big organizations.
+There was nothing out in the public that you and I could, use
+be it for research, for education, or for commercial purposes.
+There was no public data set.
+So that was the seed that kind of jumpstarted the whole process.
+There were bigger speech data sets, like LibriSpeech and so forth.
+But they're not focused on keyword spotting,
+which is the critical requirement here.
+Recall that keyword spotting is specifically
+looking at one word, not a whole sentence being spoken.
+Also, while Google, Amazon, and Apple were putting out
+products that had this quote spotting capability,
+they were all using proprietary data sets
+because they have the ability to build those private data
+sets by hiring people to actually get the data that they need.
+But there was nothing out there for the public good.
+And that's what Pete was going after is trying to build a public data set.
+And so the goals were to make sure that the data was being collected
+in such a way that it was actually permissible for distribution,
+be it for research, education, or commercial purposes.
+So these are some of the fundamental requirements.
+And ultimately, if you get these fundamental requirements,
+a data set can become a new standard.
+So speech commands today is effectively the de facto standard
+for keyword spotting applications.
+I'll talk more about this later on.
+So what were some of the additional requirements
+that Pete identified in terms of what needs to go into the data set?
+This fundamentally ties down to what are the common keyword application
+use cases, right?
+Yes and no as an example.
+That's very common because you might get a machine asking you a question.
+And you want to say yes or no.
+For robotics for instance, if you want to control
+some small autonomous vehicle, well, typical commands
+are usually left, right, go, stop.
+Or for numbers, maybe you're on a telephone and you often say digits.
+The machine responds.
+Well, that's key with spotting, for instance.
+So you go from 0, 1, 2, 3, 4, 5, 6, 7, 8, 9.
+So those are the requirements.
+So next step is how do we actually go about gathering the data?
+What are the sources?
+Who are the people who contributed?
+How do you get the data labeled?
+Well, it was built on the backs of people.
+People contributed their own time and effort.
+So over 2,600 volunteers consented to have
+their voices recorded and distributed.
+They consented.
+This was part of the licensing thing.
+They understood why or what Pete was doing
+and agreed to have their data be shared.
+So therefore, we have this access to this data today.
+And because people were contributing, we naturally
+had a variety of different accents being captured in that data set.
+And remember, you need to have a large number of samples.
+So there are over 1,000 samples for each keyword in there.
+Obviously, some words are more popular than others.
+But that's OK because it really depends on what
+your application is going to be.
+This is why I was saying earlier that you
+need to make sure you know what your application
+task is because that means you need to have the right data set at hand.
+And therefore, you need to know the characteristics
+of the data that's inside the data set.
+In order to make it accessible and to be able to collect very easily,
+simply set up a web browser.
+Basically, that was a URL that you could open up your browser on.
+And then you would be able to record your voice and contribute.
+Nothing was needed.
+No app installs were needed.
+Nothing custom.
+It was just a website.
+Next, after getting all this data we said we have to refine the data.
+So how did he go about that?
+Some data is simply not useful.
+We talked about ideas like looking at audio signals
+and saying are they too quiet, so that you can't really
+extract useful spectrograms from them.
+Maybe instead of saying yes, someone was messing around and saying
+the opposite word for everything.
+Instead of yes, they were saying, no.
+Instead of no, they were saying yes.
+People like to have a little bit of fun.
+Now you can do some of these things through automation.
+For example, you can check the volume of the particular clip
+and then be able to remove it automatically.
+You have methods of doing that.
+You also need to be able to effectively identify
+the critical part of the entire recording
+because when someone says record, it just
+starts recording until they stop the recording.
+So you might have a 10 second clip that needs
+to be cut out just down to the critical piece that
+actually has the key words in it.
+Then someone, of course, had to manually validate that data set.
+So you've got over 100,000 of these utterances that
+needed to be manually validated.
+And that was again, done through crowdsourcing,
+which effectively means people volunteer to actually do the validation.
+The final part comes down to sustaining or improving the data set,
+making it accessible.
+So the original data set only had 10 keywords in it.
+Now the data set is over 35 different keywords in it.
+And so it's starting to expand as this is
+the effective standard that everybody's building keyword spotting models on.
+So as the needs become more and more, the data set
+naturally continues to grow.
+Now the next thing is about having scripts that automatically do
+the train validation and test splits.
+Remember, I said earlier that when you are doing these splits,
+they're not arbitrary splits.
+The distributions of the data between, let's say,
+the training set and the test set needs to be thought out quite carefully.
+It's not some random sampling of the data.
+So there are scripts that actually do this.
+Keep that in mind when you are building your data sets in the future.
+And of course, there's the ultimate question
+of how do you expand these new languages.
+Speech commands is only focused on English.
+What about your language?
+What's your native language?
+My native language is actually Telugu.
+I also speak Hindi.
+I also speak a little bit of Tamil.
+None of these have keywood spotting data sets
+that I really wish we had access to.
+There are other things that are coming up
+in order to try and fill this gap, this niche, this need
+for new languages and keyword spotting.
+So we'll talk about that in the coming couple of videos.
+And you'll be very excited to see how you can potentially
+build the next major data set for your language.
+And with that, I hope you picked up a couple of key points.
+The key thing that we want to do is that we
+want to build a data set that's actually useful by everybody.
+Specifically, we want to be able to compare
+different models that are trained.
+But the models need to be working off of the same standard data set.
+Speech commands is that standard dataset.
+So that we can actually compare two different models
+and see which one is actually performing better.
+It becomes a benchmark.
+Benchmarks are crucial because TinyML has very strong constraints, remember?
+So you want to be able to use the same data set
+to benchmark different systems, so we can actually
+assess the forward progress we're making, not just from the model
+standpoint, but also from the system efficiency standpoint
+because now you're running this Tiny model that has been trained
+on the exact data that you know.
+And then you're running it on a system.
+So you can also benchmark the system, if you have a standard dataset.
+Finally, there's a process of being able to improve on the data set
+that we started off with.
+So speech commands is this original standard.
+And now we can continue to build on top of it.
+The key thing that I'm trying to get do is
+that if you want to move the needle forward,
+if we all want to enable TinyML in the future,
+we need to be able to do apples to apples comparisons from the data set
+perspective because data sets are the rocket fuel for machine learning
+models.
+So we want to make sure we have a standard data set.
+If we have a standard data set, and people are building models,
+then we can also use that coupling to benchmark different systems.
+When we get into course 3, we'll talk much more in detail
+about benchmarking and doing apples to apples
+comparisons of different systems.
+But let's hold on to that thought.
+With that said, I hope you understood what data engineering is
+and how speech commands, as an example, did all the things that
+are needed to be done properly.
+And that's why it has become the industry standard today
+for applications such as keyword spotting.

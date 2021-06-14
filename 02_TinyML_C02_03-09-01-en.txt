@@ -1,0 +1,118 @@
+SUSAN KENNEDY: In an effort to build responsible AI,
+we want to think about some issues that might arise during the development
+stage.
+The question we'll focus on now is, what data
+will be collected to train the model?
+Well, data offers great benefits from the perspective of those designing ML.
+It also carries great risks to the individuals
+who are contributing their data.
+So perhaps unsurprisingly then, there are emerging laws and regulations
+surrounding data collection and use.
+For example, in 2018, the European Union passed the General Data Protection
+Regulation, a legislative act meant to protect individuals' privacy
+and prescribe ways for organizations to handle personal data.
+But no matter what country you live in, it's
+worth taking a closer look at these regulations
+because it's predicted that most countries will eventually
+either adopt the GDPR or create legislation similar to it
+in the near future.
+There are roughly three key features to data protection, identifiability, data
+minimization, and notice and consent.
+So we'll go over each in a bit more detail now.
+Identifiability refers to a requirement for data collectors
+to reduce and safeguard identifiable components of data as much as possible.
+To reduce identifiable components, we want
+to think about de-identification techniques.
+So we can either fully anonymize data or we
+could employ a pseudonymization, which creates
+an alias to hide the subject's identity but where we retain
+a key to reverse this if necessary.
+To safeguard data, there are three things to keep in mind.
+Data Encryption, which encodes information
+so it can only be accessed with permission.
+Secure Servers and the Storage Location.
+For instance, storage in the cloud offers benefits.
+But in what nation and under what laws is the cloud operating in?
+It's also important to distinguish between different classes of data
+because it will determine how careful we need to be.
+With non-personal data, like aggregated statistics,
+you're in the clear to use it and there's no regulations.
+But with personal data, which might include someone's name, location,
+IP address, and so forth, we need to be more careful.
+And sensitive data, like genetic, biometric, and health
+data, or data that reveals race and sex, you'll
+need to exercise extreme caution.
+Another feature of data protection is minimization.
+Here the goal is to limit data collection and the duration of storage
+to only what's required to fulfill a specific purpose.
+It used to be that companies would want to retain data indefinitely.
+But as the influx of data increased dramatically and the cost of storage
+became an issue, data minimization has become
+more important both practically speaking and in terms of laws and regulation.
+Questions to ask yourself are, how long you'll
+need the data to achieve the purpose, whether there's
+unnecessary data that can be deleted, and how often you'll review and delete
+what isn't needed.
+Related to data minimization is the right to be forgotten
+or the right to erasure outlined in the GDPR.
+This states that data subjects have the right
+to request that their data be erased as soon as possible.
+But this right might be overridden in some cases.
+For example, when the data is needed to comply with other legal obligations,
+or achieve some purpose in the public interest.
+So what does this mean for data collectors?
+How will it change your workflow?
+You'll want to provide subjects with clear information and practical ways
+to make a request for data erasure.
+The third feature will turn our attention to is notice and consent.
+The aim here is to provide notice to subjects about how
+their data is planning to be used.
+And get their consent so that subjects have the option
+to choose if they want to be involved or not.
+So what counts as valid consent?
+Well, this concept is very similar to informed consent that
+was established in the medical field.
+We can distinguish a couple of different components.
+The decision has to be informed, meaning the subject has sufficient knowledge
+and comprehension to make a decision.
+And this rules out lies, deceit, or partial disclosure.
+The decision must be voluntary, where the subject freely
+chooses to give consent, ruling out coercion or inappropriate pressure
+or influence.
+And the subject must be competent, having the decisional capacity required
+to offer consent, which rules out children or adults deemed mentally
+incompetent.
+Now we'll turn to a related question of how the data will be collected.
+Earlier in this course, you were introduced
+to some mechanisms for data collection, like crowdsourcing, product users,
+and paid contributors.
+As you're probably aware, good representative data is crucial.
+So it's important to anticipate possible disadvantages of a chosen method.
+As Kate Crawford, principal researcher at Microsoft
+and professor at NYU Tandon School of Engineering
+has said, "We need to ask which people are excluded.
+Which places are less visible?
+What happens if you live in the shadow of big data sets?"
+For example, consider a case of data collected from product users.
+An app called Street Bump was designed to identify and report
+potholes that require repair.
+But since the app was deployed on smartphones,
+whose users tend to be young with a higher income,
+the data didn't accurately reflect the number
+of potholes in poor neighborhoods or those with elderly residents.
+Problems with data collection are closely related to issues of bias.
+So we'll talk about that more in an upcoming video.
+Finally, collecting the right data can be complicated, costly,
+and time consuming.
+That's why it's especially inspiring to see a movement in the ML community
+towards sharing open source, publicly available data
+sets, like the Mozilla Common Voice data set,
+for instance, which even offers a breakdown of demographics.
+This information is practically useful for people
+intending to use the data set.
+And it also makes clear where the data set could be improved.
+Not only does this make working on ML easier than ever before,
+but this increased accessibility is great
+because it fosters innovation and healthy competition.
+And this is how we'll end up with better products that
+improve the world we live in.

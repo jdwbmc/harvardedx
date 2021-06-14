@@ -1,0 +1,87 @@
+PETE WARDEN: Hi.
+In this video, I'm going to talk about how TensorFlow Lite Micro deals
+with one of the most challenging areas of embedded application
+development, memory management.
+The recent memory is so challenging is embedded systems typically
+only have hundreds or even just tens of kilobytes of RAM.
+This means it's very easy to hit memory limits when building an application.
+This means any framework that integrates with embedded products
+needs to offer a lot of control over the memory it uses because developers
+simply won't be able to use a library that takes up too much space.
+There's also a more subtle problem that shows up
+when an embedded application needs to run continuously
+for months or even years.
+Even if you're sure that you'll never ask for more memory
+than the system contains, allocating a new area
+requires that there's a big enough gap between other allocations.
+Over time, it's possible for small allocations
+to litter the available address space so that there were no gaps big enough.
+This state is known as heap fragmentation.
+It's extremely hard to predict how heap usage will evolve over
+long periods of usage, and the resulting lack of available memory
+is likely to cause the application to crash.
+The standard way to avoid these kinds of memory fragmentation issues
+with long-running programs is to avoid dynamic memory allocation altogether,
+at least after a start up phase.
+Any libraries used by applications with this requirement
+also need to follow the same rules.
+Because memory is so scarce, a lot of devices
+ship with no operating system at all.
+They just run on bare metal.
+This also makes memory handling a lot more difficult
+since there were no facilities, like a heap or memory virtualization
+to help with allocation.
+The Arduino board we're using does have an operating system, mbed OS,
+but that's not something the TensorFlow Lite Micron
+library can rely on existing on all the platforms it supports.
+So far, I've talked a lot about the challenges around memory,
+but how does TensorFlow Lite Micro deal with them?
+The most important concept to understand as an application developer using
+the library is the arena that you supply.
+The library needs memory to store variables and intermediate calculation
+values, but since it can't rely on standard operating system
+calls like malloc, we asked developers to parse in an area of memory
+to an interpreter when it's created.
+In this code snippet from an example, you
+can see how we create a global byte array and parse it into the interpreter
+when it's created.
+To avoid the problem of fragmentation, the interpreter
+only allocates from this arena at startup time.
+It will never do any allocations during invoke,
+so there's no chance of failing due to memory fragmentation.
+This API also ensures that the memory usage of the library is very clear,
+and how it's allocated is up to the application developer.
+The only requirements are that the memory area is available for as long
+as the interpreter is in use and that it's large enough
+for everything the model requires.
+The memory space itself is divided up into various sections internally.
+You don't need to understand what going on under the hood
+to use this arena interface, but the array
+is used to hold calculated values the operators need,
+the internal state of the interpreter, input and output
+arrays for all of the operators, and various other things.
+Earlier, I mentioned that you need to make sure the arena is large enough,
+but what size should it be?
+Unfortunately, this is actually a very tricky question to answer.
+The total size needed for the arena depends
+on what operations are in the model and what the operator parameters are.
+It's also possible for optimized implementations of operators
+to acquire scratch memory, which has to be allocated from the arena.
+The size needed for operator inputs and outputs
+doesn't depend on which platform you're running on,
+but different devices can have different operator implementations,
+so the scratch buffer sizes can vary.
+This means it's hard to come up with the exact size needed
+for the arena ahead of time.
+So what can you do?
+Luckily, there is an arena used bytes function in the interpreter.
+So I recommend you start off with as large an arena as you can create,
+load your model, and then log the number of bytes actually used.
+Ideally, you should do this on the device
+you want to deploy on since you may have optimized operator implementations that
+use scratch memory.
+Once you have the actual number, set the arena to that size, and recompile.
+Hopefully, this has given you a better understanding
+of how TensorFlow Lite Micro deals with the challenges of memory
+on an embedded platform and will give you a head start building
+your own memory conscious applications.

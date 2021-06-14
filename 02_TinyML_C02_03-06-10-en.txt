@@ -1,0 +1,113 @@
+VIJAY JANAPA REDDI: In this video, we're going
+to be wrapping up the data engineering section of this course
+by focusing on responsible data collection.
+Specifically, I'm talking about biases.
+Biases are a serious problem in machine learning
+and I'm going to use speech recognition as an example
+here to explain how we can try and be cognizant about biases creeping in.
+What are some sources of bias that we have?
+For one, it could be simply from the fact that we have gender diversity.
+It is well known that much of the speech data that's actually available today
+is really biased towards male speakers, because they're
+the ones who are contributing the most volume of it
+and female speakers contribute less.
+But because of that, the datasets that are public and available to us
+are naturally going to end up leading us to have
+models that are more tuned for male speakers than for female speakers.
+We don't want that, because when we build a TinyML application,
+we want that keyword spotting model to work generally for everybody.
+Same thing on age groups.
+The way the words sound when you're older versus when you younger
+tend to be slightly different.
+So we've got to make sure we catch the right demographics all over the place.
+Yet again, when we go to accents, if you'll recall,
+I said that many of the keyword spotting systems that are out there
+do not work well for my mom, for instance,
+because she happens to have a thick Indian accent, even
+though she speaks perfect English.
+So we need to make sure that we're cognizant about accents, for instance,
+from not creeping in, because that's a source of bias.
+Her accent happens to be more Indian because she's coming from India.
+Now for a native speaker, that might not be the problem.
+So we have to make sure we capture a wide dataset.
+Also, many languages tend to have different kinds of dialects
+that are very close to one another.
+But you've got to be cognizant about the fact
+that languages have different dialects, because some dialects are
+more pronounced than other dialects.
+Which means your data might be, again, biased towards some of those dialects
+and less for the other dialects.
+Which means the models are not going to work well generally.
+Finally, there's the aspect of languages in itself,
+which we've talked about quite a bit in terms
+of the long tail in the previous videos.
+So overall, my point is that there are many different sources of bias.
+So let's say because you took this class now you're cognizant about this bias
+and you're going to be very careful when you're building your dataset.
+Does that solve the problem?
+Well, let's see what happens in the real world.
+You and I might want to build a dataset because we want to build
+some sort of keyword spotting model.
+So how do we go about it?
+It's highly unlikely that we are going to go out and manually
+collect the dataset ourselves.
+More often than not, we're going to have to rely on some help,
+because the amount of data that you and I can directly collect
+is going to be limited.
+So we're going to likely hire some sort of third party company who is actually
+going to do the labeling.
+They're going to go out and hire some set of people
+who will be doing the labeling.
+That allows us to naturally scale up because given the volume of data
+we want, we can tell this intermediary company how much dataset that we want
+and they'll hire the right number of people.
+But we have to be very careful that the biases that we're
+cognizant about, well, they don't necessarily
+cover the intermediary services that we're hiring.
+Let's be specific, for example.
+Amazon Mechanical Turk is a widely used crowdsourcing website
+where businesses can effectively hire crowdworkers
+to perform certain types of tasks.
+Usually people hire them to do a lot of labeling for machine learning datasets.
+Well, one of the interesting things here is
+that even though every worker comes in being totally unbiased,
+they're just being themselves, one of the problems
+is that when you're asking someone to do labeling and you hire them,
+you do not know where these people come from.
+For example, here I'm showing you the long tail of the crowdworkers.
+The x-axis is showing the different countries from where they come from
+and the y-axis is showing the distribution, effectively.
+And you can see that a large portion are actually coming from a few countries
+and there's a long tail.
+Which means that depending on the kind of labeling you're asking them to do,
+their own bias might actually creep into the dataset,
+even though you are cognizant about the process of building
+a proper dataset without biases.
+So we have to keep this in mind, because you and I cannot directly build
+a dataset.
+We are almost always going to be hiring a third party to build the dataset.
+But if we are aware of these kinds of systemic issues that exist out there,
+we might be able to build a better dataset in the future.
+With that said, the question you should ask yourself
+is, how can you work to avoid biases inside your dataset?
+Biases are just one of the aspects that we've touched on the data engineering
+section of the TinyML course.
+There are many other aspects.
+We have talked about how we actually go about getting an accurate
+model, not just from a moral standpoint, but from overall quality of experience
+sort of standpoint.
+We will also talk about what that means in terms
+of the efficiency of the hardware.
+So, long story short, building a dataset is quite complicated
+because all of these things.
+It's a ripple effect.
+If you get the dataset wrong, you can get a model that works just well,
+but unfortunately it's not working in the right way.
+So just because your Colab says you've got
+a certain accuracy does not mean that it's actually doing its job well
+from a TinyML application standpoint.
+And that's that critical message that I'm going to wrap this up with.
+So in the next section, we'll be picking up with the new TinyML application,
+where we'll be reusing many of the fundamental concepts
+that we have covered here.
+I'll see you there.

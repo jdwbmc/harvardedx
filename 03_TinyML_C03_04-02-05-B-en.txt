@@ -1,0 +1,58 @@
+BRIAN PLANCHER: Now that you have the Arduino IDE installed,
+let's work on setting it up for the rest of this course.
+We're going to start by installing the board files
+we need for Arduino Nano 33 BLE [? sense. ?]
+To do that, we're going to go to the Menu.
+Although, if you did plug-in your Arduino,
+you might have noticed that there's this little pop up
+on the bottom left that says install this package
+to use your Arduino Nano 33 BLE board.
+By clicking that link, it'll actually get you to the same place
+exactly where we want to go.
+But let's assume you haven't plugged in the board, or you haven't x-ed it out,
+and don't know how to get that link back.
+Well, what you're going to want to do is go
+to Tools and then to Board, where you might
+see Arduino Uno already populated.
+And then we're going to open the Boards Manager.
+Inside the Boards Manager, we're going to go up to the top
+here and search for Nano 33 BLE.
+And when we do that, up at the top, we're
+going to find this Arduino Mbed Enabled Boards board file library.
+And that's what we want.
+And we want to make sure to install version--
+well, at the time of this recording, its version 1.3.1,
+but please check the reading to make sure that hasn't changed.
+And then click Install.
+And once you click Install, you should see
+this blue bar going across the bottom.
+And it should start to move quite quickly.
+And then as it gets to the end, it might hang for a long time.
+Don't be alarmed.
+Don't worry.
+Just let it run.
+It could take five minutes, 10 minutes.
+Sometimes, what will happen is that on Windows machines,
+you might need to approve an administrator pop-up to allow it
+to install some USB drivers or whatnot.
+And so just be patient with it and let it do its thing.
+Mine seems to be hanging.
+This is a Windows machine.
+And so, yeah, just be patient, and eventually it will complete.
+And then you'll be ready to move on to the next step.
+So I'm going to hang here for a little while and wait for it to finish.
+All right, and so now after a little bit of waiting,
+your board files will be installed, and you
+can see this teal installed in all caps next to the version of your board
+files.
+And you should be all set.
+The last thing we're going to do before we move on is actually show you
+how to select the board.
+So if you go again to Tools and to Board,
+instead of using the Arduino Uno, we can go under the Mbed OS boards,
+and we can select the Nano 33 BLE.
+And now we should be all configured with the board and libraries installed,
+and that board selected.
+And you can actually see down the bottom right,
+it should say Arduino Nano 33 BLE.
+And so we should be ready to go for the rest of the course.

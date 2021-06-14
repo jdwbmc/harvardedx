@@ -1,0 +1,48 @@
+BRIAN PLANCHER: Next, we'll be using the Hello World example from the TensorFlow
+Lite for microcontrollers library to test out your TensorFlow
+install and make sure that all worked correctly.
+To do that, we're going to open the Hello World
+example by going to File, Example, Arduino TensorFlow Lite, Hello World.
+And again, we're going to have a new window come that we can open up,
+which is the Hello World example.
+Now this one has multiple different files, and I'll mention some of them
+briefly in the next short video.
+But for now, let's get this deployed to make sure that it will deploy correctly
+on your device.
+To do that, again, we're going to go up to Tools,
+and make sure that the board is set to the Arduino Nano 33 BLE,
+and that the port is set to the port that your Arduino is on.
+Again, look to the reading for what the port should
+look like depending on if you're Windows, Mac, or a Linux operating
+system user.
+For me, I'm on Windows.
+So it's COM, some number.
+And in this case, it's 7.
+And then, again, just like before, we can click the Upload
+button to start compiling the code.
+And again, if you have set your preferences
+to show the full debug output, you're going to see a lot of things go here.
+And this might take a couple of minutes to compile.
+But once it's done, we'll see the output on the board.
+Now just as a comparison so you know what's coming, right now,
+I have the Arduino Blink example going on my board.
+And you can see the light turning on and off, blinking.
+When we get the Hello World example from the TensorFlow Lite
+for microcontrollers library running, what we're going to see
+there is that instead of blinking on and off,
+the LED is going to follow a sine wave, which is predicted
+by the neural network on the board.
+Therefore, it will dim on and dim off according to that sine wave, which,
+again, is learned by a neural network.
+So we're doing the super fancy TensorFlow version of Blink
+on this board.
+I'll give my computer a minute to finish compiling and uploading the code,
+and then we'll look at what the output looks like.
+OK, now the Hello World example has finished compiling
+and has been uploaded to my board.
+We can look over to the board, and we can
+see that the LED is now dimming in and out at a much faster rate
+than it was before with the Blink example.
+And that's exactly what you should expect from the Hello World example.
+We'll explore the code in a little bit more detail in the next video.
+See you there.

@@ -1,0 +1,179 @@
+SPEAKER 1: Up to this point, you've been exploring
+how computers learn with machine learning
+through fitting internal parameters of a function, or a neuron,
+to match x and y values together, when there
+was a linear relationship between them.
+This is often called regression, where you're
+using a neural network to predict a single value from one or more inputs.
+Another common use for neural network is classification, where the network
+can tell you something about the data.
+For example, if it's an image, it can tell you the contents of that image.
+Or if it's a set of values describing an object,
+then it can tell you what that object is.
+We'll now look at how we can move from our single neuron example
+to a multi neuron, multilayer network.
+And then how that can work to classify content.
+To this point, we've been looking at a single neuron
+and using it to get the y value for an x, when there's
+a linear relationship between y and x.
+But neural networks can be more sophisticated than this.
+For example, we can have a network with two layers--
+the first with two neurons and the second with one.
+The neurons in the first layer each have an internal w and B that they can learn
+and they will then output that to the second layer, which
+will calculate based on its inputs, and not the x's directly.
+With a single output layer like this, we can do a regression
+where we calculate a value, like we've been using all along.
+We can also have multiple neurons in the output layer instead.
+This methodology is often used in classification.
+So if we want to design a neural network that
+can tell the difference between a cat and a dog,
+then we could have one output neuron representing cats
+and another representing dogs.
+So then, if an image of a cat gets fed into the neural network, the neuron
+representing cats, will have a high probability value,
+and the one representing dogs will have a low probability value.
+And similarly, if we feed in an image of a dog,
+then the neuron representing a dog should have a high probability,
+and the one representing a cat should have a low probability.
+And this gives us a way of labeling cats and dogs
+by having our label contain the desired output of the set of output neurons.
+So if our first neuron represents a cat and our second represents a dog,
+then we can say that our label for cat images is 1, 0.
+And our label for dog images is 0, 1.
+Or if we want to create a neural network that recognizes the handwriting
+digits 0 through 9 with an output neuron representing each,
+we could use labels like this.
+Every output neuron is 0, except the one representing the digit.
+Let's now look at some code that will use a neural network
+to recognize the digits 0 through 9.
+We'll need data-- images that are labeled to train with.
+And fortunately, there's a data set called MNIST
+that's already built into TensorFlow.
+With these two lines of code we can load the data.
+The data set is split into training images and labels, as well as
+validation images and labels.
+The data set looks like this.
+There are 60,000 labeled images that you can use for training and 10,000
+that you can use for testing or validation.
+And we'll get all of that simply by asking
+TenserFlow for the MNIST training and validation sets.
+The handwriting digits are 28 by 28 monochrome, which means
+each pixel value is from 0 to 255.
+We want to normalize these to use them in a neural network.
+And it behaves much better if the values are between 0 and 1.
+So we can just divide the image values by 255.
+Then next, we're going to define a neural network.
+Earlier, you learned about sequential and how
+sequential can be used to define a neural network by listing
+the layers of that neural network.
+And that's what you're seeing here.
+It's a little more complex than the single neuron that you saw previously.
+Our images are 28 by 28 in dimension.
+So the first thing that we can do in our sequential
+is to define an operation to flatten these out,
+so that we can feed them into the neural network.
+The next layer has 20 neurons, so we need our images
+to be in the same dimension as that layer, considered
+to be 20 by 1, so our images will also need to be something by 1,
+in order to fit.
+The easiest way to do this is to flatten the 28 by 28, which is 784 pixels,
+into a 784 by 1.
+And that's what a flattened layer does.
+We can tell it to expect the input shape to be 28 by 28.
+If it gets anything else, it'll throw an error.
+Next, we'll define a layer of neurons.
+And we have 20 neurons in this layer.
+This number is purely arbitrary for now.
+And later you can explore methodologies to pick the optimum number.
+Too few, and you may not have enough to learn the contents of the image.
+Too many, and you could over specialize or your network
+could be very slow to learn.
+The activation function is a new concept that we'll explore shortly.
+The final layer will have 10 neurons in it because we have 10 classes.
+And these are the digits 0 through 9.
+It also has an activation function, but we'll explore that shortly too.
+So our network with 20 neurons in one layer and 10 in the other,
+will look like this, where every neuron is connected
+to every neuron in the other layer.
+All of these connections inspire the word "dense" for this layer type.
+We'll want to feed the pixels of an image into the neural network.
+So for example, these pixels are from one of the training images,
+and we can see it's the number 7.
+So we would desire that the neuron representing the number 7
+is the one that would light up.
+And we'll train it with this set of 0s and a 1 as the label representing 7.
+So remember, that our image is 28 by 28.
+So instead of the square image like this being fed in,
+it'll be flattened into 784 by 1.
+And this will be fed into the neural network instead.
+So if we return to our neural architecture,
+we can see this definition--
+the flattened layer to flatten the images, the dense layer of 20 neurons,
+and the output dense layer of 10 neurons for our 10 classes.
+Our layer of 20 neurons has something called an activation function on it.
+It's called ReLU, which stands for rectified linear unit.
+The important thing to know is this--
+every neuron will call its activation function when that layer is used.
+The ReLU activation function changes any output that is less than 0 to 0.
+So when we evaluate y equals mx plus b on any of these neurons,
+we'll throw away any values that are less than 0.
+It's really commonly used in dense layers,
+so that neurons don't cancel each other out.
+Imagine if one of these neurons return the value 10 and the other minus 10.
+Without ReLU, we'd get a net of 0 from that pair of neurons.
+And in general, you don't really want this.
+For the math-inclined, you might also notice
+that this can introduce a non-linear relationship between the layers.
+And that can help you capture complex relationships beyond just
+what the neuron alone can do.
+Our output layer has another activation function.
+This time it's called softmax.
+What this will do is help us find the neuron from amongst the 10 that
+has the highest value.
+It saves us from writing a lot of code to loop through the outputs
+and pick the biggest one.
+Our process of compiling and training is pretty much the same
+as we had for a single neuron example.
+The key difference, of course, is the functions
+that we use for optimization and loss.
+In this case, we'll use an optimizer called Adam.
+TenserFlow has many built-in optimizers, but instead
+of worrying about the math for optimization
+or the gradient calculation and descent stuff that we saw earlier,
+we can just pick a function and use it, making it easy for us to experiment.
+Adam is particularly useful because, if you
+recall when we spoke about gradient descent and the jump size
+from the learning rate, Adam can actually vary its learning rate
+helping us to converge more quickly.
+And we can say the same for loss functions.
+There's a menu of them that we can choose from,
+but often our loss function has to map closely to our scenario.
+For example, when we were doing regression,
+mean squared error made sense.
+But it doesn't make sense for classification,
+as we have a number of categories instead of a single value.
+And we need the loss across all the categories.
+This means that you'll generally use a categorical loss function.
+And you can see that in the name, like I'm using here.
+Model.fit runs the training loop.
+And in this case, we can train for just 20 epochs.
+And then we can test how well our network did by calling model.predict
+on one or more images.
+Here it's running out on the entire validation set of 10,000,
+but I'm just printing out the classification
+it gave me for the first one, and comparing it against the actual label.
+This set of 10 numbers is the set of 10 probabilities for each of the 10
+values as output by the 10 neurons.
+And the 7 is the label for the first image, so we know it's a seven.
+If we inspect closely, we can see that the neuron representing the number 7,
+has by far the highest value.
+It's telling us we have a 99.89% chance that we're looking at a 7.
+If you look closely, it's the eighth neuron
+because we started counting in 0 i.e. the first neuron is
+the probability we're looking at 0.
+The second neuron the probability we're looking at 1, and so on.
+So next you can try this out for yourself,
+and you can inspect the neurons in each of the layers
+to see what they've learned.
+And you can see also how this maps to classifying an image.

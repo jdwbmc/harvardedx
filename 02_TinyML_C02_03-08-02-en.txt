@@ -1,0 +1,220 @@
+VIJAY REDDI: Welcome to your third and final TinyML application.
+In this particular series of videos, we'll
+be learning about anomaly detection.
+Let me first and foremost define what I mean by anomaly detection.
+Anomaly detection is a specific form of data analysis, where
+you are looking to identify interesting and rare items, events,
+and observations, which raise suspicions by deferring significantly
+in their behavior from the majority of the data that you would expect.
+What this means, that occasionally, you will find some sort of a needle
+in a haystack that kind of sticks out, and you're like, well,
+why is this sort of happening here, while the rest of the data
+is typically tightly clustered around some given point?
+Now there are many different interesting applications of TinyML
+and specifically, anomaly detection.
+There are applications in heath?
+There are applications in industrial.
+There are applications in security.
+Before we dig into any one of these, let me just talk about anomaly detection
+as a general application outside of the TinyML context,
+just set the stage for you so that you have a broader
+understanding about the field.
+Let me take security as a specific example of anomaly detection.
+Typically, on smartphones, for instance, there's a lot of malware out there.
+Software that should not be accessing things
+could be accessing things on your phone and leaking it up to some hackers.
+So in cyber security, for instance, anomaly detection
+plays a very big role.
+Specifically for instance, you might be surfing the web.
+And typically, when you're surfing the web on your Android phone or your iOS
+phone, rarely would you ever need to access the contacts.
+So if, let's say for instance, your browser got hacked somehow,
+and then when you're reusing the browser, for some reason,
+every time you run the secret browser, it's constantly accessing the contacts
+and it's sending all your contact information out, well, typically,
+in an anomaly detection system, what we would
+do is that it would actually detect that some kind of unorthodox behavior
+happening that is actually causing your browser to be sending out
+data which it should not be sending
+out.
+Now that's very useful to know, because then suddenly, the system
+might flag and say, hey is this an expected behavior?
+So that's a very simple, yet clean example of anomaly detection.
+Something that's actually quite widely deployed in the larger ecosystem.
+Now we're going to be talking about anomaly detection in this course
+specifically from the perspective of sensors--
+no surprises.
+So in the health case for instance, you might have an EEG sensor.
+My iWatch, for instance, actually has anomaly detection mechanisms
+built into it that kind of help me in terms of my health monitoring.
+For instance, how does a watch know when some old person has fallen over?
+There are detectors and there which are looking for some anomalies that happen,
+which can then raise sort of a flag, and inform the families and so
+forth-- that kind of thing.
+So you have a smartwatch.
+In the case of industry, for instance, we'll be going pretty deep.
+We'll be looking at anomaly detection in the case
+of what happens if a motor fails, where typically, you
+expect the motor to be running normally, and then something goes wrong,
+and then it fails.
+Well, what if I could have predicted that the motor was
+going to fail because I could tell that something's actually
+off in terms of the way the motor is actually sounding when it's running?
+And we've already talked about security.
+There are many different applications of security based on the kind of sensors
+you might have.
+So what's the key thing about anomaly detection?
+It all comes down to having information that's coming through sensors.
+Specifically, what's going to be interesting about anomaly detection
+as we talk about it in this class is that we're
+looking at temporal data streams.
+Now we're looking at time series data, which
+is a sequence of measurements, where the temporal relationship is actually
+a critical component to understanding the data.
+Now this is a new thing that we're actually introducing to you,
+so keep that in mind.
+We're looking at time series data, so we're flipping up what kind of data
+we're looking at.
+Previously, we looked at an audio acoustic input
+and converting that into an image.
+Then we talked about visual wake words, where
+we're looking at just a static image and sort of thinking
+about how do we sort of compress that down
+effectively for our neural networks.
+Now we're talking about a very different kind of data stream,
+which is a time series scale.
+I'm going to quiz you about that.
+So in terms of use data, what you're doing is
+you're kind of scanning through the data as it's
+coming through from your sensors, which might be more than one sensor,
+for sure.
+And you're trying to find interesting patterns in there.
+And based on that pattern of activity, you
+want to determine if there's an anomaly or there's no anomaly.
+An anomaly meaning that the behavior is outside of the expected pattern.
+For instance, in this particular chart, you're looking at that red line,
+and that red line seems to have a nice up and down
+sort of a sawtooth kind of curve.
+An anomaly here would be perhaps when you don't have that up and down sort
+of sawtooth curve--
+perhaps something like the behavior towards the beginning of the curve
+where it kind of just dips a little bit, and it doesn't really
+dip all the way down.
+Perhaps that was an anomaly.
+So you're going to be looking at times use data that's coming in from sensors
+and trying to understand how to process it
+in order to detect if something is off.
+There are three fundamental building blocks
+for any kind of anomaly detection application or scenario.
+There's an input signal that's coming in--
+for instance, like the blue line that's on the right hand side.
+Then you're making a prediction.
+For instance, the predictor here is simply sitting in the value 0.
+It's a straight line.
+It's expecting the input signal to always be a nice strong 0.
+But as you can see, the input signal is varying, while the prediction is flat,
+which means that there's an error here, which
+is what the shaded area under the blue curve is capturing.
+With these three fundamental building blocks,
+you can pretty much build an anomaly detector,
+which is what we will be doing.
+But the reason I'm touching on these three things
+is that they're paramount for the fundamental building blocks
+of any anomaly detection solution.
+So for example here is a poor predictor or poor prediction,
+because your input signal and your prediction are not tracking together.
+But here's an example of a good prediction,
+because your predictor is effectively tracking that expected behavior,
+and it's minimizing the error.
+The error is key here.
+The anomalies are typically detected when there's a large error.
+So for example, perhaps on the left hand side,
+there's continuous error as you're constantly
+detecting that something is pretty off, because the error is pretty large most
+of the time.
+For instance, on the right hand side, the error
+is actually quite small, which means perhaps the machine is actually
+performing as it's supposed to.
+Now why do we want to talk about all of this in the context of TinyML?
+Why anomaly detection in TinyML?
+I gave you some application of the use cases,
+now let me kind of talk about some of the technical things.
+We'll go deep into this in the next couple of readings and videos.
+But real briefly, one of the key things is
+that it's actually really hard to have the ability
+to transmit the data that is at the sensors out,
+because typically, these sensors are sitting
+close to some sort of electrical circuit or someplace
+where it's very hard to get connectivity.
+And we'll look at a ball bearing example in a motor,
+for instance, where it's very deep inside the machine
+that it's actually hard to get the signals out nice and cleanly,
+because you have a lot of electromagnetic interference.
+Then, of course, there's the aspect of latency.
+You've got to track the data really quick,
+because there's a sensor data that's streaming fast,
+so you've got to be able to do that real quickly.
+And you can do that if you're right by the sensor,
+and you're doing on device ML.
+And of course, you want to keep the energy budget low,
+because when you're doing anomaly detection,
+you're talking about normally detection, many different use
+cases where you don't want the battery to be drained out.
+Because often, these anomalies are tethered to sensors,
+and if there are sensors, that means they have very little energy
+associated with them.
+One of the other really important things that I'm
+excited about teaching in this particular aspect of the course
+is that while most of the time we've been talking about machine learning,
+and when we've been going through this sort of a pipeline,
+we have been very heavily focused in one very particular single type of machine
+learning, which is deep learning-- using neural networks.
+What I want to do is to try and take a step back and raise your awareness
+about the level of machine learning methods that are out there.
+For example, neural networks are just one way of doing classification.
+There are also other methods like support vector machines.
+And just the way we can do classifications,
+you might have a nearest neighbor sort of method,
+you might have a clustering-based method, and so forth.
+So there are many different ways of actually unlocking machine learning.
+In the context of anomaly detection, one of the important things to keep in mind
+is that the community or the industry at large
+is trying to figure out which is the best way of going about doing things.
+It has not been yet effectively proven that neural networks are the only way
+of doing things like anomaly detection.
+There are other methods, for instance, like K-Means,
+which are actually quite popular for doing machine learning
+for anomaly detection, because they're very lightweight in terms
+of the compute needed.
+There are also other mechanisms like decision trees that can be used.
+They also require very little computer.
+One of the things that we're going to do when we talk about something
+like K-means where we're actually doing a little bit of clustering
+is understanding when these very basic sort of methods
+are actually remarkably good for doing things like anomaly detection,
+but at the same time, we're also going to understand when they're not good.
+And then we'll talk about how neural network-based methods might
+be good for things where traditional machine learning methods are actually
+not good.
+And the reason I want to do this is to kind of pull together
+your complete knowledge around TinyML and get
+you an unbiased sort of perspective in terms
+of how to look at machine-learning-based solutions
+when you're thinking of applications.
+It's not all about neural networks.
+You've got to take a step back and understand
+that it might be useful to use other types of machine learning methods.
+That said, we will go deep into autoencoders.
+Now as always we will start off by talking
+about what are some of the challenges in actually deploying anomaly detection.
+Then we'll go into our anomaly detection machine learning pipeline
+and sort of understand the full flow as we have always
+done with every single application.
+And then you'll get some hands on experience
+by learning how to train the anomaly detectors
+and then test it out on Google Colab before moving onto course 3,
+where you actually end up deploying it onto the physical device.
+And with that said, I want you to learn some interesting things
+about anomaly detection and keep an open mind
+in terms of what kind of techniques are actually
+useful in the broader ML space.

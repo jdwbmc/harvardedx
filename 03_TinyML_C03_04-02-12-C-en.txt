@@ -1,0 +1,78 @@
+BRIAN PLANCHER: All right, it's time for the last sensor test.
+Let's test your camera.
+To do that, we're going to go to File, Examples, Harvard_TinyMLx, test camera.
+And again, like the rest of them, we're going
+to make sure to set the board and the port.
+We're going to Tools, Board, and make sure
+we have the Arduino Nano 33 selected.
+And on the port, we'll make sure we have the serial port with our Arduino.
+And then we can click Upload to compile and upload the code.
+Once your code is uploaded to your board, your camera is now active.
+Before we start taking pictures, let's make
+sure we know which way to hold the camera,
+regardless of whether you have the TinyML shield
+or you've wired up your own off the shelf parts.
+And the important thing to keep in mind here
+is that when you are taking a picture with the camera,
+you want the letters OV, and numbers 7675, to be facing up and towards you.
+As long as those are facing at the top and you can read them,
+then you are taking the correct selfie.
+And if you were, say, facing the camera the other way,
+you'd want them oriented in the other direction.
+So that's how you want to hold the camera with the OV7675 up.
+If you wanted to take a selfie, you point it at you then like that.
+So let's go to the serial monitor now to start to test the camera.
+So we'll open up the serial monitor.
+And I forgot to select the port again.
+So I will select the port.
+Again, sometimes, the ports disconnect after it uploads.
+So let's open that serial monitor.
+And on the serial monitor, we will see the welcome message here
+telling us that we have entered the OV7675 test.
+And we have three commands available-- single, live, and capture.
+We'll live for you.
+If you would like later, you'll see some notes in the reading.
+It doesn't really work on all operating systems,
+and so we won't use that as our main test.
+The main test we're going to use is the single camera,
+which is just to take a single picture.
+So let's type in single here, and make sure we have both NL and CR there.
+And then when we want to take a picture, we
+can either type in capture or just click the button on the shield.
+So let's send that single, and now the camera is in single mode.
+It's ready to take a picture.
+And so one note, the camera field of view is very, very small.
+So if you are taking a selfie, you're going
+to want to hold that camera really, really far away from you.
+In fact, it probably works better if you prop it up on something,
+like maybe onto your computer monitor.
+But then it's kind of hard to press the button.
+So I'm just going to hold as far as I can, make a ridiculous face,
+and hope I can capture myself in the picture.
+So after you press the button, you'll see a note
+up here that says image data will be printed out in three seconds.
+And then suddenly, a lot of hexadecimal values will be coming at you.
+And that's because this is the raw image coming off of the camera.
+Unfortunately, as you see in the reading, there's a Colab that we have,
+which will take this raw data and display it for you.
+So what you'll need to do is you'll need to copy all of that raw data.
+So you can just highlight all of it.
+And if you just pull down, it should highlight the whole row.
+And I will copy that, and then I will open up that Colab.
+I'll make sure to run this first cell to import the correct packages.
+And then what I'll do here is I will highlight the existing hexadecimal
+bits, and I will paste in my new data.
+So we can run that.
+And then we can run this cell below here, which will take that raw data
+and display it down here for you.
+And so let's see if I captured myself.
+And I kind of got my face.
+Kind of missed that a little bit.
+A little too high.
+Again, it's pretty zoomed in, but I'm pretty sure the camera is working.
+It's not the most flattering picture of me, but it is a picture of me.
+So you can do the same thing to test your camera.
+And that's it.
+You're done with all the sensor tests.
+And I'll turn it over to Veejay and Pete to talk more about embedded systems
+and TensorFlow Lite for Microcontrollers.

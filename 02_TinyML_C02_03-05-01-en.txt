@@ -1,0 +1,156 @@
+VIJAY JANAPA REDDI: Here we are.
+Finally, we are ready to get started on the TinyML applications,
+kicking things off with keyword spotting.
+We have got a lot of foundations that we have laid out so far.
+And we're going to start building applications
+on those strong foundations.
+One of the key things that I want to get across to you as we kick off
+keyword spotting as an application is understanding
+that keyword spotting falls in the general realm of speech recognition.
+It is undoubtedly one of the most successful examples of TinyML.
+It has to operate with ultra low power efficiency.
+It has to run continuously and it has to be performed on-device, all of which
+we'll be looking at in much greater detail.
+We'll learn about keyword spotting data sets.
+We'll learn about how to train the models.
+We'll learn about how we deploy them and how to systematically evaluate
+and think about them.
+But before we go there, I want to help place
+keyword spotting in the general realm of that speech recognition ecosystem.
+Typically, when you're dealing with machines
+that have a full-on understanding or have a full-on conversation with you,
+there are large ASR models, automatic speech recognition models.
+They're large.
+They're power hungry.
+And keyword spotting is not one of those.
+It falls in the realm of overall speech recognition.
+But it's a critical front end in order to wake a more complex beast that
+is sitting behind the scenes.
+You want things that are at the front of the pipeline
+to be lean and mean and efficient, like keyword spotting.
+What do I specifically mean?
+For instance, when you say, Okay, Google, that's
+a set of keywords that wakes the machine up,
+where you can then perform full-on automatic speech recognition.
+In this particular scenario, the aspect of "show me the calendar"
+is the full-on speech recognition that's going on there, where there is speech
+through text converting the words that I'm saying into text, which are then
+used by the machines in order to figure something out and then
+be able to come back to you and then do text to speech,
+where the machine speaks back to you.
+Now, this is in the context of OK, Google.
+But the same fundamental thing effectively happens when you say,
+"Alexa--".
+The machine wakes up.
+I give it a command in general English.
+And it processes it and does something.
+Keyword spotting here is really, OK, Google or Alexa.
+We're going to go pretty deep into that.
+These two examples that I've just shown you
+are examples that we have used repeatedly in the course so far.
+And we have also talked about them in the course one
+as saying that they're everywhere.
+However, keyword spotting has a lot of applications.
+Just think about your household.
+Think about the numerous different devices you have in your house.
+Just look around your room right now and take, for a moment,
+and think, which of these devices could actually
+use keyword spotting where you give a command and the machine
+actually wakes up to be able to do something?
+For example, if you have an oven, you might be able to say, bake at 350.
+All you need the machine to do is listen to the word "bake"
+and when it hears the word "bake", you know it's the oven.
+And then you can give it a simple follow-on command.
+Now, keyword spotting does not necessarily
+mean that it's just one word.
+It could be a few words.
+It's a subset of the general English vocabulary, for instance.
+Now, this applies, obviously, to any language of your choosing.
+But the key thing is that you can take any device that is right around you
+and you can think of ways to give it the capability
+to be able to respond to keywords that will get it to do something.
+Now, in the house, there are a variety of different places.
+I'll give it to you as a homework in order
+to just go out and have fun and try and think
+of how would a particular device around your house wake up.
+Think about it in the context of cars.
+Most automotive companies today are looking at keyword spotting as a way
+to make the user experience much more smoother in the car.
+For instance, you might be able to get your car to say, "Play music."
+Or you might get it to say, "Roll the window down."
+As you can see, those are very specific and small,
+short sentences that I'm using.
+And the key thing that you want the machine to be able to
+is spot those keywords in the general context of things that
+are going on in the speech paradigm.
+Another example could be when you are wearing smart glasses in the future--
+augmented reality, for instance.
+You don't necessarily have to say, OK Google.
+Maybe you're having a conversation and you say something in passing.
+But the machine is listening for those critical words.
+And then as they happen, perhaps it projects an interesting piece
+of information on your lens.
+Those are the kind of applications that people are really excited about when
+it comes to keyword spotting.
+That said, think about situations where you're not explicitly
+giving commands to the machine.
+In the example, it's like, when we say, OK, Google
+or when we say Alexa, the key thing that we're doing
+is that we're looking at the device and giving it a very specific command.
+But there are cases where the machine is constantly listening
+and it's able to pick up these keywords on the fly in streaming audio.
+A very good example here is Now Playing by Google,
+where your phone will be able to tell you
+what song is playing in the background if it happens to detect it.
+Now, how does that work?
+You want your phone to use as little energy as possible.
+So you want it to be off most of the time.
+Otherwise, you're going to be charging it multiple times throughout the day.
+So how is it that we're able to build these phenomenal things
+and still have the battery last all day or sometimes even two,
+three days, while the machine is still able to sense
+and listen to things around us?
+You're going to find out in this particular series of videos
+that have to do with keyword spotting.
+In this series of videos that we have around keyword spotting,
+we'll start off by understanding what are the fundamental challenges around
+keyword spotting?
+It's extremely important to have a deep appreciation
+for how to look at the problem space.
+Remember, one of the things that I want to make
+sure I teach you is that we look at things from an end-to-end pipeline
+perspective, not just let me just train my model.
+That's not useful.
+Trust me.
+I'm telling you this from experience.
+Once we understand the broader challenges
+of how to deploy keyword spotting effectively,
+then we will move on to looking at the keyword spotting pipeline.
+Remember, I said that we will walk all the way
+from data sets all the way to how we deploy the model.
+We will start by looking at what are the characteristics of the data
+that we need to have?
+We will be actually using Pete's own speech data
+set, which has become the standard, effectively,
+for keyword spotting today.
+Then we'll learn how to train a small little model that
+can actually fit in a microcontroller.
+We'll do the training in Google Colab, of course.
+And then in course 3, we'll learn how to deploy it.
+Then, of course, we've got to make this model small, right?
+So we have to understand how to optimize them.
+I'm glad you learned about TensorFlow Lite and the whole thing
+about quantization and why it's so critical
+because it's going to be used repeatedly in order to shrink our models down.
+So hopefully you remember some of those fundamentals that I taught you.
+And then finally, we'll actually get into the process
+of trying to deploy it.
+But that's, of course, in course 3.
+The last part that's critical here is that we
+will continue to use Google Colab in order to train the model.
+We'll look at various metrics and trade-offs that we have,
+mostly from a model standpoint.
+But I also want to help you understand how
+to evaluate this particular application from an end-to-end scenario.
+With that, stay tuned, get excited because we're
+going to have a lot of fun with keyword spotting.

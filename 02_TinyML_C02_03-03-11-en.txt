@@ -1,0 +1,51 @@
+LAURENCE MORONEY: We've been looking at the flow for training, converting,
+optimizing, deploying, and then using a model
+at the Edge in the last few videos.
+The one thing we haven't really explored is
+what we can do to optimize the model for Edge inference right at the beginning.
+And that's when you're training the model.
+So we'll do that here.
+Looking into the model optimization tool kit, and how it can help
+you quantize models at training time before you convert them.
+There are a couple of optimizations you can explore at the converter level,
+and let's start with the easiest.
+And that's using it's built-in automatic optimization
+through setting a property.
+We'll start with this code, and it should be quite familiar by now.
+And it's a convolutional neural network that
+classifies the famous mnist 28 by 28 handwriting digits
+data set into 10 categories.
+And those are the digits 0 through 9.
+As an experiment, I trained this for just one epoch,
+and I got these results.
+Accuracy of 92.44% on the training set and 96.95% on the validation set.
+Let's use this as our baseline.
+Now, if I want to quantize the model, I can use the model optimization tool
+kit.
+And let's look at this step by step.
+We'll start by importing the tool kit as tfmot.
+If you don't have it already, you'll need to pip install it.
+Model training quantization can be done using the quantize model
+API, which is available in tfmot.quantization.keras namespace.
+You can use this by simply passing at your model,
+and it will return a new model to you, and we'll call this q aware model,
+as it's a quantization aware model.
+And you treat this model like any other.
+For example, here we compile it with an atom optimizer,
+sparse categorical cross entropy as its loss function,
+and we'll track accuracy metrics.
+If we return to our baseline-- the non-optimized model showing the 92.44%
+accuracy and 96.95% validation accuracy--
+and then we'll do the same with our optimized model, we get the following.
+And these figures are very similar with equivalent accuracy.
+And this is just after one epoch.
+Later you can try this for yourself, training for more epochs
+to see the impact.
+Know at this point your model is already quantized with INT8 weights and UINT8
+activations.
+So you don't need to do things like having a representative data set
+to convert your model.
+Here you had an introduction to how the model optimization tool kit works
+for quantization while you're training, so before you convert to .tflite.
+Next up, you'll explore the code, and you can try it out for yourself,
+and you can examine the impact on the model size and model accuracy.

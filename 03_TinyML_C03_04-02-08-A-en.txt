@@ -1,0 +1,48 @@
+BRIAN PLANCHER: All right, now it's time to begin a series of tests
+to make sure that everything is working with your hardware and software setup.
+We'll start with the Arduino blink example.
+That example does kind of what it sounds like it would do.
+It blinks the LED in the top left corner of your Arduino.
+Mine is currently just off.
+So to get to that example, we're going to use the File menu.
+Under File, we're going to go to Examples.
+Then under built-in examples, we're going to select Basics.
+And under basics, we're going to select Blink.
+And this will open up a new Arduino IDE window for the blink
+example, which we can maximize.
+We'll talk about the code in a minute.
+But first, let's just deploy it to your Arduino
+to make sure everything's working.
+To do that, we're going to need to go to the Tools menu,
+and make sure that the board says Arduino Nano 33 BLE.
+If it doesn't, we can get to that by going over Mbed OS Boards,
+and then selecting the correct board.
+We also need to make sure the port is selected.
+Currently, minus empty.
+Now when you go to port, you might actually
+see a couple of different things here.
+And exactly what you see will depend on what operating system you're using.
+We've described that in detail below, so please check the reading
+depending on your operating system.
+I'm using Windows, so usually the serial ports show up as comm something.
+And the important one we're looking for is
+we're looking for the port that has Arduino Nano 33
+BLE in parentheses next to it.
+Again, you might have multiple ports there,
+so please select the one that says Arduino.
+Once you do that, you can just click the Upload button on the top over here,
+and that will start to compile the sketch.
+You can see this compiling happening over here,
+and you can see the debug output in your console
+if you selected your preferences to have the verbose debug.
+If you didn't, you might not see as much.
+Once it's done compiling, it will start to upload the code to our Arduino.
+And at that point, the text will change from white to orange.
+And you can see that here as we're having our percentage uploading going.
+And there, we have done in 3.642 seconds.
+And if we go over and look at our Arduino,
+we can see that that top left light is blinking on and off.
+And that's exactly what we want to see.
+You've now deployed your first Arduino sketch to your Arduino.
+And you know that at least at that level, that's working.
+And so I'll see you in the next test.

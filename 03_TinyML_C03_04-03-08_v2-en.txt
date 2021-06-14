@@ -1,0 +1,162 @@
+VIJAY JANAPA REDDI: Hi.
+So far, we've been talking about the embedded system hardware.
+What I want to do in this video and the next one
+is talk a little bit about the embedded system software.
+Specifically, I want to talk about the system software,
+and then I want to talk a little bit about the ML software.
+Now, I'm going to focus very much on just the system side of things.
+I'm going to just give you a little bit of a preview about what's
+wrapping the whole embedded hardware in order to make it functional.
+As with any system, if you look at it, there
+are two core components in any computing system.
+There's the hardware.
+There's the software.
+If you open up the software black box, there's usually an operating system.
+There's libraries.
+And then you have your application code.
+And specifically, if you look at the operating systems,
+by and large you are used to running things on Linux or Mac or Windows,
+and you're probably using one of these operating systems to watch this video.
+Or perhaps you're on your phone right now watching it on a mobile OS,
+like the iOS or Android-based device.
+And the question is, what happens when you go to an embedded system?
+Embedded systems don't have those kinds of rich operating system capabilities.
+In fact, they're quite lean and mean.
+So things like the Arm Mbed OS, something that we are actually
+going to be using without you having to get
+into the details too much of course, or things like the Free RTOS.
+These are very lean and mean embedded system operating systems.
+Quite often you don't have an operating system,
+but sometimes you might have an operating system
+because operating systems raise the level of abstraction
+so it's much more easier for users to actually program and interface
+with the device.
+So when you are dealing with your microcontroller,
+by and large, when you're programming it,
+you're going to be writing code in the Arduino processing ID.
+This is going to be your bread and butter for all the examples
+that we're going to do.
+However, I do want you to understand what's in that software box.
+So for example here, on top of the Arduino hardware,
+which is a software ecosystem that's cooked with the mbed operating
+system at the base layer.
+The mbed operating system provides a lot of functionalities as I'll show you.
+On top of that, we have the Arduino which
+provides a set of functions that hide a lot of the complexity of the operating
+system.
+And then you used Arduino APIs to interface with the sensors
+and so forth to build your TensorFlow Lite Micro Application.
+So when you are writing a code, this is what you will be dealing with.
+You'll be using the Arduino ID and writing your TensorFlow Lite Micro
+Application using TensorFlow Lite Micro-specific API calls.
+We'll go into that in much more detail.
+But all of that is being orchestrated by some sort of low level code.
+For example, the mbed OS has got digital interface drivers,
+it's got the ability to interface with the analog and digital pins,
+it's got timers, and it's got a hardware abstraction layer.
+So there's a lot of complexity in terms of actually
+running a microcontroller, all of which is kind of hidden away from you.
+Why am I talking about all of this?
+Two reasons-- one, I don't like learners to just blindly be using something.
+I want you to understand the kind of ecosystem
+you are sitting in so that how to navigate that space as challenges
+come about so you can actually build on top of the knowledge
+that I'm sharing with you.
+That's one.
+The second reason I'm talking about all of this
+very much is from the resource constraints perspective.
+Now remember, memory is extremely constrained on our embedded systems.
+For example, if you just look at the raw amount of memory that you have,
+it's only about one megabyte of flash storage
+and about 256 kilobytes of RAM on this particular device.
+So therefore, we have to be very careful about how memory is being used.
+Now, of course, when you're developing neural network models,
+you are thinking about the model size because, of course,
+you're in a TinyML course.
+In course two, we talked a lot about the model sizes.
+We did quantization in order to optimize the model from an fp 32
+to get it down to end eight because we said that's a 4x reduction in the model
+size.
+Well, that's great, but in this course, that's not enough.
+You need to know more and learn how to optimize even more.
+For instance, in order to run the model, you've
+got an interpreter-- or TF Lite Micro, the actual TensorFlow Lite Micro.
+Well, that's going to need a little bit of memory.
+Not only that, then you've got the application code
+that I just gave you a screenshot of earlier through which you will actually
+be writing and interfacing with the TensorFlow Lite Micro Interpretor
+which then runs the model.
+Now all of that is going to need some variables and temporary state which
+is going to take up memory.
+In addition to all of this, you've got sensors which
+also need to store data someplace.
+So all of that might actually eat up more memory.
+Keep in mind, though, that the numbers that I'm showing you here
+are hypothetical.
+They're just illustrative, but they get the message across to you
+that you need to be quite aware and conscious about where memory is really
+going.
+And you need to keep that in mind because if you're not
+conscious about it, given that we have such limited resources,
+you can very quickly run out of memory.
+F let me give you a real world example.
+Mbed OS is an operating system, and over time, it's been evolving.
+So here's mbed OS 2, and I'm showing you in the 2 bars how much of flash memory
+we are consuming and how much of static RAM that the operating system
+itself is consuming when it's running.
+Now, this is mbed OS 2.
+Now, on the right hand side, I'm showing you mbed OS 5.
+It's an improved version of the mbed OS.
+And what do you see?
+In both the static RAM and the flash, you
+see nearly a 2x doubling of the requirements.
+For example, in static RAM, the amount of RAM that is being used
+has gone from 5 kilobytes to 13 kilobytes.
+That's more than twice the amount of memory that is being needed by the OS.
+Now, that might not seem very big, but remember,
+at least on the Arduino Nano 33 BLE Sense you only have 256 kilobytes.
+And this is just the operating system that's taking up 13 kilobytes.
+Now, if you look at the flash which is what you usually
+use to store your application, you can see that the operating system version 2
+went from 38 kilobytes to 57 kilobytes.
+It's a 1.5x increase in OS 5.
+The point I'm trying to make is that in addition to focusing on the model,
+you also need to be thinking about the system,
+and that's why I want you to understand how the applications are
+built and so forth.
+Now all that said, we will be focusing on learning how to optimize
+the whole system throughout the course.
+How can I reduce this, for instance?
+One of the key things you have to keep in mind is that as OS 5, for instance,
+is growing, you need to understand why it's growing
+and what can you do to simplify things?
+So let me give you a real world example of what Arm actually
+did to simplify things.
+Now, the mbed OS has a lot of different things that it comes with.
+It gives you a lot of flexibility and capability
+to operate the device in a very easy and efficient way, but in doing that,
+you have a lot of different features and capabilities
+that add up that take up a lot of flash and SRAM.
+And you want to detect whether you really need them.
+For example, the "features and frameworks"
+folders actually-- something that's actually not needed.
+There are many unnecessary test tools that are built into the actual mbed OS.
+Do you really need it?
+Well, it takes up one kilobyte of RAM, and it takes about 8 kilobytes of flash
+which is very precious.
+So if you were to take this out, you can save a fair bit of memory.
+So for example here, now, we have gone down in terms of the static RAM usage
+and in terms of the flash.
+We've actually cut down our flash usage from 57 kilobytes to just 49 kilobytes,
+and in the RAM case, we've gone down from 13 kilobytes to 12 kilobytes.
+That's still important.
+Point is really that TinyML applications are more than just a TinyML models.
+You've got to think about the system stack because all of that
+is going to influence how well we can actually
+run the end to end TinyML application.
+Having a TinyML model will not get you anywhere.
+Having a TinyML application mindset, that's going to get you somewhere.
+So in the next video, let's push a little bit
+further in terms of understanding the software ecosystem
+before we start building our applications out.
+I'll see you there.

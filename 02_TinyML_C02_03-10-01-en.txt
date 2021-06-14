@@ -1,0 +1,293 @@
+VIJAY JANAPA REDDI: Congratulations on making this far through Course 2
+and completing it because you have learned quite a bit
+about TinyML and TinyML applications.
+In this video, I'm going to walk you through a general overview
+of the big core concepts that we touched on.
+We touched on many of them.
+So I want to make sure you feel good about learning a lot of things.
+Specifically, I walked you through this pipeline
+here, which goes all the way from collecting data to making inferences.
+Sure, we did much of this in the Google Colab environment but that said,
+we learned all the fundamental building blocks
+that we need to actually be ready to deploy things onto a real device.
+By the way, you actually used the real tools
+that real engineers out in the world care about, so good for you.
+Now one of the things that we did as we went through this entire workflow
+is that I hope you recognize the machine learning code is just
+one portion of a bigger puzzle that we are dealing with.
+Nowadays, industries really want you to know that machine learning code
+itself is part of the big infrastructure that they have to deploy.
+Which means you have to know all the core building
+blocks that are around there.
+Therefore I introduced this lifecycle of ML, which starts from data collection,
+goes into data ingestion, data analysis and curation, data labeling, data
+validation, data preparation, model training, model evaluation
+and so forth.
+It's extremely key that you understand this big picture
+because every machine learning application has to go through this.
+And I spent a lot of time talking about data
+and I will do that yet again in this video
+because if you get the data part wrong, everything else you have done
+is a waste of time.
+So one thing we did was to kind of step through this huge gamut
+of all these different blocks through the use of different sensors.
+Remember, TinyML is all about sensors and data that's coming in from sensors.
+So we spent a little bit of time understanding
+what are the characteristics of the sensor.
+Each of the sensors that we discussed, the microphone, the camera
+sensor, the accelerometer sensor, everything that we did
+has a unique property and that is the basis for why we chose these sensors.
+So hopefully you picked something up interesting there.
+Then we talked about different kinds of networks
+and then we talked about different metrics to evaluate.
+I'll go through each of these in a little bit of detail
+as a quick recap of the specific things you
+learned but the key thing on this slide is that you learned the entire pipe
+and that's important as you go forward as an ML engineer.
+Let's kind of slice and dice through this vertical
+stack here from data engineering to building the product
+and let's try and see what are the core technical nuggets that you picked up.
+I'm going to use several example slides that come from all the material
+that we built previously so that it serves as a reminder in your head.
+That said, I'm not going to cover them in a lot of detail
+and I'm only going to touch on the highlighted key messages.
+But please, if something does not resonate, go back and look
+at the original slides.
+So the first thing was to actually look at data collection.
+So we used Pete's speech commands data set for keyword spotting.
+There were a lot of things that we discussed
+around this, which specifically involve the motivations for building a data set
+and how to go about engineering the data set.
+Why did Pete build a data set all by himself?
+Well, because there was no public data set that was available.
+And in that process we laid out the groundwork
+for what are the systematic steps that you should take when you're
+trying to build a data set, identify the key requirements,
+figure out how you're going to gather the data,
+understand how you're going to refine the data
+and decide how you're going to sustain that data
+so that you can continue improvements over it.
+There are several details that we stepped through,
+all these different kinds of bullets here,
+but specifically, one of the things that I really want to focus on
+is around the licensing, make sure you know where your data is coming
+from because you can build an awesome application at the end of the day,
+but if your data is polluted, you can get into a lot of trouble.
+So if you're building a neural network, know your data source.
+Also, while there are a lot of challenges in building
+the data set from scratch why not ask this question that if we can actually
+repurpose an existing data set and that's
+something that we introduced to you.
+We asked you to think about the fact that in the case of Visual Wake Words,
+we learned that we can actually take an existing data set which
+has a wealth of different kinds of data in it
+and subset that data so that we can use it
+for Tiny ML, where TinyML is specifically
+focusing on very specific tasks.
+For example, we looked at the MS COCO data set which Visual Wake Words uses
+and then it subsets that data set, specifically picking out
+these individual peoples being able to detect for person detection application
+use cases.
+It is a remarkably quick way to shorten the whole data processing pipeline
+as long as you have the right licenses.
+Of course, you can never have enough data.
+One of the things that I talk to you in the context of speech
+was that there's a long tail, that is if you
+want to be able to support a diverse population as you
+try to increase the diversity, you get less and less data.
+In the case of languages, we don't have that much data
+for a good number of languages.
+So how can we go about addressing this problem?
+Sure we can either build the data set from scratch and we can hire people
+or we can do something like Common Voice did, where we're actually
+building a platform that allows people to contribute
+their own languages into the community so
+that we can build a community data set for different languages for speech.
+And even after doing all of this there are
+things that we have to be careful about, specifically around biases.
+We spent a lot of time about understanding responsible AI
+development and in the context of building
+data sets it comes down to understanding the sources of different biases
+in the data set.
+And even if you understand these biases well, you have to worry about the fact
+that often when you're trying to build a large data set,
+you are hiring third party companies, so biases might implicitly
+creep into your data set and you have to be very careful
+and it is your responsibility to make sure that biases are not in your data
+set.
+Then how do we pre-process the data?
+For example, in the context of the analog signal that's
+coming in from the microphone in keyword spotting,
+we talked about how we don't necessarily want to use the raw audio signal.
+Instead we want to figure out how to extract or do feature engineering
+to extract out the critical and salient parts of that signal
+and represent that data in a form that is actually easy for our networks
+to consume.
+So for instance, we took an audio signal,
+converted that into a visual spectrogram and then used
+a convolutional neural network in order to be able to recognize the keywords.
+Then we went into model engineering or designing a model.
+One of the key challenges that we get into when we're designing models
+is that because we're dealing with Tiny ML devices
+they tend to be really small.
+Therefore, we need to think about how can we shrink down
+the number of parameters and the number of operations
+required to compute a particular model.
+I said that we will take one particular example, which
+happened to be mobilenet and we looked into it
+and we learned how by changing the fundamental operations that
+are being performed from convolutions to depth
+wise separable convolutions, that includes point wise convolutions,
+we could dramatically cut down as much as 100x factor reduction in terms
+of the number of computations that need to be performed,
+which is a huge improvement in terms of model parameter size
+and the computations required.
+So sometimes you need to look not at just the overall network architecture
+but actually go deep in understanding the fundamental building
+blocks that actually repeat over and over throughout the whole network.
+And so it's important to look at the algorithms that are there.
+We also want to think about training time for models.
+This requires you to kind of look at not just
+do I always train the network from scratch or can
+I do something interesting.
+Remember I said that when you are learning
+how to drive a car for the first time, you spend a lot of time
+learning how to drive and you go and get a test
+and you do all of that tedious process, but after you've
+learned how to drive the car, when you upgrade your car,
+you simply adapt to it.
+The same concept was introduced to you with transfer learning,
+where we said that you don't have to retrain the whole network from scratch.
+Instead you can hold certain general parts of the network locked in.
+And then only retrain the path specific layers for your given particular task.
+So instead of being able to say it's a cat versus a dog,
+well because they both have ears, eyes, nose and four legs
+it's easy to be able to freeze the general characteristics
+and then just fine tune them for being able to tell what's a cat versus a dog.
+So you learned a whole new method that's called transfer
+learning in order to shrink down the training time quite dramatically.
+Also I introduced a different kind of neural network
+in the anomaly detection section where specifically I
+introduced what we were calling autoencoders,
+where the autoencoders are dealing with unsupervised learning based issues
+where you have a wealth of data for the common case
+but then for those rare events that you need to pick up,
+you don't have enough data.
+So instead, you train your network on the common data
+and then when the common data pattern does not
+get reconstructed on the output side then you
+can detect that something is off and that effectively is the anomaly flag.
+In addition, we learned how to evaluate these models that we're building.
+Specifically, we learned that if we want to make the models run fast then
+we should do quantization.
+Quantization is something that is going to be key for every TinyML engineer.
+So hopefully you remember a little bit about post training quantization
+and quantization aware training and what are the differences between the two.
+Also when you're doing quantization I hope
+you remember why the size of the model actually goes down,
+it happens because you're going from a floating point value to an integer
+value to represent the weight.
+And then how does the performance of the network actually improve?
+That's because we're doing integer to integer multiply accumulates.
+Together that reduces the size as well as improves
+the performance which is perfect for TinyML sorts of devices.
+So make sure you know about quantization and what are all the nuances around it.
+Then we went into converting the models that we
+are training in TensorFlow into appropriate formats for deployment.
+Specifically, we learned from Lawrence that the TensorFlow ecosystem
+has many, many different ways of building and deploying things.
+We specifically focused on TensorFlow versus TensorFlow Lite.
+The key reason is that TensorFlow is both a training
+and an inference engine versus TensorFlow Lite
+is just an inference framework that is designed for running things efficiently
+on edge end point devices like mobile devices
+and TensorFlow Lite Micro is specifically tuned
+for microcontrollers.
+More on that in the next course.
+But one of the reasons we have these differences
+is because there are aspects of whether we're training the model
+or we're just running the model that matter
+because we can remove a lot of code if we're not training the model
+Similarly, there are differences in terms
+of what support is needed between TensorFlow and TensorFlow Lite
+from a software standpoint.
+A lot of devices, for instance in the embedded space,
+do not have an operating system.
+Well that has consequences on which of the frameworks you would use.
+Also, the hardware sometimes might support or might not
+support floating point for example.
+You need to understand some of these fundamental reasons
+as to why you need different sorts of frameworks.
+So as a TinyML an engineer I expect you to know these differences
+because if you're going to try and deploy something,
+you need to be using the right tools to be
+able to get to that deployment stage.
+Next the question is about deployment itself, which goes into metrics.
+So the metrics can be looked at in terms of quantitative perspective
+as well as qualitative perspective.
+Quantitative perspectives are what we're usually used to.
+For example, many of us will look at how well a particular model is
+doing but remember, I said that the model alone
+is not enough to actually determine if it's good for deployment, why?
+For example, you might have a very accurate model
+but because it's accurate and it's big it could be really slow,
+which means a user is not going to be happy.
+For example, if I say OK Google and it takes three seconds
+before the machine responds, that's not good, even if it's 100% accurate.
+Well, therefore you might want to make some compromises,
+you drop the quality by using a smaller model but it's faster.
+So perhaps you can respond more quickly to me
+and that allows you to actually enable your TinyML application.
+Also there is no one fixed calibration point
+that makes it suitable for deployment.
+In the context of keyword spotting we understood
+that we have this operating point that we
+have to move along in the false accepts versus false rejects case
+and that's important because you are deploying
+this device for a diverse number of users.
+So there is no one fixed static point on this curve
+that is actually good for deployment.
+You would have to tune it depending on where you're deploying it.
+Also we introduce this notion of streaming audio and cascade
+architectures to enable powerful capabilities
+and that TinyML is part of a bigger picture of how you
+deploy a machine learning application.
+So hopefully you remember this particular slide
+where we talked about how Siri play my music,
+for instance would actually work.
+Where there's a mix of streaming audio coupled
+with cascade architectures and then finally being able to use the cloud.
+This whole system works together.
+And as a TinyML engineer, you should know this
+because it has implications in terms of how you actually design and deploy
+your application.
+Finally, there is this aspect of product analytics
+where we actually talk about making inferences
+and how that is actually integrated into dashboards where
+you're getting feedback.
+We didn't go too far and too deep into this.
+That said, keep it in mind because it'll come up in Course 3.
+In Course 3 it's all about hands on deployment,
+you're going to be getting yourself a small little TinyML kit,
+stay tuned for all the instructions that are coming up
+and make sure you order your kit and what
+we will be focusing on there is building on all the applications
+that we have picked up here and learning how to deploy them.
+Deploy them does not mean you simply take the model
+and you just push a button, there is a fair bit
+of nuanced science involved in actually knowing how to integrate something
+into a real device.
+Don't be worried, if you don't know much about embedded systems
+we will be taking you through every single step of the way
+to build your entire TinyML application on a real physical device.
+That said, I want you to know that you should be proud of yourself
+because you learned a lot of different things in this course.
+In Course 1 you understood the language of machine learning
+and some of the interesting aspects of embedded systems.
+In Course 2 we looked at three really diverse applications that
+have very different sensor modalities and we integrated all of that
+into the single unified pipeline that we were able to repeat through.
+And in Course 3, we're going to learn how
+to deploy all of that on a real device.
+Congratulations again.
+I'll see you in Course 3.

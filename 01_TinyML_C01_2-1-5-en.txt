@@ -1,0 +1,78 @@
+LAURENCE MORONEY: Earlier we saw how the training loop works.
+You make a guess.
+You measure how accurate that guess is by calculating its loss.
+And then you use that data to make another guess
+with the next guess usually being a little bit better than the current one.
+The idea is that the smaller the loss, the more accurate your guess is.
+So in this video, we'll explore how you can minimize your loss.
+So let's first look at how gradients and derivatives can help us
+understand how to minimize loss and, in other words, how
+an optimizer function works.
+Let's plot our loss function.
+You'll remember that we were squaring values to remove the negatives,
+so our function is a square of something.
+Square functions have a parabolic shape like this one.
+If we want to know the minimum of the loss function,
+we just look to the bottom of the parabola.
+It doesn't matter whatever the parameters that make up the function
+are and wherever this would be plotted on a chart.
+We will still know that the minimum is at the bottom.
+So if we made a guess as to what the parameters of our equation would be--
+say we had started with y equals 10x plus 10, for example--
+and we calculated the loss for the data in our equation,
+we know that it would be very high and so very far away from the minimum.
+Maybe it would look a little bit like this.
+Now it gets interesting.
+And here's why you generally see a lot of math and calculus
+in machine learning.
+If you differentiate the values with respect to the loss function,
+you'll get a gradient.
+The nice thing about having a gradient is
+that you can use it to determine the direction towards the bottom.
+It's actually the negative of the gradient points that way.
+You have no idea how far it is to the bottom,
+but at least you know the correct direction.
+It's like a ball on a slope.
+Gravity will give you the direction of the bottom of the slope,
+but you don't know how far it is to go.
+So if you want to go towards the bottom, you can take a step in that direction.
+You know what the direction is, and you can pick a step size.
+The step size is often called the learning rate.
+So given a direction from the gradient and a step size from the learning rate,
+you can now safely take a step towards the minimum.
+And you'll end up here.
+You're closer to the bottom.
+You still don't know how far it is, but you're closer.
+So you can repeat the process.
+By differentiating again, you can get the gradient.
+And from the gradient, you can understand
+the direction towards the bottom.
+So you can move again in the direction of the gradient,
+and you'll end up here.
+Repeat the process again, and you could end up here.
+You're getting closer.
+Another step and you'll be here, closer still.
+The next step could have us overshoot the bottom
+and end up here because of our step size.
+But that's OK, because when we differentiate from this spot,
+we'll have a new gradient pointing back towards the bottom.
+So we might end up here, overshooting again.
+And after a few steps, we could find ourselves oscillating over and back.
+But we're generally approaching the minimum.
+It's important to choose a good learning rate or we could oscillate forever.
+Or indeed, an advanced technique is to adjust the learning rate on the fly.
+It might be good to have it bigger when we're further up the curve
+and gradually reduce it step by step so that we can get to the bottom
+more quickly.
+To illustrate, choosing the learning rate wisely is important.
+If it's too large, we could overshoot like this
+and then overshoot again on the way back like this
+and then overshoot again like this.
+We're never actually reaching the minimum.
+Or if the learning rate is too small, it might take a long time
+to reach the minimum, a long, long, long time.
+Tiny increments will get you there.
+But as you can see, it's not the most efficient way.
+OK, so now it's your turn.
+You'll try a co-lab first that does this gradient descent using TensorFlow,
+and then you'll see how to figure out the minimum loss.

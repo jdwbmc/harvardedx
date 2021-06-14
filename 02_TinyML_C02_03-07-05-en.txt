@@ -1,0 +1,122 @@
+VIJAY JANAPA REDDI: In this section, we're
+going to kick off the TinyML pipeline for visual Wake Words
+by starting off with data collection.
+As I've always, said data is king.
+So we're going to start talking about data collection
+and pre-processing before we go on to the rest of the parts.
+As with any data, always remember to identify the key requirements
+of the license file that you need to have
+that corresponds to how you intend for the model
+to actually be used in the field.
+I've already talked about this, so I'm not going to re-harp it,
+but it's an extremely critical thing.
+Why?
+Because if you don't read the licenses properly for your data source,
+you can get into a lot of trouble.
+Let me be specific.
+Here's a person who went out and scraped Tinder for about 40,000 images
+to create a facial data set for AI experimentation.
+Sounds like an awesome thing-- you're reusing
+some existing data that's out there, and then you're building a custom data set.
+Well, this is what Tinder had to say officially.
+"This person has violated our terms of service,
+and we're going to take appropriate action and investigate further."
+Well, that's not a good thing because what
+this means is that if anyone happened to build anything that
+is interesting with the tiny ML model into an application that happened
+to be using this data set, well, they can no longer be making
+any business because the data set was polluted, which means you
+don't have the right to use the model.
+Again, I keep harping on this point because it's extremely crucial that you
+understand that the data is king, and that the network, whatever it picks up,
+is dependent upon that data.
+So make sure your data is clean.
+So far, we've talked a lot about data collection.
+We had an entire module on that, and I said,
+if you want to be able to build a good data set,
+you've got to go through a set of stages.
+I said, you got to gather the data after you've identified the requirements,
+and then you've got to figure out how to validate that data.
+And then, make sure you can sustain that data collection pipeline.
+OK and I said that that's really costly, if you want to do it at scale,
+or they have to rely on a whole bunch of crowdsourcing-based methods
+like we did with Common Voice, for instance,
+or like we did with speech commands.
+Well, there's another one that I left out intentionally
+that I wanted to bring up in this particular part of the class, which
+is that you can actually reuse existing data in order
+to create a subset of the data.
+So let's assume, for instance, I have ImageNet,
+which has got a whole bunch of different kinds of classes in it,
+about a thousand different classes, but in TinyML,
+given that you're typically caring about one particular domain, so for example,
+in our doorbell example, it was a cat. .
+So what you really need is just cat pictures In that particular case,
+I don't need a whole bunch of label data that's
+irrelevant to my application use-case.
+I might be able to reuse that existing data with only images of cats
+and balance it out with other images that are not of cats.
+So there's this potential to reuse the data.
+Now this is not new.
+This is exactly how, in fact, Pete actually
+helped build the visual Wake Words data set.
+And the visual Wake Words data set has a single goal,
+which is effectively looking at trying to identify a person in a picture.
+That's what the whole visual Wake Word's data set is all about.
+But the critical thing is really about using publicly available data sets
+in order to create new data sources.
+All right, let's take a concrete example.
+Here's an image that comes from the MS COCO data set.
+What this data set has is a whole bunch of different kinds
+of annotations for many different people, objects, and so forth.
+And specifically, by looking at this image, what the data set
+tells you is that there is a person in here,
+which has got an annotation around him, with a bounding box.
+Well, if you know this exact location in the bigger image,
+then you can crop this image out to just create yourself a new, very specific
+image with one person.
+But hey, it happens that there's another person in here.
+So you can crop that person out and then label that person as them.
+So this way, you are effectively, dynamically creating a new data set out
+of the original data set.
+Now this is a remarkably powerful thing.
+It's a very simple concept, but as long as the licenses are OK,
+you are good to go.
+Because you are effectively now paying the cost up front for a very large data
+set, but then you are able to dynamically create specific instances.
+For example, here we can create a person detection data set.
+We might be able to create a cat detection data set and so forth.
+There are some challenges you have to watch out for, though.
+Think about it.
+The original data set was collected with something in mind.
+There was a very specific goal in mind when that data set was collected.
+Is that data set really going to meet the needs of your particular TinyML
+application?
+It may, but it also may not.
+For example, if the data set that you need is something about planets,
+being able to detect planets and so forth, well, if you're
+imaged in that data set is all about cars, trucks,
+and so forth-- about all the objects that are on this particular planet,
+it's not necessarily going to help you with looking at planets.
+Because that data simply doesn't exist in this data set.
+So you have to worry about that, whether the data actually is there.
+The second thing is whether there's a bias
+because you have to look at the distribution of the samples
+and make sure that the data that you are interested in
+is actually going to be balanced.
+We talked a lot about this in the data engineering
+section of this particular course.
+And make sure you've got all the relevant images,
+and also make sure you've got the right quality and quantity of the images.
+So the point I'm trying to emphasize here is that be careful.
+Don't just jump in and say, hey, I've learned about this new method
+about just using this existing data set.
+Read the licenses.
+Make sure it's got the right data.
+Do your analysis on the data before you start creating the subset of the data
+in order to train your TinyML application.
+We were effectively going to be using the visual Wake Words data
+set which shortcuts the whole process of building a person detection data set.
+And that's why I'm introducing that particular data set in this course.
+With that said, let's go on to the second stage of building up
+the TinyML application.

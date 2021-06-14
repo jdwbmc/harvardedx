@@ -1,0 +1,138 @@
+VIJAY REDDI: So far I've talked a lot about building data sets from scratch,
+where we have understood the process of outlining the requirements,
+figuring out how to go about gathering the data,
+then figuring out how to process that data effectively to validate that data,
+and then finding a means of sustaining that data to keep improving on it.
+I wanted to walk you through that whole pipeline,
+because it's extremely crucial if you're going to start from scratch.
+I wanted to identify all the pitfalls you might have.
+Now, what I want to complement that knowledge with,
+is saying that you don't always have to start from scratch.
+You might be able to potentially reuse data sets.
+And the key question there is, why?
+Well, TinyML is beautiful because it often focuses on one particular task.
+And because it does one particular task, you
+might be able to leverage broad swaths of data that is out there
+and be able to subset that data down for that one particular task
+you want to do.
+And I'll talk about that very specifically later on.
+So why do we want to do something like that?
+Well, building data sets is costly, and it's tedious, and it's error prone.
+And therefore, we don't want to do it.
+We, instead, want to reuse any data set that's available that has already
+gone through that iterative process.
+So then, you've got to ask yourself the question of what's actually available,
+and what's missing?
+If there is a data set that I might be able to repurpose,
+then where can I get that data?
+And if something's missing, then do I have
+to go build that data set from scratch, like Pete did for speech commands?
+Well, you've got to identify the answers to these questions.
+So let me talk about what's available.
+Here's an example from TensorFlow where they have a data set catalog which
+has many different areas that are covered, all the way from audio,
+to image classification, to object detection,
+to question and answering, text summarization--
+many different kinds of different data sets
+that are readily available that you can actually use.
+Before you jump on and start using them, though, make
+sure you check the licenses and see what they say about how can you use them?
+I'm sure you probably use them for research and education.
+But can you use them for commercial purposes?
+That's a question for you to answer.
+So let me talk about one specific example or way in which
+we can actually do subsetting of a large data set
+to create a TinyML specific data set.
+I had introduced MS COCO, which is specifically
+focused on object detection, for instance, where given a picture,
+it's got to identify critical bounding boxes.
+So the labels are all basically bounding boxes that identify, ah, here's
+a person; here's a cat; here's a dog; here's a bus; here's a truck,
+and so forth.
+Now, this data set is pretty comprehensive.
+It covers many different areas, if you remember the details
+from the previous video.
+Now in TinyML, for example, if I want to do a person detection module,
+I want to have a simple camera sensor that the TinyML
+model is going to be using in order to detect a person.
+For example, maybe I wish I had a smart light in my room,
+where whenever I leave the room, I want the light to automatically turn off.
+Why are the lights always on when I'm not in the room?
+Well, today, I have to manually flip the switch and turn it off.
+I wish there was a little TinyML person detection
+model, because if it was running very efficiently, then
+whenever I leave the room, the lights automatically turn off.
+Whenever I come into the room, the lights automatically turn on.
+That's a good use case.
+There are also security application use cases
+of being able to detect if someone is there
+when they're not supposed to be there.
+So that's a very good application.
+What do you want to do if you want to build that application?
+Well, do you go out and build the data set from scratch?
+You don't have to, because we're lucky to have this MS COCO data
+set that's available to us.
+We can effectively take that large data set
+and break that data set down for only the parts where people are involved.
+This data set might have a car or a truck
+or bus or whatever, along with people.
+But we don't care about that.
+We only care about whether there are people or there are no people.
+And that, we can effectively do.
+So we can take a data set that's already curated and subset it.
+So we don't have to start everything from scratch.
+Now, similar to the way we're talking about data sets
+and we don't have to restart from scratch;
+we just need to write the scripts to filter through,
+we can also apply the same notion for how we actually train models.
+We don't always have to start from scratch.
+For example, if, let's say, today you were able to drive a car--
+you got your license, and you were able to drive a car, then tomorrow, you
+upgrade your car.
+Do you go back and get a new license, or do you just
+transfer the learning that happened when you first got your car
+and when you first got your license to the new car?
+Why can you do the transfer?
+Well, because, sure, the cars might be a little different,
+but they're still effectively a car.
+But if it's something like a car versus trying to fly a plane,
+well then, you've got to go back and get your certification.
+So we'll be getting more into transfer learning later on,
+but I'm trying to give you an idea that not everything in machine learning
+needs to be started from scratch.
+So we might be able to reuse some pretrained models, models
+that have already trained on some of the existing data,
+and adapt them a little bit by using transfer learning
+and then be able to shrink the time it takes for you to actually get
+the new application that you want to build really fast off the ground.
+Now, you don't always have to work with the data that's
+only coming from real-world pictures, for instance, or real-world sounds.
+You can also get your data from simulations--
+physics simulations, game engines that are becoming extremely
+good at simulating the real world.
+So you can actually produce a lot of data from simulations
+and be actually able to use it directly inside your machine learning model.
+Also, if you have heard of GANs, machine learning models
+are using GANs to be able to produce new pictures.
+So that's also another source of potential data.
+Of course, I'm going to include a reading that's
+going to tell you about some of the nuances and pitfalls
+about using simulation data or synthesized data versus using
+real data, because there are some nuances there
+that are extremely important.
+So you might be thinking, ah, I have solved
+the problem of my having a balanced data set or a large data
+by using a little bit of real data, a little bit of simulation data,
+a little bit of ML models that have generated the data.
+And I've created this mega data set.
+Well, that data set model, you've got quantity.
+You lack this other part-- quality.
+So we'll learn a little bit about the nuances
+there, because there are some pitfalls there you can get yourself into.
+Now, we'll be going into some of the transfer
+learning aspects both from a machine learning model perspective, as well
+as the data set perspective once we get into the image sensor part,
+which is coming up next after we finish up data engineering.
+So stay tuned for that.
+And after that, we'll be able to extend out to anomaly detection, which
+also uses something quite similar.

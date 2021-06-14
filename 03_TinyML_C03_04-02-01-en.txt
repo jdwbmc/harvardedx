@@ -1,0 +1,14 @@
+BRIAN PLANCER: Hi, I'm Brian Plancher, and I'm
+a PhD candidate at Harvard University.
+And I'll be here to help you through the lab components of this course.
+We've prepared detailed readings with lots of screenshots and short video
+walk-throughs to help make sure you are all set to deploy your TinyML
+applications onto your Arduinos.
+In this first lab section, we're going to make sure all of your software
+gets installed and all of your hardware gets assembled and set up correctly.
+Then we'll run a series of test programs to make sure that you are all
+set for the rest of this course.
+Because TensorFlow Lite for microcontrollers,
+and Arduino code in general, is written in C++,
+we'll start with a quick introduction to C++ for Python programmers.
+Let's dive in.

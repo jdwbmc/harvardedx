@@ -1,0 +1,28 @@
+All right.
+And so the next thing that we'll need to do is to install all of the libraries
+that we'll be using in this course.
+We'll use the Arduino IDE's built in library manager to do this.
+You can find that under the Tools menu by clicking Manage Libraries.
+This operates very similar to the boards manager that we just used.
+And we'll have a similar popup that shows up
+in the middle of the screen with a search bar across the top.
+So for example, in that search bar, we could type TensorFlow.
+And the first thing that will show up is the Arduino TensorFlow Lite Library
+for Microcontrollers.
+And so we can then go over here and find the correct version.
+Again, please check the reading for the most up to date version.
+At the time of this recording, it is 2.4.0-alpha.
+However, it may change over time.
+So again, please check the reading below for the correct version.
+Anyway, once you have the correct version, you can click Install.
+And it will install the library across the bottom
+with another one of those blue bars.
+And this should be pretty quick in this case.
+Yeah.
+It's done.
+And when it's done, you'll see the installed word in teal
+next to the library.
+So please look to the reading below and make
+sure you install all of the libraries that we'll need for this course
+and install the correct version of those libraries.
+Thanks.

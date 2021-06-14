@@ -1,0 +1,271 @@
+VIJAY REDDI: In this video, we're going to focus on keywood spotting data
+pre-processing, which is part of the data collection kind of pipeline,
+but it's also useful when we're actually training models.
+So think about what happens, for instance, when we say, Okay Google.
+The first thing that happens is that you have your microphone, which
+is a sensor, which is picking up that audio signal, which is actually
+an analog signal and converting that into a digital signal that can then
+be processed effectively for your neural network.
+So we will be understanding the sequence that we're going through
+and what are all the nuances you have to watch out for.
+So this is going to be very much at the beginning of this pipeline
+that we will be walking through.
+We've already talked about collecting the data
+and how to build a good rich data set.
+Well, that's the sounds.
+But now, before you can actually get around to training the model,
+you actually have to do preprocessing on that data, which
+we learn in this particular video, and then use
+that to actually train the network on.
+Let's step through and understand what exactly
+is going on when we are collecting an audio signal
+from a sensor like the microphone.
+All we hear, really, are just sound waves that are vibrating.
+And your microphone is effectively picking up those vibrations
+and converting them into an electrical signal, which
+is in the form of voltage distortions you're going to have.
+And that is going to be sampled at a certain rate,
+because you're effectively picking up signals periodically.
+With the microphone for instance, you will
+see that you will be picking up an audio signal at around 16 kilohertz, which
+means 16,000 samples are getting picked up continuously.
+And that data of 16,000 samples per second and somehow
+has got to be fed into the network.
+So this leads into an interesting set of questions.
+Here, while I am focusing very much on the audio signal,
+I want you to keep in mind that what I'm trying to really teach you
+is that when we have a sensor, we have to think about what it's data
+input looks like and what its data feeding into the network
+needs to look like.
+So for the microphone, we have 16 kilohertz signal that's coming.
+That means we have 16,000 data points.
+First question-- do we need all of that data?
+Something to think about.
+What level of sampling is actually good something that we should keep in mind?
+Do we need to feed all of that data into the network?
+Or can we try and extract some critical features?
+That's where creative thinking comes in.
+We need to understand what aspects of the signal
+that we really want to pick up.
+Let's take this example here of no said loudly.
+And what we're looking at is a time domain signal.
+x-axis is effectively just time and then y-axis is just
+the amplitude of that signal.
+What's interesting here is that you have a wide signal,
+and the important part the note is somewhere in the middle of the signal.
+Everything is a signal.
+So the question is, how do we first and foremost figure out where that no is?
+So somehow, we actually have to identify the no.
+Doesn't matter whether it's said loudly or quietly--
+you have to identify that crucial region.
+The other thing here is that it's the same word, no,
+said loudly versus said quietly.
+And yet what you were seeing here is that by just looking at the raw
+waveforms that are coming in, we cannot tell the difference.
+The left hand and the right hand look completely different,
+even though it's the exact same word being said.
+If I show you this figure, do you know what these words are?
+Of course, no, you can't.
+You can't possibly know.
+Well, but can you tell us something interesting here?
+Well, the bottom two are effectively the no from the previous slide.
+The top ones are yes.
+And again, I'm trying to make the same critical point here
+that the same word can look totally different in its raw format.
+This is why preprocessing the signal is actually extremely critical.
+Because we want to extract the salient features.
+Because the two no's and the two yeses--
+there is some hidden information in there that clearly corresponds to yes
+and no, but looking at these raw waveforms,
+we cannot tell that the left hand no and the right hand no and the left hand yes
+and the right hand yes are actually exactly the same.
+So how do we go about distilling this?
+Some of the interesting challenges that we're going to get into
+are really, that when you have this basic waveform that's coming out,
+you got to first and foremost figure out when does the word really start.
+That's called alignment.
+Keep that in mind.
+So you've got to align or extract the critical part of the signal that
+actually corresponds to us in order to figure out whether it's
+a yes or no or any other word.
+That's the first step you're going to do.
+We need to figure out how to actually extract the aligned part of the signal,
+extract the critical features that are in there.
+So let's step through those things next.
+Specifically, how can we differentiate the uniqueness in the signals?
+If we go back and we look at this figure,
+that 16 kilohertz analog signal is getting a digital representation,
+which we're looking at in the kind of waveforms that we're seeing earlier.
+Now what we want to be able to do is to pull out the interesting tidbits
+between these two variants.
+So if you look at any signal, it's fundamentally a composition
+of other primitive signals.
+So the signal on the right, for instance,
+that we're looking at that has an interesting shape,
+is really a composition for instance of a signal that's on top and the bottom.
+Now we totally just drew this, but do you get the idea.
+Is that a complex signal can be deconstructed
+into a set of different signals that each have a critical frequency.
+So the frequency on the top and the frequency on the bottom one
+are completely different.
+And the resulting combination of those signals
+also looks different, which is why you have the right hand waveform.
+So what I'm hinting at is if we are looking at a keyword like this,
+what does the signal decomposition look like?
+What are the frequencies, the fundamental frequencies,
+that are all sitting inside the signal?
+If we can extract that, then perhaps regardless of how loud or how quiet
+it is we can actually get to the sense of the word.
+That's where Fourier transforms come in.
+Fourier transform is a very simple process
+that tries to extract a time domain signal into a frequency domains.
+So it does this conversion so you're trying
+to look at what are the frequencies that are present in the signal.
+That's the first step.
+Why do we do this?
+Because by extracting out the critical frequencies,
+it's like trying to find the fingerprint, effectively.
+It's one of the steps, but it's a crucial step.
+If you're not familiar with Fourier transforms--
+and FFT stands for how you do a fast Fourier transform--
+don't worry about it, I have a reading that will actually give you pointers
+and explains the exact process that's involved.
+Because if I have to teach you FFT, we'll
+have to start a whole new course and just signal processing.
+But let's stay focused on the critical building
+blocks that correspond to building a keyword spotting ML application.
+So the first step is really extracting the frequencies,
+which FFT allows us to do.
+Now one of the key things you'll realize is when you say,
+no, it's not a snapshot.
+It is actually a set of frequencies that are emitting over time.
+No.
+That takes maybe half a second--
+I don't know, something like that.
+When I say, yes, that's a set of frequencies
+that are changing over time.
+And that is the pattern that we want to try and extract or essentially capture,
+because that pattern is a unique fingerprint.
+And how do we do that?
+Well, this is where we have to do the FFT, which we're extracting
+those critical frequencies out.
+Well, that, we're going to have to do that over the entire sound.
+So once we align or chop out the critical bit of no in here,
+we start at its beginning, and we have what's
+called a sliding window, where we're doing that FFT to extract out
+the frequencies along that time domain.
+And in doing that, we look something like this,
+where we're overlapping a window, as it's kind of sliding every time.
+It's about 25 to 30 milliseconds.
+That's typically the window size.
+The reading explains why it's about that size.
+It's effectively a very good measure for capturing the critical features,
+and to be able to see the transience that are happening over time
+and the frequency response to it.
+So if we kind of step through this, what we can do
+is we can generate interesting plot that actually shows us something about what
+frequencies are pronounced and how they're
+changing over time in their strength on the right hand
+side, which is called a spectrogram.
+A spectrogram is effectively a visual representation of the signal,
+and all of the different frequencies that are involved,
+and how it changed over time.
+That's all there is.
+It's a beautiful picture.
+Now if I go back and look at these original figures that we're looking at,
+these audio signals, and I convert them into spectrograms so beautiful,
+what you will see is that the top and the bottom ones look quite distinct.
+Specifically, if we look at the top yes ones,
+then you see that they have a distinctive signature that stands out
+from the ones that are below for the no's.
+The no's don't have any strong amplitude of visibility there.
+The strength of that color or the vibrancy of that color
+is telling you how strongly those frequencies are actually
+pronounced there.
+And you can clearly see a distinction here,
+which is then allowing us to sort of get a clue that these are not
+the same words.
+By looking at the signal, we're able to say that,
+well, yes and no look quite different.
+Moreover, if you look at the horizontal side
+where you have no loud and no that is said quietly, look at them.
+They look similar.
+Even though they're actually in the raw form, they were different.
+That's the beauty about converting an audio signal into a frequency domain,
+and then looking at it visually through a spectrogram.
+Can we do even better?
+This is often typical in machine learning.
+You're always iterating on the data to try and extract more salient features.
+You're doing feature engineering.
+The answer is, yes, of course.
+Well, a little bit of a machine running.
+Well, it's simply about trying to mimic how our ear is actually hearing sound.
+So our ear does not hear all the sounds equally
+with the same frequencies-- don't respond well in the ears.
+The lower band frequencies are actually much more crisper to us.
+We can tell apart the low frequencies far more easily
+than the high frequency ranges.
+And so we want to effectively use that thing,
+and we call that process a Mel filterbanks.
+Mel filterbanks are basically allowing us to understand
+how the human perception is of sound.
+And this is something that was developed a very long time back.
+We will be using these Mel filterbanks to effectively bend
+the frequencies to extract out a much stronger signal in the spectrogram.
+So again, in the readings, I explain what are these MFCCs
+that we'll be talking about.
+We also explain what a spectrogram is.
+But as you can see on the left hand side is the original spectrogram,
+the right hand side is what's called a MFCC, which
+has been processed effectively.
+And what you can clearly see are that for the yes and the no,
+they look different.
+And by extracting these different frequencies
+that we're seeing over time, what the model gets a chance to look at
+is how the things are changing over time on the x-axis.
+And it's that sort of a pattern that the network
+is going to try and look for or learn to look for in identifying
+the keywords, yes and no.
+We can certainly do a bit more of engineering.
+For instance, we can clean the signal.
+Sometimes, you want to get rid of that quiet yes and the loud yes,
+those amplitude differences.
+Sometimes, you can normalize the signal in order
+to make sure that the loudness and the quietness
+is actually kind of ripped apart, so that way, you can really
+focus on a normalized clean signal, and the amplitudes are all
+the same for all of the sentences or the words that are inside your data set.
+By doing that, it actually helps your neural network learn.
+Now this is a very typical part of any machine learning pipeline.
+It's not specific to keyword spotting, so that's
+why I'm not really poking at it too much.
+But this is something that we actually do in our particular pipeline
+as well as we prep the audio signal in order to feed it into the network.
+So in this video, what I want you to take away
+is that we preprocess signals that are coming out of the sensors.
+We do not pick the raw data and feed it straight into the model--
+no, no.
+Instead, what we do is we preprocess that data.
+And by doing the preprocessing, we are looking for critical features
+that we want to extract out so that it's easier for our models
+to be able to pick those features up or learn to pick those features up
+as we train the network.
+That's the critical message that I'm trying to convey to you here.
+Moreover, what's interesting is that when you do the preprocessing,
+we are not looking at the signal in the original format.
+We're actually completely converting it on a different representation.
+We went from an audio time squeeze signal into a frequency signal.
+And we're looking at the frequency as a picture.
+Think about that.
+That's important.
+So when we're dealing with sensors, think of useful conversions
+that we would go through.
+We will give you a couple of examples to bootstrap you
+on the kinds of different preprocessing steps that are done.
+We will actually be using them in order to train our models, as well.
+So you will get quite familiar with this sort of a process.
+Generally, though, whatever we are touching in the pipeline
+is actually going to be useful for any audio sensor that you take.
+So I've tried to structure it so that you get the fundamentals that can
+be repurposed for this type of sensor.
+And with this, we'll continue in the next video.

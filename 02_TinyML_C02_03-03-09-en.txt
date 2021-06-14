@@ -1,0 +1,83 @@
+LAURENCE MORONEY: Recall the flow from earlier
+in the course where you start with a model that you train in TensorFlow.
+You then convert that model to TensorFlow Lite format
+using tools that are part of the API.
+Your converted model can then be optimized to run on smaller systems,
+and it's then deployed to the Edge.
+Once it's deployed to the Edge, you can make inferences with that model.
+For you to get the most out of your model,
+it will need to be optimized for the Edge.
+And optimization can take place in a number of ways.
+You can set up optimizations on the converter
+when you're converting the model, or you can do post-conversion optimization.
+And in this video, we'll look at a couple of these.
+First of all, let's consider optimization
+at the point of model conversion.
+There are a couple of optimizations that you can explore at the converter level,
+but let's start with the easiest.
+And that's using it's built-in, automatic optimization
+through setting a property.
+So for example, consider this code where we have a saved model for cats and dogs
+at the directory indicated.
+And we'll convert it to a TensorFlow Lite model by invoking the converter,
+getting a tflite file, and then saving that out.
+So we could introduce optimizations like this,
+by setting the converter optimizations property here.
+And in this case, I'll set it to tf.lite.Optimize.DEFAULT.
+There are a few options for what you could do here, so let's explore them.
+Optimize for size, as its name suggests, performs optimizations
+to make the model as small as possible.
+Optimize for latency will perform optimizations
+that reduce inference time as much as possible.
+They're both worth experimenting with.
+And because Optimize.DEFAULT will try to optimize for both of these--
+and it usually works quite well at doing so--
+you'll usually get by just by keeping it at a default like this.
+But it is good to know about the others.
+As an example, when I was using the cats versus dogs model
+we're discussing here, my model size was about 9 megabytes.
+After using the default optimization, it ended up a 2.3 megabytes.
+Experiments have shown that models can be made up to about four times smaller
+with a two to three time speed-up.
+Depending on your model type, there can be a loss in accuracy,
+so be sure to test thoroughly to see if the losses are acceptable.
+For example, my cats versus dogs model dropped from about 99%
+accurate to about 96% accurate when using this optimization.
+The second method we can explore is quantization
+through representative data.
+This changes the weights in the model from 32-bit floating
+points to 8-bit integer.
+And this can have a huge impact on model size and latency
+with a relatively small impact on accuracy.
+And it's particularly powerful for hardware
+that's optimized for 8-bit integers.
+So starting with the same code that we just saw,
+we can set our converter optimizations.
+But we can then add code to create a representative data set of the values
+that we want to optimize around.
+Let's look at this piece by piece.
+We'll start by taking a sample of our test data
+from the data set that we originally used to train and test the model.
+The goal is to have a representative sample of the type of data
+that the model would expect to see, so that the model can be calibrated
+for the ranges of data expected.
+This is then wrapped in a function that returns its input values.
+This type of function is typically called a Data Generator,
+so here, the function name is Representative Data Generator.
+Now that you have a Data Generator that can
+provide a good example of what type of data
+the model is expected to run inference on,
+we can tell the converter to use that as the representative
+data set for the model.
+And then we can tell the model that the supported_ops
+should be INT8 by setting the supported_ops property like this.
+If you want to compress the INT8--
+which is recommended for hardware that supports it--
+you can use this property value, tf.lite.OpsSet.TFLITE_BUILTINS_INT8.
+Note that this interface is constantly evolving
+and the API surface might change, but the underlying
+concept should remain the same.
+Now that we've explored coding optimization and quantization
+at the converter level, it's your turn to try them out in the Colab.
+Play with the different options, and explore
+the impact of the optimizations.

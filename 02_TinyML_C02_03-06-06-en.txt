@@ -1,0 +1,240 @@
+VIJAY JANAPA REDDI: Hopefully, at this point
+you are excited about keyword spotting, not
+from general keyword spotting in English,
+but perhaps keyword spotting in your native language.
+That's an exciting thought that you and I should be thinking about.
+How do we do that?
+What's the problem in being able to do that today?
+It's the data set.
+Do we have a speech command data set for your language?
+They sure don't have it from my language, which is Telugu.
+Now, I'm going to talk about what's the real problem here,
+which is called the long tail.
+Let me explain what I mean by the long tail here.
+The long tail gets at this point that if you
+want to collect data that's really diverse,
+which means you have to consider many, many different kinds of people
+and their accents and the nuances of how they say things,
+then the data will diminish really fast.
+But if you're talking about just English, for instance,
+there's a large wealth of data out there that we can tap into.
+That's effectively the long tail problem.
+The long tail really becomes an interesting problem
+if you want to do something like keyword spotting
+for many different kinds of languages.
+So I'm showing you a picture on the left that you will recognize immediately
+in terms of the different languages that are there.
+And their population clearly indicates the size of the circle.
+And you'll see that for some languages, there's
+a large number of people who you can tap into to get the data.
+But for the many other languages, we don't have that many people.
+There are over 7,000 different languages spoken on this planet.
+Question is this.
+How can we enable speech commands for all of them?
+Wouldn't it be cool if you could say, Alexa or OK
+Google in some sort of native language and then the machine responds?
+That would be a very different experience.
+We might be able to come with all kinds of really interesting use cases.
+I just talked about Alexa and Google again,
+but those are just voice assistance.
+I'll talk about one very specific example that really keeps me up
+at night as to why we should enable speech commands for the planet.
+Think about this in the context of a developing country
+where, for instance, you don't have massive computing
+infrastructure and rich internet connections and things like that.
+But let's say there's some sort of problem.
+Let's say there's a virus out there that is spreading across these villages.
+And the one base technology that almost all different places have
+is access to radio, a very primitive sort of technology
+that is pervasive across the planet.
+Now, imagine if you were able to train a keyword spotting in a certain language
+and get it to detect certain keywords.
+And let's say we want to figure out how much of a problem
+we think it is that there is a certain virus in a certain village
+and build a map-- overall map for a whole region,
+for a whole collection of different villages.
+Imagine if we could train the keyword spotting model
+and put it in front of the radio and tune
+in to different regions or different villages
+where the signals are coming from.
+Then the keyword spotting model is going to be
+able to pick up the keywords, let's say, the virus or COVID or something
+like that.
+And when it picks it up, you can start building and figuring things
+out about maybe there is actually a problem in this village--
+oh, there's a problem in this village, oh, there's a problem in this village--
+without explicitly having to have doctors and nurses
+and everybody go out across the entire place,
+which is very costly and extremely hard to do,
+especially in developing countries.
+So that's a very creative example of trying
+to use keyword spotting for something outside of voice assistance.
+This is why I think it's extremely important to build speech commands
+sorts of data sets, small little data sets
+for the variety of different languages that we have across the planet.
+Now, how do we go about doing this?
+Obviously, at this point you know that we can do one of two things.
+One is you can either pay in order to get someone to actually do
+the labeling, contribute that voice.
+Or we can do crowdsourcing the way Pete did for speech commands
+and rely on volunteers who actually contribute the data.
+What's the difference between the two of them?
+Well, if you want to be able to pay for all the different languages,
+well, that's costly, and it's got limited scale.
+Someone needs to be philanthropically interested in contributing
+for the whole planet.
+Maybe that's the Gates Foundation.
+But that's still a lot to ask from any one organization.
+So more than likely, the left-hand side approach is not going to work.
+Paying in order to try and build data sets
+has very limited applicability unless it's a business proposition around it.
+The example I gave you is not so much as a business proposition.
+It's much more about doing social good.
+So we have to rely on the community to actually help us build the data sets,
+because if we can rely on the community the way Pete did
+and give them a good cause or good motivation,
+it's more than likely that we might be able to build it.
+That's where I want to introduce Common Voice to you.
+Common Voice is effectively a crowdsourcing platform
+that allows people to actually contribute speech.
+The way you do that is by simply going to a website,
+and you click on Speak on the top left.
+And a certain sentence or a certain keyword is given to you,
+and you record it.
+This is very similar to what Pete did.
+It's exactly what I was talking about previously when I said he put up
+a website and people contributed.
+And how do you validate it?
+There's a listen mode where there's a certain statement that
+is supposed to have been recorded.
+Then you click Play, and whoever previously contributed it,
+their voice will be playing.
+And you will be listening to it and looking at the text
+and saying "check" or "no, this is not right."
+So that's the validation stage.
+This is effectively what Common Voice does.
+It's an infrastructure that is out there that
+helps us build data sets for speech, like what we are looking at right now
+for English.
+But you can actually extend this to many different people
+in many different languages.
+Common Voice is a platform that's out there for the public good.
+Over 50,000 volunteers have already contributed speech in there.
+Now, you might be wondering, why am I suddenly talking
+about another platform?
+Because we already got speech commands, so
+what's so special about Common Voice?
+Well, the interesting thing is that it's there for 54 different languages.
+These are all different languages that people contributed.
+Maybe you and I should start contributing to this Common Noise
+infrastructure, because that's how a new language gets recorded.
+One of the interesting things here is that we can enable speech recognition
+for all kinds of different languages because this
+is a community-driven effort.
+And that's what really gets me excited about Common Voice.
+What I'm trying to do here is introduce you to two things.
+One is a very specific instantiation of a platform
+that you can actually use to build data sets.
+Two, I'm trying to get you to understand how we can build data sets.
+You need to know the right tools and mechanisms that are out there.
+And Common Voice is one repository from which you can get data.
+So what Common Voice has is valid data sets.
+So people have contributed into it.
+So someone has to go and verify that it's correct.
+So they have validated some of it.
+The way that validation is done is very similar to the way
+Pete did his speech commands data set validation.
+Some people listen to it, and then they say, yes, this
+is exactly what it's supposed to be.
+There are going to be recordings in there that are invalid.
+So some people said, yes, this is not actually correct.
+And finally, there are others where some people have said, yes, this is correct,
+and others have said, no, this is not correct.
+So that's the other bucket.
+I'm just trying to give you a little flavor
+for how things are actually structured or what kind of situations
+will come up.
+It's not always going to be yes.
+It's not always going to be no.
+You might have a mixture.
+And that's the key point as to why we're talking about how we actually
+end up with this other bucket.
+Some of the very important and interesting aspects
+are that it has a permissive license, which means then you
+and I can use it for commercial purposes or research-related purposes
+and so forth.
+There are many contributors, as I said earlier.
+It comes with metadata, which is extremely important.
+Think about it.
+Metadata for a data set is like a nutrition sticker
+that is on the back of every food item that you
+buy, which tells you how much sugar there is,
+how much fat there is, and so forth.
+Metadata is very similar to that, but it's specific to the data set.
+It actually talks about the internals of the data set.
+We'll get into that more in a bit.
+Then, of course, there is a specific subset
+of Common Voice that is extremely relevant to us, which
+is the single word target segment.
+It is almost exactly speech commands, which is
+something that just started recently.
+Pete pioneered the idea about two years ago before this.
+The interesting aspect of this is that it supports multiple languages, not
+just English, which is the key thing that I
+was trying to get to in this video about talking
+about different languages for people across the planet.
+There are over 18 different languages today,
+and it's continuing to grow remarkably.
+The languages are effectively capturing a set of keywords.
+In this case, it happens to be yes, no, hey, Firefox.
+Firefox is a web browser.
+And the reason they are capturing this is because, well, the Common Voice
+project is part of the Mozilla Foundation, which
+actually supports the project, and therefore Firefox is captured.
+And it also captures digits, 0 through 9.
+So one of the richest things about this is the fact
+that, again, because Common Voice has a permissive license,
+we can actually work with it, which is really powerful.
+Again, here I'm showing you a screenshot of how you would record it, very
+similar to what Pete pioneered.
+It's also very easy to use because all you need is a browser.
+I strongly encourage you to actually go out and contribute
+a couple of keywords, because that would help us.
+And one of the interesting things here is
+that you might actually be able to contribute in starting a new language.
+So if you're excited about this, get yourself
+and get your friends and everybody to go to Common Voice
+and potentially contribute, because we can make the world a bit better
+by having additional data that specifically ties to new languages.
+One of the important aspects is generally
+about the structure of the data that we need to have.
+So Common Voice has yes, no.
+There's a notion of prompt.
+What's the prompt that we want to have?
+Then, of course, is a feature of recording
+that data that's actually important.
+How do we actually record the data?
+What are the attributes that are actually captured inside that data?
+How do we validate that data?
+We've got to know which of the recordings
+are actually up, which are the recordings are actually down,
+and then use that to create the data splits for the test, the training,
+and the validation as well.
+I'm talking about all of this in the context
+of explaining how speech commands came about as a data set that you are using.
+I'm trying to emphasize that there is more to just building machine learning
+models.
+You need to understand that machinery models are comprised of data.
+And now, how do we go about collecting the data
+is something that is extremely crucial, and we
+need to be systematic in that process.
+We cannot just do an ad hoc process.
+So hopefully, in this video what you've understand is that, hey,
+we started with speech commands, which was just for English,
+but now there are other mechanisms to build data sets for our own languages
+that we desire.
+And there's a method to the madness.
+And Common Voice is one systematic process
+which uses the fundamental building block steps that we talked about.
+And so we can all contribute into it, and then potentially we
+can use that data set to train custom keyword spotting models.

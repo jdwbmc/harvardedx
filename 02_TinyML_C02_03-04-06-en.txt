@@ -1,0 +1,214 @@
+VIJAY JANAPA REDDI: Hi.
+In this video, we're going to learn about the inference engine,
+or the machine learning framework that is actually
+going to support our models that we're working very hard on making small
+and so forth.
+It's extremely important that you understand these differences.
+Because as a TinyML engineer, you're going to need it.
+Because every little bit counts in terms of extracting efficiency
+from the system.
+In this course, as we go through this machine learning workflow,
+we're going to be using both TensorFlow and TensorFlow Lite.
+In course 3, we'll actually be using TensorFlow Lite from microcontrollers
+specifically.
+In this video, I'm going to try and focus
+on the big differences between TensorFlow and TensorFlow Lite.
+I want to make sure you understand what are the technical differences
+between these software stacks.
+Because this is going to be fundamental to actually
+how you go about building your TinyML applications.
+Let's start off with TensorFlow.
+TensorFlow is a machine learning framework that runs in the cloud,
+as you are doing with your Google Colabs.
+It relies on big, powerful processors.
+That might be CPUs, GPUs, and these custom-built Google
+TPUs, which are used for efficiently running neural network processing
+graphs.
+However, when you're doing the models, you're training them,
+you need big frameworks.
+But if you're deploying them onto small devices, for example, like your phone,
+you don't necessarily have all of that massive computational horsepower
+and capabilities.
+Why?
+Because these devices have less memory.
+They have less compute power.
+And also, they're only focused on inference.
+So then why do you need a big training framework,
+a system that's capable of both training and inference, when you only
+do one half of that world on something like a mobile device
+or an embedded device?
+That's the fundamental rationale behind TensorFlow Lite.
+Let's make something nice, and clean, and mean.
+Now that boils down to some critical differences
+in terms of how these two systems are effectively implemented.
+Let's talk about them.
+From a network topology, think about what's
+happening when you are training the network versus when
+you're deploying the network.
+When you're training the network, are you typically
+playing around with the network, like what operations to use,
+what max pulling you use, maybe doing drop-out as an optimization.
+These kinds of things require you to change the network structure.
+Therefore, TensorFlow has a lot of capability for that.
+But when you're only doing inference, are you
+ever changing the network structure?
+The answer is no.
+Because you've already designed the model, and you're deploying it.
+Similarly for weights, when you're training the network,
+are your weights constantly changing?
+The answer is yes, right?
+Because we're doing a forward pass.
+And then we're coming back, and we're doing backpropagation,
+and updating the weights using gradient descent on our loss functions.
+So our weights are constantly getting updated.
+Versus in TensorFlow Lite, are we doing any weight updates?
+The answer is no, because we're deploying it.
+Think about the memory.
+I've emphasized this many times, that when you're deploying things
+onto mobile devices and embedded systems,
+memory is always extremely critical.
+So we tend to focus on that.
+So we want to strip away anything that is in the framework that
+actually ends up eating the memory.
+Because not only do we want our models to be small,
+we actually need the frameworks that is supporting the model also to be small.
+Do we need distributed compute?
+Do we need multiple computers to work together?
+Well, when you're training a complicated model, the answer is yes.
+You need multiple computers to actually do the computation.
+But when you're doing inference calculations,
+no, you're typically running the model on a single device.
+Therefore you don't need all of this extra capability that's
+in the software framework to actually be able to do your inference efficiently.
+Bottom line-- TensorFlow is really designed for machine
+learning engineers and researchers who are trying to architect the model.
+TensorFlow Lite is designed for application developers.
+And by the way, you're in a TinyML applications course right now.
+So let's go a little bit further to try and understand
+the critical differences between TensorFlow and TensorFlow Lite
+in these three buckets.
+Because this has implications.
+In addition to just talking about TensorFlow Lite,
+I'll also talk about TensorFlow Lite Micro, which
+is an extension of the TensorFlow Lite ecosystem, which
+Lawrence hinted at earlier.
+But let's start off with the model size.
+From a modeling perspective, as I've said earlier, TensorFlow,
+you're going to be doing training.
+But in TensorFlow Lite and TensorFlow Lite for microcontrollers,
+you don't need to be doing any training.
+So you can strip away those parts.
+Also, can TensorFlow do inference?
+The answer is, absolutely, yes.
+But the question is whether you can do it efficiently or not.
+It's not necessarily optimized for that.
+It's really optimized for the training side.
+However, TensorFlow Lite and TensorFlow Lite Micro
+are extremely optimized for inference.
+In course 3, we'll go much deeper into this.
+Also, how many ops a particular framework supports depends on the task
+it's designed to do.
+As a machine learning researcher or engineer,
+you're often exploring many different kinds of operators when
+you're trying to train the network.
+Therefore TensorFlow has over 1,400 ops right now.
+That's a lot of ops.
+But many of those ops are actually not used by the widely popular models.
+Therefore TensorFlow Lite and TensorFlow Lite for microcontrollers
+only have a handful of ops.
+There is almost 130 ops in TensorFlow Lite
+as compared to TensorFlow Lite for microcontrollers,
+which has only 50 ops.
+This is an order of magnitude different.
+Just from an efficiency perspective, you want
+to focus on where things really matter, not just
+provide general capability, which is absolutely
+needed in TensorFlow for being able to train the models effectively.
+And the hope is that many of those critical ops that are being trained
+are actually the ones actually are useful.
+And it turns out only about 130, 150 ops are typically useful.
+And also there's the whole notion of native support for quantization.
+At this point, you know why quantization is so crucial to us.
+TensorFlow doesn't really support any specific quantization,
+because it's not really needed.
+Versus TensorFlow Lite and TensorFlow Lite for microcontrollers, quantization
+is sort of natively supported.
+The optimization APIs are all naturally there.
+Let's look at the software side.
+First thing is, do you need an operating system in order to run the frameworks?
+On TensorFlow, the answer is yes.
+You need something like Linux, or Windows, or so forth,
+because it relies on things like dynamic memory allocation.
+Same thing happens for TensorFlow Lite, which
+typically runs on smartphones, where you tend
+to have something like Android or iOS, which can actually do dynamic memory
+allocation.
+But in TensorFlow Lite for microcontrollers, the answer is no.
+Because if you had taken course 1, you would
+know that we don't have nice operating system support for microcontrollers,
+because we want the microcontroller to be lean and efficient.
+So you don't necessarily need to have a mid-level operating system support.
+Also, you need the ability to map models efficiently
+in embedded devices and mobile devices.
+Memory mapping is a very quick and effective way
+of bringing the model into memory, which is something that TensorFlow
+and TensorFlow Lite differ upon.
+Finally, the ability to delegate to hardware
+accelerators-- we'll talk about this in much more detail down
+the road in course 3.
+But for now, the ability exists in both TensorFlow, and TensorFlow Lite.
+And TensorFlow Lite Micro is soon going to have the ability
+to deploy onto custom micro neural processing
+units on embedded microcontrollers.
+Final element is the hardware differences.
+Think about the binary size.
+I've always said that it's extremely important to keep the binary size small
+because of flash, for instance, on microcontrollers, is extremely small.
+Similarly, on mobile devices the memory is also very limited.
+But if you look at the binary size of TensorFlow, it's 3 megabytes,
+versus on microcontrollers and mobile devices,
+it's only in the order of, like, a few kilobytes.
+That's because TensorFlow Lite and TensorFlow Lite for microcontrollers
+has been extremely optimized to keep the whole software
+infrastructure itself very small.
+So the base footprint, once the model is actually up and running,
+as compared to TensorFlow, is an order of magnitude
+smaller for TensorFlow Lite for microcontrollers and TensorFlow Lite.
+And finally, these systems are optimized for different hardware execution units.
+TensorFlow is optimized for x86, the GPUs, and the Google TPUs.
+TensorFlow Lite, which is optimized for mobile devices,
+is optimized for Cortex A, or application class processors,
+and x86 processors.
+Whereas TensorFlow Lite for microcontrollers
+is really custom optimized for embedded systems,
+which are like the Cortex m class microcontrollers
+from Arm or the digital signal processors, all of which--
+this particular thing will be something that we
+talk about in great detail and course 3 so
+that we can actually close the loop in terms
+of understanding how we go from building models, to building applications,
+to actually deploying them very efficiently.
+Now with all that said, the key message that I'm trying to get across here
+is that it's important not only to optimize the models,
+but it's also important to optimize the infrastructure, or the runtime that
+actually runs that model during inference time.
+I hope you took away that there are big differences between TensorFlow
+versus TensorFlow Lite ecosystem.
+Even within the TensorFlow Lite ecosystem,
+which is custom designed for the inference world,
+is also split up further based on mobile devices
+versus the embedded ecosystem.
+The reason is because even when you do inference,
+it depends on the kind of system you are running inference on.
+For example, embedded systems do not have an operating system.
+They also have extremely limited amount of memory.
+So there are some big differences.
+So hopefully this video gives you a little bit of insight
+into why we actually use the converter, and what happens behind the converter
+calls in terms of optimization, and why the converter
+itself is actually designed to be lean and mean.
+With all that said, I'm very much looking forward to the next video,
+where we're finally ready to get started with our TinyML applications.
+Because everything we have covered so far
+lays the foundations that we will be using for building our applications.
+I'll see you in the next video.

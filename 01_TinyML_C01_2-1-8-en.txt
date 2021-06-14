@@ -1,0 +1,88 @@
+PROFESSOR: Previously, you saw how you can start fitting parameters
+to an equation by making a guess about those parameters,
+measuring your loss on that guess, and then
+using what you knew to make a better guess by plotting
+on a chart of the loss using calculus to get the gradient,
+and then using that to figure out your way towards minimum loss.
+This is ultimately how neural networks work under the hood.
+So in this video you're going to switch gears and see
+how to code a neural network that achieves the same goal.
+Recall, here's the set of numbers.
+We have a bunch of x's and a bunch of y's.
+And we want to figure out the relationship between them.
+Earlier, we used the process of machine learning-- guessing, measuring,
+optimizing by hand, and we got the result y equals 2x minus 1.
+Let's now see how a neural network would do this.
+Here's the code.
+There's a lot going on here that you may not be familiar with.
+So I'll break it down line by line.
+This first line defines our model, and it's the simplest neural network
+that I could think of.
+You've probably seen neural networks that look a little bit like this.
+So that we can understand the terminology in the code,
+let's explore some of that here.
+Each of these circles will be considered a neuron.
+Each of these sets of neurons is called a layer.
+So for example, this would be one layer, this would be another,
+and this would be another.
+These layers are also in sequence.
+The first layer feeds the second which feeds the third.
+As a result, we'll use the term sequential to define this network.
+You might also have heard the term hidden layers
+when dealing with neural networks.
+The hidden layers are the middle ones that are neither input nor output.
+So that middle one, you can see here, is a hidden layer.
+The neurons are all connected to each other, making a dense connection.
+And we'll use that term to define the name and the type of the layers.
+So now if we go back to our code, we can see the term sequential.
+We're defining a sequential neural network.
+Within the brackets, we would then list the layers in this neural network.
+We only have one entry, so we only have one layer.
+This layer is a dense, so that we know it's a densely connected network.
+The units parameter tells us how many neurons will be in the layer.
+And we can see that we only have one.
+So this code defines the simplest possible neural network.
+There's one layer and it has one neuron.
+There's one other thing to call out when defining
+the first, and in this case the only, layer in a network,
+you have to tell at the input shape.
+Now here our input shape has only one value.
+We're training a neural network on single x's to predict single y's.
+So again our input shape really couldn't be any simpler.
+Visually, our neural network looks like this.
+We only have one layer, and it has one neuron.
+It takes an input, which is a single value we'll call x,
+and it will learn the parameters to produce y based on our training data.
+So now hopefully you can see that we're defining a new model, which
+is a neural net comprised of a single layer with a single neuron
+and that neural net will take a single input value.
+When we compile the model, we'll define the loss function and an optimizer.
+The loss function is mean squared error, as we used previously.
+But instead of calculating everything ourselves,
+we can just tell TensorFlow to use this last function for us.
+The optimizer is SGD, which stands for Stochastic Gradient Descent.
+And this will follow the process we saw in the previous video of using
+a gradient to descend down the loss curve to try and reach a minimum.
+We're not doing any of the math or the calculus ourselves
+we'll just let TensorFlow do it for us.
+Now we specify the x's and the y's.
+TensorFlow expects these to be in a numpy array,
+and that's what that np stands for.
+And you can see that the array of y's has the corresponding y
+for a value in the x.
+So y equals minus 3 when x equals minus 1, y equals minus 1 when x equals 0,
+and so on.
+The process of figuring out this relationship or training
+is called fitting.
+So we do model.fit.
+We're fitting the x's to the y's.
+We'll do this for 500 epochs, where an epoch is each of the steps
+that we had discussed previously-- make a guess, measure the loss of the guess,
+optimize, and continue.
+So this line of code will do that 500 times.
+Then when we're done, we can use the model to predict the y for a given x.
+So if x is 10.0, what do you think y will be?
+Well, you can try it out for yourself now.
+Maybe you think if x is 10, then y would be 19.
+And the answer to that surprisingly is, it's not.
+And can you figure out the reason?

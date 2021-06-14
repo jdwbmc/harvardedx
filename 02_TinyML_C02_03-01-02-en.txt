@@ -1,0 +1,294 @@
+VIJAY JANAPA REDDI: Hi.
+In this video, I'm going to focus on the building blocks
+that we need from Course 1 to be successful in Course 2.
+Specifically, I'm going to touch on the language that we
+use in Course 1 and the terminologies that we introduce
+and the concepts that you practiced, so that it
+can be a refresher for the things that we're going to be doing in Course 2.
+I'm going to try and make a couple of connections
+about how that wealth of material that you picked up in Course 1
+is actually going to be applicable here in Course 2.
+Now remember, in the last video I said, that we're
+going to be looking at three different sensors,
+and then we're going to be looking at the unique characteristics
+about these sensors, and then looking at the networks
+that we're going to be training for them.
+And then understand how we assess those networks,
+in the context of a TinyML application use
+case, which means looking beyond just the typical model accuracy,
+but trying to understand the nuances that are there about how
+our application might really perform.
+And is looking at just a neural network model performance enough,
+or the accuracy enough, or are the other metrics
+that we really have to consider?
+All that said, let's first start with the basics
+of doing a total recap on the language that we introduced in Course 1.
+Course 1, almost exclusively focused on neural networks.
+We wanted to make sure that you understood
+all you needed to know to be successful in Course 2
+from the machine learning perspective.
+What did we touch upon?
+I'm going to throw out a couple of terms here.
+This is not the full gamut of terms that we touched upon.
+So, I want to make sure that some of these key terms that we
+touch on actually resonate and remind you about the knowledge you picked up.
+Or my hope is that if you're coming straight into Course 2,
+that you have familiarity with these terms,
+because it's a fundamental thing at this point.
+Because I'm going to be moving up a little faster, in terms of how
+we cover material in this course.
+First and foremost, I hope you know what a neural network is
+and where it stands in the big context of AI.
+Remember, AI goes into machine learning, further narrows into deep learning.
+And that's where your neural networks come.
+So it's a very specific type of artificial intelligence
+that we're talking about.
+It is not the only solution.
+Hopefully, you remember a little bit of that.
+Then we talked about training these networks using gradient descent.
+What exactly is gradient descent?
+How do you actually optimize a network to learn by using loss functions?
+Specifically, what are you training in the network?
+Kernels and filters.
+What's the difference between them?
+Do you know the difference between a CNN or convolutional neural network
+versus a more traditional deep neural network?
+I'm kind of referring to MLPs or multilayer perceptrons.
+We have touched on both of these kinds of networks in Course 1.
+And in this course, we are going to be using
+both CNNs and traditional MLP/DNNs.
+So you need to be familiar with both.
+Furthermore, we did a lot of training in Course 1,
+and then we did a couple of inferences on the MNIST data set and the MNIST
+fashion data set.
+We're also going to be doing some more training.
+We're going to be doing training on data that corresponds to sensors.
+And then we're going to learn how to do inferences on them,
+and then learn how to assess the inference capabilities of the TinyML
+application.
+Well, before you can train a network, you have to extract key features.
+We're going to be doing a lot of feature engineering in this particular course.
+Feature engineering, that specifically looks at the traits of the sensors,
+so each of the sensor requires different kinds of feature engineering.
+We're going to talk about that.
+At this point, do you recognize the word features.
+What do they really mean?
+Think about the images that you looked at in Course 1.
+What exactly are we trying to extract?
+What is it that the convolutional kernels
+are doing as the image is moving through the different stages of the network?
+Why do you have multiple convolutional layers?
+Why not just have one big convolutional layer?
+They're extracting different features.
+I hope that resonates with you.
+Then we talked about overfitting.
+When you're training a network over the data that you're given,
+the network can become overfitted to that particular training
+data, which can be a real problem when you deploy it.
+Because in deployment, or during deployment,
+you are not necessarily going to get that exact kind of data.
+You might get data that is a little off.
+But your network might not actually generalize well.
+So you need to avoid overfitting.
+And we learned how to do that.
+We also talked about how to get data into the network.
+How do you do data augmentation?
+Why is data augmentation extremely critical?
+In this course, we're going to go really deep into data engineering,
+because we're going to look at things that are well beyond data augmentation.
+And it's extremely crucial because it's garbage
+in garbage out with neural networks.
+And we need to know how to preprocess the data.
+We touched a very little bit of preprocessing in the Course 1.
+And in Course 2 we're going to do a lot of preprocessing.
+We're going to understand how you preprocess data differently
+for different types of sensors.
+So hopefully, you're comfortable with the notion of preprocessing.
+Finally, when we talk about the data set that we're using,
+the same data can be used for multiple different things.
+You usually start with the large data.
+And you take that large data and you break it up into pieces.
+You get your training data.
+Then you get your validation data, and you get your test data.
+Hopefully, you know what each of these means.
+We will actually be recapping some of these things further on.
+So hopefully that will help you connect the dots back to Course 1.
+Then we built different kinds of machine learning models, not necessarily just
+neural networks.
+You learned about regression as one of the first things.
+Regression is all about fitting a line and trying
+to minimize the error between a scattered set of points.
+Then we learned about classification.
+How can we get convolutional neural nets to be
+able to tell us if it's a cat or a dog, or what
+the digit is in an MNIST data set.
+All of this put together, one of the key things that I wanted to emphasize,
+and hopefully you got across, was that it's extremely important for us
+to be responsible in order to deploy TinyMLs safely into the real world.
+Look, all too often many of us make this mistake
+that we get very excited about the actual mechanics-- the nuts and bolts,
+and how to build things.
+And then we forget the consequences of putting this technology out
+into the real world.
+Organizations, big organizations, world leading machine learning organizations,
+like Google, Amazon, Facebook, Microsoft and so forth, they're all increasingly
+expecting their engineers to be responsible AI engineers.
+This is the reason that in every single one of these courses,
+we repeatedly emphasize to you that you need to be aware about responsible AI
+design.
+You need to be aware of responsible AI development.
+You need to be aware about responsible AI deployment.
+We talked about responsible AI design in course 1.
+We're going to talk about responsible AI development in Course 2.
+And Susan Kennedy is going to lead that effort in this course.
+Now, one of the things that we talked about in Course 1 was look,
+we wanted to make models really accurate.
+And so the models ended up getting really big.
+We got into VGG-16 and so forth, as models were evolving in order
+to improve the accuracy.
+This is from the ImageNet accuracy evaluation.
+This plot that has kind of faded in the background,
+is actually looking at the accuracy on the y-axis.
+And the x-axis is showing you the computational requirements.
+Now in Course 1, we talked about how we ended up with VGG and said,
+that, wow, the models are getting way too big.
+And that there was a real need to actually start
+building smaller models that are also accurate and try and deploy them.
+This transition happened as we started building machine
+learning models that are getting deployed in the cloud,
+to then trying to deploy them in smartphone kind of devices.
+And now, as we're looking towards the next big wave,
+in terms of deploying things onto smaller networks,
+we need to think even more carefully.
+So one of the key things that I introduced at a very high level--
+I only introduced the language, I did not explain the mechanics,
+was how can we take that network, a big network, and shrink it down?
+One of the ways we can do that is by pruning the network.
+We can prune the synapses.
+That is, we can cut out some of the connections.
+Or we can also prune the neurons all together,
+which is eliminate some of the neurons, so that way
+you don't have to do the weight calculations on them,
+which reduces the amount of computational complexity
+of the network.
+And it also reduces the total number of neurons or weights
+that you have in the network.
+And in doing so, you shrink the model size,
+and you also reduce the amount of computational power needed.
+We only touched on the language of this.
+We did not actually explain the mechanics.
+In this course, I'm going to open up that box.
+And I'm going to step us into that box, so we
+understand what it means to actually be able to do these optimizations.
+What are the optimizations?
+So we'll spend a lot of time on this.
+It's extrememly important as you try and make anything tiny, is quantization.
+The idea that instead of using many bytes for representing values.
+For example, if you use a float32, that's
+going to require 4 bytes of memory storage.
+Instead of the 4 bytes, if you can compress those values down
+into an int8 byte, which is a single byte, which can represent values
+from negative 128 to 127, then that gives you a 4x reduction
+in the network straight out.
+But of course, there's a trade off.
+You make trade offs in accuracy.
+We only introduce the term quantization.
+In this course, we're actually going to learn
+how to program for quantization, specifically, that's one.
+Two, we're also going to open that up and understand what is actually
+happening when you do quantization.
+Quantization is not as simple as it seems.
+There are a lot of nuances around it.
+So I want to give you a firsthand experience about that.
+And it's extremely important for TinyML engineers to know this,
+because quantization is going to be used over and over
+and over and over in something like TinyMLs.
+So you need to master this.
+We also touched on this very high level notion
+that, look, when you're training models you tend to use TensorFlow.
+But as you start moving towards smaller devices, like smartphones and embedded
+microcontrollers, we have to use different frameworks.
+We have to use something like TensorFlow Lite.
+The question is why.
+Because you're trying to deploy them on resource constrained things.
+I gave you a very high level intuition about who
+uses TensorFlow versus TensorFlow Lite.
+Person who is doing researching into the machine learning space
+might use TensorFlow.
+Someone who is actually trying to deploy the model
+is going to care about TensorFlow Lite.
+We're going to open up that box, and we're
+going to go pretty deep into understanding
+what are the fundamental differences.
+This is going to help you be a better engineer,
+because when you're out there, trying to build TinyML applications
+and then deploy them, you're going to need to know the differences.
+Very often, most people don't know the difference
+between TensorFlow and TensorFlow Lite.
+In fact, you can build a model and you can run a model completely
+in TensorFlow.
+But in the real world, you would never do that.
+Why?
+Well, you'll find out in this course.
+So the other thing that I touched a lot on when you're deploying things
+on to small little embedded devices there
+are these big trade offs between large computing
+systems and the small embedded microcontrollers.
+I really hope you took away some key principles down there,
+and not brush it away as, oh, this is some sort of high-level concept
+that I don't need to worry about.
+Because if you did do that, it's going to come back and bite you
+when you're trying to go out for an engineering interview.
+The reason I say that is because there are
+massive differences between a traditional large computing
+system like a laptop versus what happens in an embedded desktop.
+One of the things that I'm going to ask you right now
+is, do you know why the yellow bar here says, that the smaller embedded
+system has lower code portability?
+Think about it for a second.
+And if you've taken Course 1, I want to make sure you actually
+know how to answer that.
+Why is it that in a larger system you have universal code portability
+versus in a smaller system you don't have universal code portability?
+If you don't know this, go back and look at the material in Course 1.
+It's important to understand this, especially as we go into Course 3,
+it's going to become an even more important.
+And then, looking at the green rows below.
+Why are embedded system's cost low?
+Why do they consume very little power?
+Why is it that the engineering effort for them
+is very low compared to the larger systems?
+I'll give you a hint.
+Cost. Think about the fact that a traditional embedded system might not
+have the ability to do very simple floating point math.
+For instance, when I said that pi can be approximated using 22 by 7,
+where the first three digits are 3.14.
+I don't necessarily need to have a floating point arithmetic to get that.
+I could use fixed point arithmetic to do that.
+Well, if I take that floating point arithmetic out,
+it automatically drops the power consumption
+inside my processor in the embedded system.
+If I take that floating arithmetic out, it
+lowers the cost, because I don't need to put much engineering effort into it.
+So embedded systems, as much as they're pervasive and they're about 250 billion
+of them all over the place, there are trade offs you make.
+And those tight trade-offs, those tight corners we cut,
+that's the reason that it makes deploying machine running on them hard.
+But then again, they're everywhere.
+And that's what's exciting, and that's what opens up the space.
+So please take a moment to kind of reflect on some of these differences
+that we have between embedded systems and non-embedded systems.
+It's extremely crucial.
+There's a lot of material out there as well.
+I'll throw out a couple of pointers that are actually
+helpful for a quick recap on what the differences are if you need it.
+So as a quick recap in Course 1, we talked
+about the fundamentals of TinyML, tried to understand the language.
+That was the key thing we focused on-- understanding the language
+and then doing the hands-on programming with using Google Colab.
+In this course, we're going to focus on taking the language that we learn
+and the hands on building blocks about the neural networks,
+and we're going to learn how to put it all together in order
+to solve applications, which I will talk about in greater
+depth in the next video.
+With that, I'll see you soon.

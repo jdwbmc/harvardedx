@@ -1,0 +1,74 @@
+PETE WARDEN: In this video, we will be looking
+at the code that's at the heart of the Hello World example,
+where we call into Tensorflow Lite Micro to actually run the machine learning
+model we've trained.
+This code is contained in a loop function that's
+called repeatedly by the Arduino framework,
+and it fits onto a single screen.
+So we'll take a few minutes to step through the APIs calls involved.
+As a reminder, the model we've trained takes an input value
+and calculates an estimate of the sine function on that value.
+We're incrementing the input value over time to help pulse and LED.
+So in this code to get started, we figure out
+the float version of that incrementing value,
+and store it in a variable called x.
+The Hello World model has been optimized use 8-bit quantization.
+So we need to convert that float value into the quantized equivalent.
+During initialization, we stored the structure
+that holds information about the input, which is a TFLite tensor in a variable.
+So we use those parameters to perform the conversion.
+To go from a floating point value to 8 bits,
+we need to do a linear transformation controlled by the scale and zero point
+settings that are stored in the model.
+You'll always want to do something similar
+whenever you're feeding in quantized values as inputs, scaling
+and subtracting an offset.
+To be extra safe, you could also make sure the float
+values don't overflow the minimum and maximum of the expected range.
+But for simplicity's sake in this example, we don't do that.
+Now instead of passing values into a function call,
+TFL Micro sets up areas in memory to hold inputs and outputs ahead of time,
+and the application developer is expected
+to fill in the contents of the inputs before calling the invoke function.
+In our case, the input is just a single 8-bit number.
+So we use the input data structure we set up during initialization to write
+into the correct memory location.
+The data member of TFLite tensor holds the address of the array,
+and it's a C union, so that we can have type safe access.
+Since a model is expecting a single signed 8-bit value,
+we use the int8 accessor, and write the first entry in the array.
+The actual model calculation is triggered
+by calling the invoke function on the interpreter.
+This runs through all the operations defined in the model,
+reading the inputs from the memory area that we stored
+the quantized x value into, and writing to the memory areas reserved
+to hold output.
+You might be surprised that the invoke call doesn't take any arguments.
+But all the parameters are either defined as part of the model data,
+or taken from the input memory areas we just filled out.
+It also doesn't return any calculation values,
+since those are written into the areas of memory that
+are reserved for outputs.
+It does return an error code, which in normal operation is K TFLite OK.
+Any other result indicates that something went wrong
+with the calculation process.
+Just as there is a reserved area for input values,
+the invoke call writes the results of the model calculations
+into memory areas that can be accessed once the function is complete.
+In this case, we've stored the data structure
+holding information about the output, and like we
+do to write the input value, we read a single 8-bit value
+from the output array.
+Since it's a lot easier to work with a floating point number, rather
+than the 8-bit encoded value we got out from the model,
+we do the reverse process we did for the input,
+to convert the output back into a floating point value.
+Again, we're reading the conversion factors from the model information,
+and it's good practice to follow this pattern whenever you need
+to convert quantized output values.
+Hopefully this run through has given you some ideas
+on how the model calculation process works with TensorFlow Lite Micro.
+You'll be seeing more complex models in the future.
+But they'll all follow this basic pattern
+of writing input values into memory arrays, calling invoke,
+and then reading the results.

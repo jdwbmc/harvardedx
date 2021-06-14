@@ -1,0 +1,21 @@
+BRIAN PLANCHER: Hi, everyone.
+In this reading, we're going to get your software all set up for this course.
+We're going to be working with the Arduino Integrated Development
+Environment or IDE for short.
+The Arduino IDE has a ton of built-in functionality,
+and we'll be using a lot of it in this course.
+For example, will be loading in libraries, writing code,
+deploying code, monitoring output over the serial port,
+and a host of other things.
+By the end of this reading, your software
+will be all ready to deploy some TinyML applications onto your Arduino.
+Now before we dive in, I do want to note that I
+will be using the latest versions of all libraries, board files,
+et cetera in this reading.
+However, I do imagine that over time those versions may become out of date.
+We'll make sure to update the reading with the appropriate versions
+that you should be using.
+However, I am not sure that will be able to update the videos.
+So please, please, please use whatever version is written in the reading,
+and use that version when you are installing the various libraries.
+Thank you.

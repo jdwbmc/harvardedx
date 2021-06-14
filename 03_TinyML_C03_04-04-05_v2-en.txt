@@ -1,0 +1,53 @@
+PETE WARDEN: Hi.
+Today I'm going to talk about an important part of the TensorFlow Lite
+Micro library's design, its interpreter.
+So what is an interpreter?
+Interpretation means executing a program by following a data structure stored
+in memory, as opposed to a purely compiled approach,
+where the execution is determined by instructions ahead of time.
+In our case, this is the difference between storing a model as data
+and looping through the operations of runtime,
+calling the appropriate functions based on the op type, versus examining
+the model at compile time and emitting code that
+makes direct call to the functions.
+TFL Micro is based on an interpreted approach.
+But aren't interpreters slow?
+The most common place you might have encountered interpreters and compilers
+in the past is on desktop computers.
+Python is an interpreted language, and C++ is compiled, for example.
+Broadly speaking, desktop interpreted languages are easier to use
+but run more slowly.
+Is this true for embedded ML too?
+Running a procedural language like Python for an interpreter
+is inherently challenging because each line of code
+probably only takes a few assembly instructions to execute,
+but parsing that line may take thousands of instructions.
+This gives a big performance advantage to compiled languages like C++ which do
+the parsing ahead of time.
+Machine learning is different, though.
+In machine learning, each layer like convolutional softmax
+is likely to take tens of thousands or even millions of cycles to execute.
+This means any parsing overhead is comparatively small.
+As a result, there isn't a noticeable speed difference between the approaches
+for real models in our experiments.
+As a practical example, we ran an experiment
+to count the number of instructions that were taken up
+with interpreting the model versus calculating the operations.
+For a large model, it's a vanishingly small proportion of the time taken.
+And even very small models, it's only a few percent of the cycles.
+And there are some very important advantages to using an interpreter.
+It's possible to change the model without recompiling the code,
+though the lack of a file system on most embedded systems
+can make this hard in practice.
+The same operator code can be used across multiple different models
+in the same system.
+The same portable model serialization format
+can be used across a lot of different systems.
+So how does interpreting a model actually work?
+The model contains a list of operators and arguments,
+for example, CONV2D, FullyConnected, softmax.
+The interpreter loops through this list of runtime
+and calls the appropriate operator implementations or kernels.
+You can think of the interpreter as pseudocode
+that loops through a list of ops and for each one
+decides what function to call based on the ops type.

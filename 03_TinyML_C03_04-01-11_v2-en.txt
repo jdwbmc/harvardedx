@@ -1,0 +1,34 @@
+VIJAY JANAPA REDDI: Hi.
+In this video, I want to talk to you a little bit about how
+course 3 is structured, because course 3 is
+different from course 1 and course 2 in that we actually
+have a hands-on component.
+Now, some parts are going to stay the same.
+For example, I'm going to continue giving you
+video lectures in order to help you realize the important concepts that you
+have to keep in mind.
+Then you're going to have readings.
+Now you have certainly had many readings through both course 1 and course 2.
+One of the interesting things that we're doing in course 3
+is that we're going to Mbed a couple of [INAUDIBLE] and videos
+in order to spruce up the content in order
+to help you navigate the programming experience and the development
+side of the experience a bit more smoothly.
+And then finally, you're going to have labs.
+Now these labs will require you to actually do the deployment cycle.
+Now, in doing deployment, you might run into a couple of issues.
+For example, in the Magic Wand, I ask you to move the device.
+Well, it sounds simple, but it might not be that easy
+for you to understand exactly what I'm asking you to do.
+Therefore, I've asked Brian, my TA, to actually join us in helping us out.
+He's going to be doing hands-on demonstrations,
+walking you through the colabs, the compilation process,
+as well as the deployment process, all the way from getting started
+and making sure your kit works to actually seeing TinyML in action.
+In addition to that, you're going to have
+quizzes, your tests, your assignments, and your discussion forums.
+My hope is that all of this material, put together,
+will help you have a great experience with the TinyML kit
+as well as building the actual applications that go onto this device.
+With that said, I'm going to leave you in the good hands of Brian, who's
+going to introduce himself next and help you get started with the TinyML kit.

@@ -1,0 +1,149 @@
+SUSAN KENNEDY: The lesson question we'll consider during the development stage
+is how we can ensure that our model is fair.
+While this topic is still being debated by ethicists and computer scientists,
+a general way to think about unfairness in ML
+is a model that exhibits discriminatory biases,
+perpetuates inequality, or performs less well
+for historically disadvantaged groups.
+But it's important to realize how the term discriminate can
+be used in different ways.
+Technically speaking, all ML discriminates, since this
+just means to recognize the distinction or differentiate.
+But what we're talking about in the context of fairness
+is wrongful discrimination.
+Wrongful discrimination typically involves disadvantaging people
+in protected classes, based on characteristics
+that you can see listed here, like age, disability, medical history, sex, race,
+and so forth.
+In US law, wrongful discrimination falls into two categories--
+disparate treatment, where membership in a protected class is used as an input
+to the model, and decisions are differentiated
+on that basis in a way that disadvantages members of the protected
+class, and disparate impact--
+where outcomes of the model disproportionately disadvantage members
+of the protected class.
+However, given the unique features of AI,
+it's proven difficult to show how cases of unfairness
+might fit into these categories.
+So instead of focusing on how AI might be considered unfair,
+we'll now look at different metrics that have
+been devised to help promote fairness.
+One metric is group unawareness, where sensitive attributes,
+like race or gender are not included as features of the data.
+Benefit of this metric is that it avoids disparate treatment.
+But a disadvantage is that there might be highly correlated features that
+serve as proxies for the sensitive attribute
+and end up producing discriminatory results nonetheless.
+Another metric is called group threshold,
+where we counteract historical biases in data
+by adjusting confidence thresholds independently for each group.
+So if group A has typically been advantaged relative to group B,
+we might decrease the confidence threshold for group B,
+so our model doesn't unfairly exclude members of this group.
+A potential problem for this metric of fairness
+is reaching agreement about the existence of historical bias,
+as well as how the confidence thresholds should be adjusted accordingly.
+A third metric is demographic parity.
+Here, we're concerned with the positive rate being equal across groups.
+Suppose we have a health wearable device that predicts if someone's healthy,
+and an employer is using this on the basis of offering bonuses to employees.
+In this case, we might want all individuals to have
+an equal rate of positive results.
+But now, let's take a closer look.
+If one group is more qualified, and so more
+likely to be healthy in our example than the other group,
+then achieving equal positive rates might
+mean that we have to exclude some qualified members
+of the advantaged group.
+And this raises concerns about reverse discrimination,
+as you may be familiar with from debates about affirmative action policies.
+The fourth metric of fairness is equal opportunity,
+where we want to make sure that among the people who are actually qualified--
+and so actually healthy, in our example--
+that they have an equal chance of being accurately classified as such.
+So we're primarily focused on the true positive rate,
+or the relationship between true positives and false negatives.
+For group A, there are nine true positives and three false negatives.
+So our true positive rate is 9 out of 12, or 75%.
+For group B, we have three true positives to one false negative.
+And so our true positive rate is three out of four, or again, 75%.
+But if we look closer, we might notice that we've
+introduced a lot of false positives for group B.
+And this might be problematic in certain contexts.
+The last metric of fairness we'll discuss
+is equal accuracy, or the percentage of correct classifications as actually
+healthy or not, should be the same for all individuals.
+This refers to the overall accuracy of the model.
+A problem that might arise is that even when
+the accuracy rate is equal for group A and group B,
+the errors that end up occurring might be different for each.
+For example, group A may have a higher rate,
+of false negatives, while group B has a higher rate of false positives.
+If you remember from the previous video, when
+we talked about bias and Northpointe's recidivism tool,
+this is what ended up happening when black defendants had a higher
+rate of false positives, while white defendants enjoyed
+a higher rate of false negatives.
+When the model's results informed decisions
+about the distribution of some benefit or harm,
+differences between false negatives and false positives
+can make a big difference.
+While you might think that the right thing to do
+is satisfy all of these metrics the best that we can,
+researchers in computer science have shown
+that we can't do this, a problem known as the impossibility theorem.
+For example, Group Unawareness, where we don't consider the sensitive attribute,
+is incompatible with Group Threshold, where
+we set the confidence threshold independently,
+based on the sensitive attribute.
+An Equal Opportunity, or the true positive rate,
+is equal across groups, is incompatible with Equal Accuracy,
+where the accuracy rate is equal across groups.
+Now that we've covered different metrics for fairness,
+we'll focus on some other tips and tricks for mitigating unfairness in ML.
+One common pitfalls referred to as the Framing Trap.
+Typically, designers operate within the algorithmic frame,
+where they consider questions like whether the properties of the output
+match the input, and whether the algorithm provides
+good accuracy on unseen data.
+But this is only one important lens through which
+you should evaluate your model.
+You'll also want to consider the Data Frame,
+as we talked about earlier, where you consider whether bias has been removed
+from the training data, and whether the demographic information
+requires optimization through one of the fairness metrics we just discussed.
+Lastly, you'll want to consider the Sociotechnical Frame.
+How does the model operate when considered
+as part of a system of humans and social institutions?
+For example, you might design a fair algorithm for predicting health.
+But if the employers who use this to inform their decisions about handing
+out bonuses routinely ignore the recommendations of the algorithm,
+then your model might indirectly result in unfairness,
+despite how you've optimized it.
+Another common pitfall is the portability trap.
+It's commonly regarded as a benefit whenever
+we can reuse an algorithm from one context to another.
+For example, maybe we design a tiny ML algorithm
+to add water conservation efforts in California
+and optimize it for fairness.
+And since the model is successful in this context,
+you might think that we can similarly use it in Nigeria, Africa.
+But context matters.
+Repurposing algorithmic solutions may not preserve fair outcomes.
+So you'll always want to do your research before deploying
+your model in a new context.
+The last common pitfall we'll cover is the Formalism Trap.
+If you're working on ML, you might think that the ultimate question that
+needs to be answered is which mathematical formulation of fairness
+you should choose.
+But another important question to ask is which
+social groups you'll listen to and include in your deliberation,
+as focusing on one social group might give you
+a conflicting result about the best metric for fairness
+than if you had focused on a different group.
+While issues of fairness can be tricky, and researchers are still
+making progress in this area, it's becoming far easier
+for individual designers to tackle this issue now,
+thanks to publicly available tools like Google's What-If tool.
+This allows you to explore the different metrics
+and help you optimize for fairness in your model.

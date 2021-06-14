@@ -1,0 +1,286 @@
+VIJAY JANAPA REDDI: All right, here we are
+getting started with building our keyword application.
+One of the first things we have to do when we want to build any application
+is we've got to start with data sets.
+So, in this particular video, I'm going to go deep into understanding data
+sets.
+Specifically, I'm going to talk about how
+data sets, which are right at the beginning of the keyword
+spotting pipeline, influence how the model will do.
+So we need to understand what are the kind of things that our data set really
+needs to have in order to be effective for building a TinyML model that
+enables keyword spotting or that does keyword spotting.
+What does it mean to build a good data set?
+Take a look at this particular GIF here.
+We've got Alexa, and then the machine comes back.
+And I say, "dim the lights."
+Let's keep it really simple.
+Keyword spotting allows you to have Alexa,
+and you might also be able to do dim the lights, potentially,
+because it's a limited set of words on device,
+but let's keep it really simple, the vanilla version of keyword spotting
+where it wakes up and listens to a command.
+So it's Alexa, just that.
+Now first thing you have to think about is who
+are the users for this Alexa device.
+Is it you and only you?
+Is it you and me?
+Is it you, me, and my parents who are currently
+in India who have a very different way of speaking English
+because they tend to have a bit of a stronger accent?
+Everybody is capable, perfectly capable, of saying Alexa,
+but the crucial difference is how the machine interprets that sound
+or hears that audio signal.
+We'll look at that in the form of spectrograms
+later and see there are subtle differences for the exact same word.
+Because the machine is just looking at audio signals,
+it needs to be able to generalize, which means that the data set that we're
+looking at, the data that we're going to train a neural network model on,
+needs to be really diverse.
+So we need to understand who the users are in order
+to build the proper data set.
+So ask yourself, when you're looking at all the different devices
+that I ask you to look around and see how
+we can empower them with keyword spotting, who
+are all the people who will interact?
+Maybe it's in your bedroom, and you're the only person that interacts.
+Or maybe it's a very general device that's in your living room,
+and it's got to be able to understand your parents.
+It's got to be able to understand your grandparents.
+It's got to be able to understand you.
+So you've got to think about who that user set is, and it's
+extremely crucial because you've got to have a rich enough data in there to be
+able to train that model well.
+Now the second question is, what do they need?
+What is the particular model that you're trying to build?
+What is it trying to process?
+What kind of a task are you trying to do?
+Because you've got to make sure you capture
+the right aspects into that data set.
+So, for example, when I earlier said bake at 350,
+I used that as an example to say that I want my oven in the kitchen to be
+able to listen for the keyword bake.
+And then, when it hears the temperature, set the temperature at the right level.
+Well, that's a very particular task.
+So there I know I need to know that the keyboard is going to be bake.
+You've got to think about these keywords.
+That might seem really simple, but, later on,
+when we get into the nuances of actually doing
+the preprocessing on the audio signal, you'll
+realize that the keyword you choose is, actually, quite critical
+because some words are not easy to pick up by using machine learning models
+because it's very hard to tell the difference.
+So you might actually have a lot of false positives.
+So you need to pick the right keyword.
+Now that's crucial because, again, you're building the data set.
+So, if you chose a wrong keyword, well, that's
+going to get you into serious trouble later down the road.
+Then what particular task are you trying to solve?
+Of course, in the example of bake, well, I'm
+trying to get my oven to actually bake my bread or bake my cake.
+Well, in that particular case, you know the particular task.
+So you need to clearly define that particular task
+because that outlines the requirements.
+And I'll show you an example soon.
+And how do you interact with the system?
+In this particular example, for instance, I'm looking straight at you.
+And I'm talking directly at you or, well, the camera and the microphone.
+I'm talking directly to the microphone.
+What happens if, for instance, the device is actually
+located in some corner?
+And it's supposed to be listening to me.
+So, in that particular case, I better think
+about how to actually create the data because the data might, actually,
+be a very weak audio signal that it picks up
+something that is reflecting off the walls
+and then bounces it into that corner there.
+Well, that data set needs to look quite different from when I'm actually
+directly standing in front of the machine
+and giving it a command, which might be the case,
+for instance, if you're building a keyword spotting model for your phone.
+Maybe you take your phone out, and you say take a picture, right?
+Or you say camera, and then it opens up the camera app.
+Well, that proximity has implications because that audio signal
+sound is actually going to be pretty large there,
+as compared to some sort of device that's
+sitting in some corner of the room, and it's got to listen,
+which means you've got to think about all these things
+because all of the stuff has to go into the data set so that your model can
+be trained properly.
+So I'm hinting at a lot of things here.
+And there are a couple of readings that are coming up
+that will take you through more systematically
+and how you need to ask these questions yourself in order
+to be able to get the right data set.
+Then, of course, there are aspects of the real world
+that make it really hard.
+Specifically, you're not in some sort of a quiet room that's
+pristine at all times.
+A device might be-- in my office, right now, it's nice and quiet,
+but I have kids.
+They can get really loud.
+Well, when that happens, for instance, all hell breaks loose.
+Point that I'm trying to make is that there can be background noises,
+for instance, that will happen.
+So your data set needs to be having all of these kinds of background noise
+and like real-world characteristics so that, when
+you deploy the product, the sounds that you're listening for,
+the model has learned to be a little resilient against all
+of these kinds of issues, such as background noise.
+Now, all of this said, let's take one specific example, speech commands.
+And let's go deep into it to try and understand
+how those characteristics that I mentioned earlier
+have been addressed through one example by Pete
+who you will see in the next course.
+And, in fact, he's one of the great guys, and I love him.
+And he's actually inspirational.
+And it's one of the reasons that I'm actually here because both of us
+tagged up to say let's teach TinyML to the world.
+So, getting back on point, Pete actually put together
+this data set a little while back.
+As you can see the date, it's in 2018.
+Wow, he's one of the guys who was thinking
+about this kind of a thing for a while and realized that, back then, there was
+no limited vocabulary speech data set.
+There was no notion of keyword spotting data set.
+There was nothing there.
+So he thought hard, talked to many people,
+and tried to compose a data set that tries to address some of the issues
+that I mentioned to you earlier.
+Let's go through and see what's inside this data
+set because you will be using this data set in doing your Colabs.
+The speech commands data set, basically, has a whole bunch of individual words.
+It's not sentences.
+It's not dim the lights.
+It's something just like a single word.
+So it's composed of a whole collection of words,
+which I'll show you in a second.
+And it's got many, many recordings for each word.
+Think about why do you need that.
+Well, it's for that exact reason I was saying.
+Like there are many people who might be interacting with the device.
+So you've got to capture the fact that people are diverse.
+They speak differently.
+They see things differently.
+They emphasize things differently.
+So, by having a broad distribution of examples in your data set,
+you are, effectively, going to try and get the model
+to be able to recognize all of them.
+And how did he build this?
+Well, you need a lot of data.
+If you need a lot of data, well, you've got to enlist people.
+Typically, companies will pay labellers, as they say.
+They'll hire an organization that actually does the labelling.
+Later, when we do data set engineering as another module
+in this particular course, we'll talk about some
+of the issues that will come about this, but,
+for now, what Pete did was that he actually got the community
+to contribute those example words.
+Those 1,000 and 4,000 examples of each word,
+well, the community contributed it, went to a website,
+recorded the audio in for the given word.
+And one of the key things is that the data set actually
+includes background noise in order to kind of be
+reflective of real-world situations.
+Again, I said, for instance, this video, my family is really quiet because they
+know I'm actually doing a recording.
+But, in reality, it's like a little zoo down here
+with my kids screaming in the background at all times.
+Well, point is that you need to have some
+of that sort of background, realistic audio in there
+so that we can train the network.
+And the speech commands data set actually
+has that sort of background noise included in there.
+And so the data set is actually limited.
+Remember, I said keyword spotting is all about a limited set of keywords.
+Now, in the particular case of speech commands,
+it's got 25 different IoT kind of keywords.
+I'll show you what those are.
+And it's got 10 different unknown words.
+There's a little bit more description about this
+in the readings that will follow.
+Well, what are the data sets actually looking like?
+Well, here's a distribution of words that are there in the data set.
+On the left side, you're seeing all the different words that are there.
+And the bars are, basically, showing the number of examples
+that are there in the data set.
+It's not a perfect data set, but it's a good enough data set.
+It's not perfect in the sense that some of the words
+don't have that many samples.
+For example, the words at the top, like for bird and so forth,
+there aren't that many samples, as compared to yes and no.
+Now this is not by mistake.
+So, often, when you think about the particular use case,
+you will tend to emphasize words that are more relevant to you.
+And that's what's actually going on here for instance.
+Here you can see that some of these words
+are actually the more often used words.
+So think of it like, for instance, if I have a robot where
+I want to say yes, no, left, right, or I have some sort of machine where
+I want to say yes or no to.
+Well, these are quite pronounced in the data set.
+And, in fact, these are the words that we'll actually
+be using because there's a large sample of them.
+And, by having a large sample, that data is actually quite diverse.
+Now I'm just emphasizing this as one example data sets,
+typically, have these characteristics, but you need
+to understand what that data set is.
+And, hopefully, one of the things that you're getting out
+of this particular video right now is you
+understand that, as you look in TinyML, you need to have specific data sets.
+Now, typically, for instance, if you are familiar with machine learning
+or very familiar with machine learning, you
+have probably used ImageNet or MS COCO or KITTI or any of those big data sets.
+Well, you're talking about TinyML here.
+So we're not talking about having data that's, broadly, able
+to like look at a very large range.
+So like ImageNet, which is a humongous, beautiful database of images
+for image classification, has over 14 million different images
+that are, broadly, classified over a thousand different classes.
+Well, in TinyML, you are much more focused.
+You know what your application area is, and then
+you try and construct the data set accordingly.
+That is a crucial difference in data set engineering for TinyML.
+So keep that in mind.
+And, therefore, when you look at speech commands, that's what motivated.
+There are other speech data sets that are out there,
+but they are all around sentences.
+That's not what you need for TinyML and keyword spotting.
+You need a data set that, specifically, focuses on commands or keywords.
+Therefore, that inspired Pete to actually put the speech commands
+data set together, trying to address some of the questions
+that we raised earlier.
+Now some of the things that you've got to think about, generally, in terms
+of data sets is about quality control.
+You've got to keep in mind that sounds are imperfect
+just because of the way sounds kind of propagate through.
+For instance, right now, when I'm talking to you,
+this sound is actually propagating all the way
+to the microphone, which is getting encoded
+into some sort of compressed format.
+Then that's getting pushed over to the HDMI cable
+onto my computer, which is then picking it up and then doing a decode on that,
+decompressing the signal.
+Then it's passing through filters in order to clean the signal a little bit.
+Then it's recording it, and, voila, you hear me.
+So what I'm trying to say is that there are lots of complicated processes
+that are involved.
+So sound can be quite delicate.
+So, when you're looking at recording data,
+you've got to think about is that sound clip that you're
+recording quite representative of the real audio signal or not.
+And you've also got to capture the noisy backgrounds
+aspect that I mentioned to you earlier.
+It's very, very important.
+We'll actually do this in the Colab later on.
+And, with that said, I'm going to stop here and let
+you think for a moment about why we focused on data sets.
+Ask yourself, what did you learn in this video?
+Data sets are extremely crucial and extremely fundamental.
+You get them wrong, everything you do down the application pipeline
+is a waste of effort.
+So think carefully.
+And, specifically, think about what is unique about building TinyML data sets,
+as I hinted earlier in this particular video.
+With that said, I'll see you in the next video.
+And, hopefully, we can push forward in terms of building the models.

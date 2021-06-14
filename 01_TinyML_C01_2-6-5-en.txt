@@ -1,0 +1,151 @@
+VIJAY REDDI: Hi there.
+This is going to be the last video for Course 1.
+And after this, we're going to be stepping into Course 2, which
+I'm very excited about.
+As we said in Course 1, it's all about the language and the fundamentals
+of tiny machine learning.
+That involves understanding what's tiny.
+That's the embedded side.
+What's TinyML?
+Well, that's all about the ML fundamentals
+that you need to know in order to be able to build a TinyML application.
+As we go into Course 2, we're going to focus very much
+on taking the bread and butter things that we've learned in Course 1
+and actually building interesting applications.
+And we will be using neural networks.
+We will be using TensorFlow.
+We will be using Google Colab.
+Everything that you have learned so far, we're going to be building on it
+and expanding our knowledge.
+Let me just take you head in and say that we'll
+be looking at some seriously interesting applications.
+We'll be looking at building TinyML applications for speech, for vision,
+and things that use different kinds of sensors,
+like IMU, accelerometer, and gyroscope kind of things.
+For instance, if you recall right at the beginning of Course 1,
+we started talking about speech with OK Google or Alexa or Hey Siri.
+In fact, it was one of the first things that I had in the very first slide deck
+that I showed you.
+In this particular example, with speech for instance,
+we will be looking into training our own model that
+responds to our own speech commands.
+So you will have your own pick or choice of the model
+that you want, trained specifically for the words that you care about.
+You might care about waking the machine up when you say "hello,"
+and it will respond.
+We'll be using a variety of different sensors.
+And that's how the assignments are all set up.
+So when you'll be programming Google Colab,
+for speech you'll be using the microphone,
+for vision you'll be using the camera input,
+for IMU you will be using different kinds of sensor data.
+But given that you'll be programming in the Colab environment,
+we will be doing all of this with the data already given to you or data
+that you can collect, for instance, in the form of files.
+We'll get much more into this, but for now, I just
+want you to be excited knowing that you're actually going
+to be building TinyML applications.
+Because now you have the fundamentals that
+are needed to be able to build the TinyML applications.
+But the key thing that we'll also be focusing on
+is, how do we make those small models not just be functional,
+in terms of being able to do the speech, vision, or IMU use cases,
+but actually making them really, really small
+so they have the potential to fit in an embedded device?
+That's going to be very exciting.
+In order to do that, we'll be talking about different kinds of techniques,
+like pruning, for instance-- pulling out certain networks without really
+losing any accuracy in the network.
+We'll be talking about using different kinds of numerical formats,
+for instance.
+Instead of using float32, which requires you to use four bytes of data,
+we will be using int8, which only requires one byte of data.
+So by compressing the network down by using different numerical formats,
+and hopefully without losing accuracy-- there's some nuances in there that we
+will talk about and learn about--
+but by doing that, you can actually make the model very, very small.
+And in doing so, you can have the potential
+to put it onto a small, little, embedded device.
+We'll also be looking at more advanced things like knowledge distillation,
+for instance, where you can take a big network
+and distill critical information out of it so that you can create a smaller
+network that effectively has the same knowledge,
+but has a totally different topology.
+We'll talk about these kinds of different optimizations.
+Now while we'll talk about the models a lot,
+one of the key things that I also want to help you learn
+is about the actual underneath-the-hood runtime system.
+Because that's really critical for deploying machine learning efficiently.
+What do I mean by that?
+So far, when you have been training the model,
+and when you have been programming things in Google Colab,
+you've been focused on actually using things
+like big GPUs that are in Google's data centers to get the trained model.
+But once we start going into actually deploying the model
+onto a variety of small devices--
+for example, like trying to deploy it on Raspberry Pi
+or on a tiny little microcontroller, for instance-- well,
+that's going to be really challenging if you take the trained modeling
+and put it right on it.
+It will not fit.
+We actually have to do a slew of different kinds of optimizations
+and conversions.
+First of all, we're going to learn what it
+means to convert a trained TensorFlow model into a TFLite model.
+We'll get into the details of what TFLite really is
+and why we need to do that next.
+Then we'll learn how to optimize that TFLite model so that it actually
+is quantized, and so that it actually uses less amount of memory,
+and so forth.
+And after that, we will look deeper into what
+are the APIs that are involved, because the APIs that you will need
+as an application developer who is using TFLite
+are slightly different from the APIs that you have been exposed to so far.
+One of my goals out of Course 1, 2, and 3
+is to really teach you how to program in these frameworks,
+so that at the end of the day, you actually have a job prospect.
+Because you will be able to say that I know how to program in TensorFlow,
+I know how to program in TensorFlow Lite,
+and I also know how to program in TensorFlow Lite Micro.
+I'll get you there by exposing you to the variety of different API calls--
+so similar to what Laurence did, in terms of teaching you
+how to program in TensorFlow, I'll walk you
+through a little bit in programming TensorFlow Lite.
+And by the way, Laurence Moroney is going
+to be with us right at the beginning of Course 2
+to help us go from understanding TensorFlow into TensorFlow Lite.
+Then as we get more into Course 3--
+I'm looking two steps ahead now-- we'll be
+talking about deploying the TinyML models that we have built in Course 2
+onto the dedicated hardware.
+That requires us to do a couple of more different transformations,
+because we have to be a bit more cognizant about the embedded system.
+To that end, we'll go even deeper into TensorFlow Lite
+by specializing into TensorFlow Lite for Microcontrollers.
+And ultimately, after the deployment, we'll
+go into using that device to do interesting applications.
+The last part is all going to be about the hardware in Course 3.
+And so for that, you will have to start thinking about procuring a kit, which
+we'll share the details for soon.
+The kit effectively comes completely self-contained.
+It comes with cables, a camera, a breadboard-- everything
+you need in order to enable the different kinds of applications
+that we're talking about.
+In fact, I'll do even better than that.
+I'll try and teach you about some potential applications
+that you might be able to build based on the fundamentals
+you pick up in Course 2, so that you can actually do things on your own.
+And with that said, I want to leave you thinking
+that there's an exciting new course coming up
+that you want to be a part of, because in that course,
+all the knowledge you have acquired so far
+is actually going to be put into practice.
+You will learn to develop tiny machine learning models.
+And you will learn how to actually optimize them.
+And you will learn the software that's actually involved behind the scenes.
+And as we push that even further into Course 3,
+you will learn to deploy it on the hardware,
+and you'll be able to start building real, physical-world applications that
+are in your hands and being able to show them off to everybody.
+So I'm very excited to see you in Course 2.
+With that, have a good time.

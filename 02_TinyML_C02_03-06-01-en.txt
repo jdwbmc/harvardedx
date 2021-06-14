@@ -1,0 +1,375 @@
+VIJAY JANAPA REDDI: In this video and the coming couple of series of videos,
+I'm going to be focusing on data engineering.
+I mentioned right at the beginning that data engineering is something
+that we have to pay attention to as we try and train machine learning models
+because the machine learning models rely on data.
+Without data, there is no machine learning model.
+Well, because a supervised AI system is trained on a corpus of training data,
+the fundamental question becomes, where is that original data set coming from?
+Think about it right.
+Typically, you almost always start off with that original data set,
+some original data set.
+You don't even think about where it came from.
+Then you say, OK, I'm going to split this original data set into a training
+data set and a test data set.
+Remember, the training data set is what we actually
+use to iteratively tune the hyperparameters of the network
+in effect and the test data set is held out in order to actually give
+an unbiased perspective on how well the trained model is really doing.
+Training data set is typically further split up
+into the actual training set and a subclass that's held up for validation.
+The validation data set is effectively there
+in order to assess how well your model is picking up
+its skill in terms of whether you're making changes
+in the hyperparameters for instance.
+So the model training process is really the training
+set plus the validation set.
+And then at some point, you will say, I have a very effective model
+that works well on my validation data set,
+so now I'm ready to put it out there.
+And well, when you're ready to assess it,
+well, that's when you put in your test data set
+and that's the final accuracy that often you report.
+Now this is the very typical data processing part
+that we all tend to focus on in the machine learning side.
+But the key question that I often ask is where did this original data
+set come from?
+It's extremely important that you learn about this process
+because without the data, you don't really have anything to train on.
+And there are lots of nuances around building this original data set,
+and that's what I want to get through in the next couple of videos
+and the content that will follow.
+So, data engineering is all about data sets.
+I said this earlier in a previous video.
+Now let's talk about this.
+Good data is absolutely necessary for us.
+Why?
+Because if you have good data, then it'll give you a good accuracy.
+But in order to get that good accuracy, you
+have to ask yourself the fundamental question.
+What problem are you trying to solve?
+What does that mean?
+First and foremost, your data has to contain the useful features.
+If you're obviously dealing with something like images,
+for instance, well, if the images are blurry, is that any good?
+What happens if your microphone is not picking up much of the sound
+that it's supposed to be picking up and you have poor quality data?
+That data is not really useful.
+The other part is can a human, for instance,
+actually distinguish between the examples of each class?
+Now the reason this is extremely important
+is because someone has to label the data.
+So the human is the actual expert who needs to know whether there's a cat
+or whether there's a dog in the picture.
+If they don't know the difference between a cat and dog,
+then you've got a problem.
+Similarly, think about it.
+For instance, if you are trying to label a cancer data set
+and you have to know the structure of a particular cell, can you do that?
+I can't do that because I don't have the domain knowledge.
+So, you got to think about what problem you're trying
+to solve and find the right people.
+Then, you've got to ask yourself the question
+of how exactly are you going to assess the performance
+of that particular model.
+We talk a lot about accuracy in the context of keyword spotting
+and I told you, yes, you can look at it from a model perspective,
+but then there are also aspects of system level efficiency
+and there also this quantity of experience
+that the end user has overall.
+So you've got to really articulate all those requirements.
+After you kind of figure that out, then there's
+a notion of how much data do you need and what quantity
+does that data really need to have?
+So for example, if you are trying to collect
+data that's in the context of vision and speech,
+you need to think about what are the fundamental attributes of those sensors
+that need to be reflected carefully in terms of the quality of those sensors,
+in terms of the quality of the data that's coming out of those sensors.
+And how much of that do you need?
+First and foremost, you need to have a wide distribution of different training
+samples.
+So for example, if there's a keyword, "yes" and there's a keyword, "no,"
+you need to make sure you have several thousands of those examples
+in order to get a wide distribution, so that the network is
+resilient to any one particular person's way of speaking the keyword.
+Then you've got to get accurate labels.
+Well, think about it.
+If your data is mislabeled, no magical machine learning model
+is going to be able to compensate for that,
+because we are training on the labels, because we're
+using them as the ground truth.
+Then we've got to make sure we have a sufficient number
+of the different items that we want to tag, uniformly
+balanced throughout the data set.
+In other words, if you want to classify "yes" and "no,"
+you need to make sure that you have "yes" and "no" equally balanced
+in the data set.
+So let's think about this more systematically,
+because in order to go through those questions,
+there are four key stages you'll walk through.
+First one, starting with requirements.
+What are the requirements in terms of building your data set?
+We talk a little bit about the problem definition,
+and of course, you have to think about what input format do you
+want to capture the data in?
+Whether it's like an MP3 or a PNG, or--
+it's a simple process, but nonetheless, you need to think about it.
+Now one of the most important things that I want to emphasize
+here is that you've got to focus on permissions and rights.
+Often we don't think about that.
+Today, we take it for granted, for instance, that I can just go on Google
+and I can do an image search and I will get loads of images.
+But you got to ask yourself the question,
+is that data actually accessible?
+Meaning that it actually opens, you can directly use it.
+Or do I have to license it for a fee?
+Now, there's also other subtle issues about,
+is a person-- for instance, in that image, is that person identifiable
+and is that OK?
+Or is it OK just to have a person in that picture?
+These are subtle nuances and we typically
+don't think about these things.
+But if you are a TinyML engineer, and you come to me, and you said,
+hey, I trained this model.
+One of my first questions is going to be,
+where did you get your data set from?
+And that is an important question.
+If you answer to me is, I don't know, more than likely,
+I will not be hiring you.
+That's because that model that you've trained, that IP,
+that intellectual property that we created--
+well, it might be tainted if it was trained on data for which we did not
+explicitly have permissions.
+This is extremely often overlooked and it's an extremely serious problem.
+Now, let me give you a very specific example.
+Let's say you're taking a picture.
+You've got your camera-- you went and bought it.
+You took a nice little picture and you're very proud of it.
+And you're going to put it into your data set.
+Depending on how you're using your model--
+which might be trained on that data--
+you might get into a pickle.
+Because if that data for instance, has got critical logos, brand images,
+or some sort of property in there, and your model is actually
+providing some sort of end user value in order
+to be able to pick those things up, well, you need to be careful.
+Because those models, properties, brands, for instance,
+they're all copyrighted properties.
+And so, which means you don't have permission
+for effectively accessing that.
+You have to make sure you actually have the right permissions set up.
+Only then can you actually use the data because the image
+actually has information in there.
+While the image is yours, that information that's inside it though,
+might not belong to you.
+So that might seem crazy to you, but it's totally true.
+So you have to be very careful.
+Similarly in speech for instance, when you're collecting the data,
+you've got to make sure that the people who are giving you the data
+have also agreed, in order to use that data,
+in order to train a model for instance.
+If it's not written down in the license file,
+then you're going to get into a serious problem
+when you actually use their speech to train a model that's later
+on doing inferences and deployment.
+So many different kinds of licenses exist out there.
+I'm just giving you some examples of Apache, BSD, CC licenses.
+You've got to understand which of these licenses
+actually matter for you and you've got to make sure that the data has
+the corresponding license.
+In fact, as homework, I want you to go and look
+at what's the license for the speech commands data set.
+Then let's say you get all these requirements down right,
+the second step is that now you've got to gather the data.
+How do you go about getting the data?
+You figured out you've got to have the right permissions and copyright
+things put in place, now how do I tell the people that I
+want this sort of data?
+You've got to get the right people.
+I already gave you an example.
+For instance, if you are trying to tag cancer cells,
+you better not hire me because you're not
+going to get any good data out of me.
+You've got to hire the right domain expert.
+Then you've got to think about how am I actually going
+to go and collect the data.
+How do I actually ensure that I'm actually getting
+the right labeling put in there?
+What are the kind of labels that I actually need?
+Is it just a cat and a dog, or is it a cat, dog, and a mouse?
+And also.
+You've got to think about the data sources from which you actually
+want to collect all of this data.
+Let me talk about that a little bit because it is relevant to TinyML
+specifically.
+We're using sensors.
+Now you've got to think about, do you have enough of these sensors that
+are deployed everywhere, that you are actually going
+to get a rich collection of that data.
+You also got to think about where these sensors are going to be.
+Let's say you want to collect volcanic activity because you're
+training some sort of TinyML application that does some good around nature.
+Well, if you're collecting sensor data, you've
+got to think about, well, how often or how much power and energy does
+it consume?
+Because that might have implications in terms of the cost of building
+that data set.
+Because if that sensor needs you to constantly go and replace batteries
+in the computing system because it's using too much power,
+well, that's not a very effective way of sourcing your data.
+Crowdsourcing is a different way of collecting data
+from different contributors.
+And so contributors you have being people, like you and me.
+But then, do we have enough contributors volunteering to generate the data set?
+We'll talk about this in the context of speech commands again, soon.
+And let's say for a particular product, do you have the consent?
+Do you have the right privacy issues figured out?
+As well as, got this issue about, like, maybe I
+can pay people in order to actually contribute data for me?
+And we'll talk about this as in the context of Mechanical Turk later on.
+Now that's the whole gathering stage.
+Let me go into the refinement stage.
+You've got to process the data.
+You've already seen some of the processing,
+for instance, that we looked at earlier and of course,
+one with doing data augmentation.
+For instance, you also want to do some sort of basic clean up of the data--
+checking for things like, is the mic actually
+working when you're looking at the recordings?
+Or are these recordings basically empty because the mic was not working?
+Occasionally, it totally happens that you might get data
+because you're collecting it at the scale,
+you might get data that is not very of high quality.
+So you need to validate that data.
+You cannot just use the raw data.
+That's the key message that I'm trying to convey out.
+So let's talk a little bit about what data is actually useful.
+You've collected the data now, now you're
+trying to validate/verify the data.
+Well, you got to keep in mind that verifying the data
+is very tedious because it's manual in some sense,
+that it'll cost you time, a lot of money, as well.
+Because you might have to hire individuals to go and listen
+to every single one of those keywords, for instance,
+and make sure that every file actually has a right keyword.
+Maybe there's a sound in it.
+Well, that's great.
+The mic was working.
+But did they actually say the right key word
+when they were supposed to say the right key word?
+What if someone was being malicious and having a little bit of fun,
+and sort of saying "yes," they are saying "no."
+So you're actually polluting your data set.
+You've got to be careful.
+You can certainly use some level of automation.
+For example, to detect if there was a sound or no sound in a recording,
+well, that's pretty easy.
+You can automate it.
+And of course, as I was hinting earlier, you've
+got to have the right domain expertise.
+For instance, you might be thinking that, look, I've
+hired person x as a domain expert and they labeled the data like this.
+Well, does everyone agree with that particular person's
+way of doing the labeling, or is there some nuance way
+of doing the labeling slightly differently?
+So that might lead into disputes or disagreements.
+So you've got to be careful about this.
+I know it sounds like a lot, but it's true.
+It is a lot of work and this is why most people don't talk about the data set.
+But actually, data engineering for data sets
+is extremely important and very useful to know.
+The final state is really about sustainability.
+You've got to store the data someplace.
+You've got to worry sometimes in terms of where you are actually
+storing the data.
+Are you putting it in some sort of cloud service?
+And if it is in some sort of cloud service,
+does everyone have fair and equal access to that data?
+You might not think about this, but certain regions or certain countries
+in this world have very strong restrictions
+about what data is actually publicly accessible and what data is not.
+Then of course, is the data secure?
+Depending on what kind of data you're talking about,
+sometimes you have to worry about the security of that data.
+For example, if it's my medical records and a machine learning model
+is being trained on it, well, I hope no one
+is going to accidentally put it up on Google
+and then be making it completely accessible by mistake.
+And of course, then there's a chance that they're going to be errors.
+And of course, there's going to be the issue of versioning.
+You collect a bunch of data, but that's not it.
+Data engineering is a continuous process.
+You keep updating the data, which means you've
+got to remember what data you originally trained your version one model on.
+What data did the version two model trained on?
+Because maybe you improved the model, but then there's
+something wrong with that model, which means you need to be able to go back.
+It's very similar to code versioning, which
+we're used to where you always use GitHub or something in order
+to keep track of the versions.
+You've got to do data versioning as well.
+So why would your data evolve?
+Well, it's because the demographics might change, for instance.
+Let's say for example, speech commands, today you're
+learning about speech commands.
+And soon you'll realize, well, the volunteers who
+contributed into speech commands, well, it's
+from a very small subset of the entire planet.
+The way you and I say words might be a little different.
+What that means is as you are learning about speech commands,
+now you need to have your own sounds actually recorded.
+So because you're getting informed, well, now we
+need a bigger distribution of that data.
+And of course, the expanding user base, more number of people.
+So we need to just have more amount of data,
+so we're much more resilient when we're training our models.
+So I've talked about the requirements, gathering, refinement, and sustainment.
+So this is one of the critical workflows you
+need to keep in mind in terms of building the data set.
+Often, again as I've said, people don't talk about it
+but it's extremely important that you go through these stages.
+And the bold ones that I highlighted earlier
+are all extremely important ones and so pay extra attention to those.
+Now generally, building data sets requires an insane amount of work
+as you can see.
+Typically, you're used to using ImageNet.
+ImageNet has over 14 million images in there.
+It's one of the big reasons that we're all here today,
+it's because when ImageNet was created, it
+set off this competition where everybody was
+competing against being able to classify images correctly
+from this ImageNet database.
+Which is an awesome thing to do, but you need a lot of images.
+ImageNet had 14 million, COCO--
+which is for detecting objects--
+is just as big.
+It's 2.5 million segmented images.
+So I'm trying to give you a sample for the scale of the data set.
+If you look at driving data sets, like Waymo's open data set or KITTI 360,
+well again here, you can see that it's a huge volume of data.
+Waymo for instance, has nearly two thousand 20-second driving segments
+of information that comes from cameras, LIDARS.
+That's every 20 seconds is like 200,000 frames of data that is in there.
+So it's a massive amount of data we're talking about.
+1,950 might look small, but if you look at it from the total amount of frames,
+it's a ginormous data set.
+Similarly, KITTI is another very popular data set
+that's used in autonomous driving.
+It's got data that's about 73 kilometers of driving data
+that comes from many different sensors that include laser scans
+as well as static images coming in from cameras.
+A large volume of data.
+Again, as a summary here, look at the scale of these data.
+Common Voice-- something that's for spoken audio--
+has over 5,000 hours of speech data, which is a huge.
+Common Objects, ImageNet, Waymo--
+all of these data sets are big.
+So what is involved in building these data sets?
+How would you go about building your own data set?
+How big should the data set be, is a question in and of itself
+because wisdom generally is that more data is always better.
+So let's start understanding a little bit
+about how do you build your own data sets for a TinyML?
+We'll pick up in the readings and the recordings
+next in trying to get you to understand how you go about this process.

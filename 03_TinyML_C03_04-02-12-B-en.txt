@@ -1,0 +1,43 @@
+BRIAN PLANCHER: The next sensor that we're going to test
+is your inertial measurement unit.
+We're going to open the example again in the same way
+by going to File, Examples, Harvard_TinyMLx, test-IMU.
+And again, as always, we're going to make sure that the board and the port
+are correctly selected.
+And we're going to go and upload and compile that code.
+And once that's all up on your device, we
+can talk about how to actually use it to test your sensor.
+All right, now that you've deployed your code, let's use it to test the IMU.
+To do that, we're going to use the serial monitor and serial
+plotter just like in the last test.
+So let's start by opening up that serial monitor.
+And again, make sure the port is still selected.
+So when we open up the serial monitor, we're
+going to get a window with some instructions about the three tests
+we can use.
+A, G, and M, which will display the accelerometer, the gyroscope,
+and the magnetometer, which are the three different sensors
+that make up an IMU.
+Now just like in the last test, if we do it in the serial monitor,
+we're just going to see those numbers getting displayed to the screen.
+So let's move over to the serial plotter where we can actually
+get a graph of that output.
+And I'm going to use G for the gyroscope because I
+find that that's the easiest one to test and the easiest one to visualize.
+And what the gyroscope is asking for, or displaying,
+is the angular acceleration.
+And that is the rate of change of the orientation of the board.
+And since the board is flat on the table,
+we see basically just a little bit of noise around zero.
+But if we pick it up and start to yaw about one axis,
+suddenly, we're going to see a huge spike and trough in the green line.
+And if we change the axis about which we are rotating it--
+so let's say we start to pitch it up and down--
+now we can get the orange line excited.
+And if we, say, roll it back and forth, now we can get the blue line excited.
+And so that is a really great test to see if your IMU is working.
+If you can just yaw it, pitch it, and roll it, and get
+the blue green and orange lines to be excited individually,
+then your IMU should be working great.
+You can also test the accelerometer and the magnetometer as well if you'd like.
+And once you're done with that, I will see you in the camera test.

@@ -1,0 +1,68 @@
+LAURENCE MORONEY: Earlier, you looked at a process
+that defines machine learning, where you make a guess.
+You then measure how good or how bad that guess is.
+And then, based on that, you can make another guess.
+And keep repeating the process.
+Measuring how effective your guess is is often called measuring your loss.
+Minimizing your loss means you increase your accuracy.
+So you'll learn different strategies for minimizing the loss soon.
+But first, let's take a look at it and a way that you can measure it.
+So for example, you can have the values for x and y that you can see here.
+And you want to figure out a way to match x to y.
+You know that y is a function of x.
+You just don't know what that function is.
+So you make a guess.
+Say you think it's y equals 3x minus 1.
+It's as good a guess as any.
+But how do you measure how good or how bad it is?
+Well, first, we can calculate what y would look like.
+And you can see that here.
+Now that we know what y is supposed to look like, I can see my y.
+And I can see the real y.
+They're not the same.
+In some cases, they're pretty good.
+The second entry, for example, looks OK to me.
+And in some cases, they're really bad.
+And the last entry, where I guessed it would end up 11.
+But the real value is 7.
+Now, is there a way for me to formulize a calculating how good
+or how bad these are?
+Well, maybe I could look for it by plotting them.
+And here, you can see the real values of y.
+And you can see my guesses.
+And by drawing a line between them, I can, by the length of that line,
+figure out which ones are good and which ones are not so good.
+I can measure the length of these lines.
+So it's minus 1, 0, 1, 2, 3 and 4 for my six points.
+So if I now remove the chart, I can see these clearly.
+So maybe, I could add them up to get the overall loss from my guess.
+But that seems wrong.
+Because even though both of these are wrong, they would actually cancel out.
+And it would look like I actually have three of my six correct,
+when in fact, I only have one.
+So what if I square them to remove any negatives?
+And now, with my losses squared, it looks like this.
+They're all positive.
+So I won't have any canceling each other out.
+And my correct one is still 0.
+So now, if I total up all of these, I'll get 31.
+Because I squared them, I can take the square root
+to get a fair measurement of my error.
+And as you can see, it's 5.57.
+So now, let me repeat that with another guess.
+What if I guessed that y equals 2x minus 2?
+Now that I can see that my y is still off the real y,
+but when I measure the difference and I square that, I get five ones.
+If I add them up, I'll get 5.
+And the square root of that as 2.23.
+So my loss is now smaller than it was.
+And I know I'm heading in the right direction.
+And if I now guess y equals 2x minus 1, I can calculate my loss as 0.
+And now, I know I have the right formula to get the right answer.
+This video just explained loss and how to measure it.
+Now, of course, the next step should be, how can you
+use that information to generate the next guess,
+knowing that the next guess should actually
+be a better one than the current one?
+That process, called optimization, will be covered a little later.
+But first, let's take a look at some code that uses this process.

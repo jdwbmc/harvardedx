@@ -1,0 +1,176 @@
+VIJAY JANAPA REDDI: Hi.
+One of the key things that we often deal with when
+we are dealing with embedded systems is that we tend to interface them
+with different types of sensors.
+Now, if you remember, when I talked about the Tiny Machine Learning
+shield, which is a daughter PCB design with breakout for input/output pins
+that allow you to interface the Nano 33 with many different kinds
+of external sensors, for example, like the camera sensor or an LED
+and so forth.
+Now, this particular TinyML shield has got a set of pins.
+If we recall, on the left-hand side, we have general-purpose input/output pins
+that allow you to interface with digital and analog components.
+And, on the right-hand side, we have pins that interface
+with I2C protocol-based sensors.
+Now, I want to talk a little bit about this because, on the TinyML shield,
+we are, in fact, using these capabilities.
+And so I want you to understand how we're actually interfacing them
+so that, later on, when you expand yourself
+outside the scope of whatever we're teaching,
+you will know how to integrate new sensors.
+And, for example, in the I2C, you can actually
+integrate a Seeed Grove sensor, like the thermocouple that we're showing here,
+using a simple cable.
+Now, there are many other types of sensors
+you might be able to interface-- thermocouple,
+a Coulomb counter, a rotary encoder.
+Or pick your favorite one from the website shown below.
+The key thing to understand is how these sensors are actually interfacing.
+I'm not going to be able to go really deep in here
+because this is not an embedded systems class, but, that said,
+I want to give you just enough of the pointers in terms of interfacing
+these embedded components, just as we have
+done with the camera module in here, so that you actually
+have a little bit of inclination on what's going on.
+And then the readings will supplement some of this material.
+And we will give additional pointers so you can build outward from there.
+The key thing is that, when you're interfacing these sensors,
+you have to interface them through some sort of communication module.
+For example, here is an old-school parallel interface,
+as we used to call it, where you have a transmitter on the left-hand side,
+and you have a receiver.
+Think of it as the transmitter being the camera, for instance,
+which is picking up data, the pixel data,
+and it's transmitting that over to the receiver, which is the Arduino Nano 33
+BLE sensor.
+It's got to receive data.
+So you can have parallel interfaces like this, or you can have serial interfaces
+like this.
+In parallel interfaces, you tend to have a whole bunch of wires that are going
+from the transmitter to the receiver.
+Now, the poor thing about this is that it uses up a lot of space and area.
+The nice thing about a serial interface, like we're showing here,
+is that all of that data is communicated effectively
+over one line in some sort of intelligent sequence
+that is predetermined.
+And there are many different types of communication protocols out there.
+The three primary ones you need to know about when you're interfacing
+with sensors is generally the UART, or the Universal Asynchronous Receive
+Transmit protocol, or the I2C, the Inter-Integrated Circuit protocol,
+or SPI, the Serial Peripheral Interface.
+These are all serial communication protocols.
+In other words, you have a single line through which
+you're effectively communicating from between the transmitter
+and the receiver.
+Now, the readings will supplement the knowledge that I have here,
+but I'm going to specifically focus on the I2C protocol
+because that's one of the most common ways to interface with sensors.
+And, in fact, it's one of the things that we are actually using.
+So I want you to understand a little bit about what's
+actually going on underneath the hood.
+So an I2C protocol basically has two critical ways
+of communication channels.
+One is called an SDA, which is the serial data channel where data actually
+moves, and the serial clock channel, which actually controls
+when the data is actually coming about.
+These two wires are already sort of there.
+You just need to know that they exist and what
+their role is because often, when you're integrating sensors,
+you're dealing with these two pins.
+The nice thing about these pins that you can actually
+connect different sensors on this.
+So you can take the Nano 33, which, for example, will be your mother down here,
+and connect it to the camera, which might be your son here.
+Typically, these are called master-slave circuits,
+but I prefer not to use that terminology to be progressive.
+Now, let's be a bit more specific.
+What happens here is that the mother, like the Nano 33,
+is able to transmit data.
+And the son is able to receive the data.
+On the other hand, the son might be able to transmit the data over
+to the mother.
+Being a bit more specific, in our case, for example,
+the Nano 33 BLE is the mother, which is sort of the brains.
+And the sensors are like the camera module or some other Seeed Grove sensor
+that you might choose to interface.
+Basically, all three components or n number of these different sensors
+that you might have connect over to the SDA and SCL.
+And, by connecting them and then programmatically setting up
+a mechanism to communicate between them, you can get data in from the sensor,
+or you can push data to another device.
+So just a very, very high-level skim of what's
+actually going on in terms of how a sensor communicates with the Nano 33
+BLE sensor.
+There's often a start and a stop.
+Think of it as a handshake or saying hi and bye.
+So, at the start, you have a special signal
+where you can see that the SDA line goes low,
+and the SCL clock signal stays high.
+When that happens that basically indicates to the device
+that you're about to start transmitting data.
+And the first thing you will do is you kick off that start signal,
+and then you start transmitting your bits.
+Now, the first thing that happens is that you're actually telling
+what address you want to send to.
+So, for example, let's say you want to pull data in from the IMU.
+Now, an IMU might have an accelerometer.
+It might have a gyroscope.
+And you want to know which one of those do you actually want to read.
+So, in that particular case, you will give the address to either one of them.
+And then you will say whether you want to read or write.
+In our case, for example, we might want to read the data.
+So you will say, I want to read the data.
+And then, after that, you will get an acknowledgment saying, yes, things
+are ready to be read.
+And then the data starts coming in from the sensor.
+And the data comes in a chunk of 1 byte, which is 8 bits of data.
+Every time 8 bits of data are passed back, you get an acknowledgment.
+And then this process repeats until there's a stop signal.
+The readings are going to go into much more detail.
+I'm simply trying to pick out the key points that I want you to know.
+At this point, I just want you to know that we're
+trying to understand that there's an I2C protocol that
+has some way of communicating with the sensor where the sensor might actually
+have different kinds of pieces of data that you might want to get to,
+like the accelerometer or the gyroscope data and so forth.
+So, therefore, you have an address.
+And, once you program it, you are able to read and write from it using I2C.
+How does this pertain to what we are doing in our class?
+Well, the OV7675 camera module that we are interfacing with, for example, uses
+a variant of an I2C.
+Remember, I just said a variant.
+That's because the OV module has a proprietary I2C interface.
+But, by and large, you will find that, if you look at the pins,
+the pins are the SDCs and the SCLs that we talked about earlier.
+And then you tend to have some additional pins.
+And those pins are basically transmitting pixel data back
+to the Arduino Nano 33.
+And, of course, then you have the power pins
+that actually need to provide power to the OV module.
+Just the way the OV module interfaces through an I2C interface
+onto the Nano 33 BLE, the IMU that is on the board that is already
+physically integrated onto the board also
+communicates with the processor using I2C.
+Now, you are starting to understand why I'm actually emphasizing the need
+to understand these protocols.
+Later on, when you're integrating things,
+you will need to know what type of sensor you're actually dealing with.
+So this kit that we have put together for you
+is basically using fundamental embedded system principles,
+which will be common to no matter what device you pick up and you play with.
+Hopefully, at this point, you have an idea
+about why we chose this particular microcontroller
+and specifically why we chose this particular embedded system platform
+and why or how the different sensors that we have provided you
+interface with the board itself.
+There is much more to this.
+And this class unfortunately cannot do due diligence in explaining every
+single thing around embedded systems [INAUDIBLE]..
+But what I'm trying to hint to you is to keep in mind the language
+that I'm getting you exposed to.
+And, once you kind of know a couple of those terms,
+then you'll be able to go on and build outward from that particular point.
+With that said, in the next two videos, I'm
+going to focus very much on the software side of how we get the embedded system
+to actually do what we want it to do.
+And I'll see you there.

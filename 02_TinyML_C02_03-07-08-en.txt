@@ -1,0 +1,233 @@
+VIJAY REDDI: In this video, we're going to learn what it means
+to design a visual wake words model.
+Now before we do that, let's take a step back and look at where we are.
+We talked a little bit about collecting data and preprocessing
+the data for an image-based task.
+Now I'm going to talk about designing a model before we
+jump into training the model.
+Why do I want to do this?
+I want to do this because when you look at image classification with a task,
+there's lots of different neural networks out there.
+This graph is showing you the variety of different models
+that are out there that give you accuracy versus performance latency
+trade off curve.
+So for example, if I take ResNet-152, I can have very good or very high
+accuracy, but then I have to pay a fair bit
+in terms of the computational requirements,
+because it demands over 20 giga operations
+to make a single forward pass.
+The reason I'm talking about this is just a few years ago,
+there was this big challenge that we faced,
+which was about how do we take these models
+and shrink them down so that they were actually
+running efficiently not on some big cloud computing server,
+but on smart handheld devices.
+Because if we try and run these big models on these small devices,
+they're going to run out of battery really fast.
+So I want to take you on a little bit of history
+so that we can learn something from the history
+in order to be able to design models better for TinyML-specific tasks.
+So if you want to shrink models down, there are two fundamental things.
+You want to be able to shrink down the number of parameters
+that are actually inside the model.
+The size of the circle here corresponds to the number of parameters.
+So for example, VGG-19 has over 155 million parameters.
+You want a network that is small and parameters.
+The other thing you want to do is you also
+want to make sure it runs efficiently.
+You don't want it to need a lot of competition.
+So those are the two fundamental legs.
+There's a number of model parameters, and then there's
+a number of hardware operations you can perform per second.
+These two together will actually give you
+a small network that is actually run efficiently on a mobile device
+or TinyML device.
+So let's try and understand how we can break a complex model down
+so we can try and shrink things down.
+I got to take you back to the fundamentals.
+When you look at an image-based task, you spend a lot of time
+doing convolutional operations.
+Almost all the different networks that I showed you,
+they all use convolutions at the heart of it.
+This is a slide from course 1, where we looked
+at applying a filter over the image on the left,
+and you end up with the image on the right.
+What is really happening behind the scenes
+when you do this convolution is extremely important to understand
+because it is the foundational building block that has consequences
+down the road.
+So if you want to be able to shrink models down
+or you want to scale things down, you really
+have to understand this fundamental building block.
+If you look at a Standard Convolution operator, what you're really doing
+is that you've got a filter, the yellow here, that
+is scanning through the original image, input image on the left,
+and it's producing the corresponding blue pixel
+on the right for the set of pixels that it's looking at on the left.
+I have a 3 channel RGB image, a 3 by 3 by 3 filter
+that is scanning over all of those different channels at the same time
+and outputting a single point.
+To be more specific, input feature map is 8 in width, 8 in height,
+and it's got three channels.
+The kernel that's running over it is a 3 by 3 by 3 kernel.
+That's that yellow kernel that we're looking at.
+And the output is that single orange dot that we're
+seeing as the kernel is going through the image on the left.
+The question is this-- this standard convolution is quite complicated.
+But effectively, is there some way to break the convolution down
+into simpler operations rather than doing one massive compound convolution?
+The reading that I have breaks down the math that tells you
+the exact number of multiplications and additions
+you're going to be performing for this standard convolution.
+And it's quite strongly dependent upon the number of challenge you have,
+the number of filters you have, and so forth.
+Please pay attention to the math in there.
+The thing that I'm leading into is can we break this standard convolution down
+into smaller pieces so that's much more efficient to run on the hardware?
+So that's where depthwise convolution comes in.
+The depthwise convolution is this fundamental idea
+that instead of doing a compound convolution,
+what if I kind of took the individual channels out
+and I did a convolutional on each channel individually?
+And after that, I do a pointwise convolution
+to fold all of those output feature maps into a single point, which
+is exactly where the original standard convolution would have gotten us?
+So I'm trying to combine depthwise and pointwise separable convolutions
+together.
+So instead of doing one compound convolution,
+I'm taking two simpler steps--
+a depthwise convolution across the channels and then a pointwise
+convolution to produce the output single value.
+So if we do this, one of the key things that we get out of it
+is that we end up reducing the number of multiplications and additions
+that we do.
+Now I'm not going to get into the math here.
+The reading does a beautiful job of explaining this,
+so please pay attention to it because it's extremely important that you
+have an appreciation for the difference between a standard convolution
+and a depthwise convolution or depthwise separable convolution,
+because you will see that it can dramatically cut down
+the amount of computations needed.
+And that is the fundamental foundational block
+of making improvements to reducing model size
+and improving the latency both at the same time.
+Here is a ratio that you would have if you
+were to compare a depthwise separable convolution to a standard convolution,
+just to put things into perspective.
+If, for example, I had 100 filters that I was applying
+and I had for each of those filters, the kernel size
+was effectively 512 dimensions by 512 dimensions,
+just to give you an example, it would be 100 times more
+efficient to do a depthwise separable convolution
+than a standard convolution.
+Do the math for the examples and the reading,
+and then you'll see why the difference is so large.
+And this is exactly what came out of Google a couple of years
+ago when a couple of these engineers there sat down
+with the original convolutions, and they were scratching their head, and saying,
+how can we reduce this competition?
+And voila.
+They said, what if we could split this standard convolution up
+into dealing with the individual channels,
+and then do a coupled pointwise convolution operator at the end?
+That's what led to mobile nets, which is a very specific type
+of convolutional neural network that has taken off remarkably,
+and is now being deployed widely across many different devices,
+because it's dramatically reduced the computational requirements, as shown
+here.
+You can see that the size of the bubble is small,
+because it has fewer parameters inside the network.
+It also is very much to the left, which means
+it is because it requires little computation,
+and it achieves a fairly good amount of accuracy.
+In recent years, we've made a number of improvements over it.
+But the point is that it actually achieves remarkably good efficiency.
+That was for a state of the art smartphones back in the day.
+So if you compare this baseline, which is still fairly large, because it's
+16 megabytes compared to our dinky little kilobyte amount of memory
+that we have on our microcontroller, we're about 64 times off.
+So we need to do something in order to shrink this model, which is already
+quite small, much, much smaller.
+That's where there's some subtle optimizations that we can
+do on the baseline mobile nets model.
+For example, we can play around with what's called a depthwise multiplier.
+The depthwise multiplier is a way to reduce the total amount of computation.
+This equation, which is presented in greater detail in the reading,
+explains the convolution as it's performed in two steps.
+The left-hand side corresponds to the depthwise aspect of the convolution,
+the right-hand side is doing the pointwise convolution,
+as I mentioned earlier.
+You're combining these two individual steps,
+and therefore, you have an addition in the middle.
+Now within each of these individual steps, you can play a couple of games.
+As you're doing the convolution, you can control the number of channels
+that you're looking at within each layer.
+By controlling that, you are effectively going
+to be able to control the number of different computations
+that you will have to do across the entire network.
+Reading has more detail, but the critical message
+is you can control this parameter alpha between 0 and 1.
+And this has great benefit in terms of cutting down both the size of the model
+as well as the computation requirements from the model.
+This table here shows you a variety of different pieces of data.
+Let me walk you through it.
+So the first row is showing you the baseline model for mobile nets.
+What this is showing is that the baseline achieves about 70.7%
+in accuracy, does really well.
+And what's interesting, though, is that if I change the alpha down by scaling
+it down by about 25%, I can drop a little bit on accuracy,
+but then I can get a real bang for the buck
+in terms of the number of parameters that are actually inside the network.
+By reducing the number of parameters, I'm effectively
+able to shrink the network down.
+And as you look at different values of alpha, what you see
+is that you can make a network down quite small
+as long as you're willing to trade off a certain level of accuracy.
+In addition, you can also see that the amount of computation
+associated by scaling down alpha starts decreasing.
+And this is, again, because you are limiting the number of challenge
+you're effectively looking at.
+So this is one way of controlling the knob.
+Another way of controlling the knob is actually deciding how big or small
+is the image input going to be.
+Previously, I showed you a cat image, which
+is 224 by 224 Pixels we can shrink that down to be even smaller, 128 by 128.
+Of course, you're going to take a hit on accuracy, but look at the number of max
+or multiply accumulates that you have to perform.
+It's a remarkable drop in there.
+And that's huge compared to having the same alpha.
+That's the critical message that I'm going after here.
+Now please keep in mind, though, these are all different kinds
+of optimizations.
+There are a whole variety of different optimizations you
+can perform across a number of channels you applied,
+the number of filters you're applying, what the alpha value is,
+and the whole bunch of different hyper parameters you can tune.
+And that's effectively what's called neural architecture search.
+Neural architecture search is a way of trying
+to find the best combination of parameters
+through the sea of different parameters to achieve the smallest model that
+gives you the best accuracy.
+Now I don't have an answer or a magic bullet that kind of tells you
+what that perfect type of parameter search scheme is going to be.
+People have come up with many different kinds of schemes.
+But the critical message here really is this.
+If you want to design a model for neural networks
+that fit on the resource-constrained devices, number one,
+I want you to think about more than just the number
+of layers you're putting together.
+I want you to try and understand that you can actually go into it
+and understand what the mechanics that are determining the parameter sizes.
+So how can I shrink the number of parameters there?
+How do I also make it run more efficiently
+by understanding the operators that are actually being used?
+Now, this is a bit more advanced, there's a lot more to it.
+And as we go into course 3, I'll try and give you a little bit more
+detail into these kinds of things.
+Here, I'm trying to give you a flavor for carefully designing
+the models more than just looking at the high level structure
+of the overall neural network.
+And there are lots of nuanced parameters we can play with.
+And that is key in terms of making the model smaller.
+With that said, in the next video, let's pick up
+with getting ready to train the neural network model.

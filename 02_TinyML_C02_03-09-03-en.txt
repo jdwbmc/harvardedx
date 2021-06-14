@@ -1,0 +1,151 @@
+SUSAN KENNEDY: Another question to address during the development stage
+is whether the data set is biased.
+First, we'll want to be clear about what we mean when we talk about bias.
+In general, it's best to understand bias as a deviation
+in a predictable direction, not a random one.
+This is important because it helps us distinguish between those errors that
+aren't attributable to bias.
+So in the context of ML, bias refers to systematic errors.
+This is oftentimes because of bias data sets,
+meaning faulty, poor, or incomplete data,
+which can lead to a distribution mismatch between the data set
+and reality.
+Moreover, bias can not only lead to inaccurate results, but in some cases
+discriminatory or unfair results, which we'll
+discuss more in an upcoming video.
+Now I'm sure you've heard how important data is for machine learning.
+If we have bad data inputs, we'll end up with bad results.
+And that's even if we have an otherwise perfect model.
+This is sometimes referred to as the "garbage in, garbage out" problem.
+But how does our data become biased in the first place?
+Well, there are actually a lot of ways that this
+can happen, ranging from conditions under which the data was created,
+how it was collected and sampled, and how it was processed.
+Unfortunately, bias can basically enter the picture
+at any point in the data lifecycle, making it a big challenge for ML.
+In order to tackle this challenge, I'll introduce you
+to some common forms of bias in data so you know what to look out for.
+One way bias enters the picture is owing to how we define the target variable.
+This gives our model an objective, but it can sometimes
+be a rather subjective matter, making it more
+of an art form than a perfect science.
+For example, if we're designing an algorithm
+to make promotion recommendations, how do you define a good employee
+and how could you put this in terms that the computer could understand?
+Well, you have to come up with some quantifiable measures, maybe
+the number of sick days, number of times late to work,
+number of sales per quarter, and the length of employment.
+But defining the target variable in this way might unintentionally disadvantage
+some class of people.
+For example, the number of sick days might
+disadvantage pregnant women or individuals
+with disabilities missing work.
+Or the number of times late to work might disadvantage those people
+who rely on public transportation.
+How might this apply to cases of Tiny ML?
+Well imagine you're using biometric sensors for a health wearable device.
+How should you define healthy?
+Maybe you could focus on heart rate, blood pressure, or the number of steps.
+While these might seem like innocuous measures, focusing on blood pressure
+might disadvantage the elderly, who tend to have higher blood pressure even when
+they have heart healthy habits.
+Another way bias enters the picture is through the labeling of data.
+The reason is that the labels we apply to the training data
+must serve as the ground truth.
+So as far as our model can tell, the labels perfectly match reality.
+But what happens when there's mislabeled data?
+For example, if we build a horse versus human classifier
+and some of the images of horses are actually mislabeled as human.
+Even if it's obvious to us that the picture is of a horse,
+the computer only knows what's in the picture based off
+of the label we gave it.
+And so the model will start to misclassify images of horses as human.
+While this example might seem easy to spot with a careful review of the data,
+bias in labeling can sometimes be much more difficult to address.
+Suppose we're labeling medical images for a disease classifier
+and we present a set of patient images to train
+graders who label the data for us.
+While the two extremes might show a clear pattern,
+if we look at this graph, we'll see that there's
+disagreement among the experts about which label best
+applies to a particular image, in which case, we
+have to make a rather controversial decision about how to label
+these images and train our model.
+Another common form of bias relates to how
+we sample the data that's used to train the model.
+Imagine we're training a model to respond to a wake word
+and our data set looks like this with mostly white individuals.
+Now let's suppose that this data doesn't accurately
+represent reality, where our users are significantly more diverse.
+What will end up happening is that our model
+will perform less well for these individuals who aren't represented
+in the training data.
+Bias might also be a result of prejudice or historical injustices reflected
+in the data.
+For example, the company Northpointe relied on an algorithm
+to predict recidivism risk.
+And despite equal accuracy in terms of correct predictions,
+black defendants were almost twice as likely as whites
+to be labeled as higher risk, but not actually reoffend.
+And the opposite mistake was made among whites,
+who were much more likely to be labeled lower risk
+but then go on to commit other crimes.
+This is attributed to historical injustice
+in policing practices that's been disproportionately focused
+on minority populations, resulting in higher arrest
+rates among these populations, which then gets reflected in the data set.
+This type of bias might also occur when stereotypes skew the data set.
+For example, the stereotype that women are primarily
+responsible for cooking and other household chores
+might result in women being overrepresented in a data set that
+includes images of people cooking.
+This could then cause the algorithm to be
+inaccurate by predicting women or cooking a majority of the time, even
+when this actually isn't the case.
+Bias can also be attributed to measurement distortion, which
+most often occurs when there's a problem with the device that's
+making a measurement or an observation.
+To put it simply, hardware matters.
+For example, optic sensors and cameras have
+problems detecting darker skin tones due to the way light is reflected
+and this has led to notable issues with automatic soap dispensers
+and tools for activity detection and facial recognition.
+Additionally, this can happen when the device used
+to collect data for training differs from the device that's
+used when the model's deployed.
+If our data set contains images from a DSLR camera,
+but the device our model is deployed on is a mobile phone,
+as these images show, the value distortion
+will cause the model to generate bad results.
+So how can we fix biased data?
+Well given the scope of the problem it most importantly
+requires us to remain vigilant and keep a lookout for potential bias.
+But fortunately, there's some industry wide solutions being proposed
+as well as questions to keep in mind to help guide individual designers.
+One industry solution called Datasheets for Datasets was published in a paper
+by researchers from Google and Microsoft as well as academics.
+They offer a list of questions for data set creators
+to reflect on during the key stages of the data set lifecycle, example,
+the motivation, composition, collection, distribution,
+and maintenance of the data set.
+Similarly, there are data nutrition labels,
+a standard label that highlights the key ingredients of the data set,
+including provenance, metadata, missing units, and so forth.
+This helps someone at a glance get a better sense of what the data contains
+and make a more informed decision about whether it's an appropriate data set
+to use for their project.
+There are also biased testing toolkits coming out.
+For example IBM offers its AI Fairness 360 tool
+that makes biased testing a part of your development cycle.
+And similar tools are being offered by Google and Microsoft.
+Now as an individual designer, there are some helpful tips
+to keep in mind to mitigate bias.
+You want to carefully research users in advance
+and be aware of potential outliers.
+Ensure your team of data scientists and data labellers are diverse.
+Where possible, combine inputs from multiple sources
+to ensure data diversity.
+Create a gold standard for data labeling and seek out domain experts
+to review your data.
+Now that you're familiar with the problem of biased data sets,
+you're one step closer to developing reliable and accurate tiny ML.
